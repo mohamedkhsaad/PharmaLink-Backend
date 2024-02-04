@@ -16,7 +16,8 @@ from django.contrib.auth.hashers import make_password, check_password
 from django.utils.translation import gettext as _
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404
-
+from rest_framework.permissions import IsAuthenticated
+from User.authentication import *
 # class UserSignupView(generics.CreateAPIView):
 #     queryset = User.objects.all()
 #     serializer_class = UserSerializer
@@ -143,3 +144,41 @@ class CustomTokenLoginView(APIView):
             return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
 
+
+
+class UserLogoutView(APIView):
+    """
+    This view logs out the user by deleting all associated tokens.
+    """
+    permission_classes = [IsAuthenticated]
+    # authentication_classes = [CustomTokenAuthentication]
+    def post(self, request, format=None):
+        # Retrieve the user's ID
+        user_id = request.user.id
+        print(user_id)
+
+        # Delete all tokens associated with the user
+        try:
+            CustomToken.objects.filter(user_id=user_id).delete()            
+            return Response({'message': 'Logout successful', 'user_id': user_id}, status=status.HTTP_200_OK)
+        except CustomToken.DoesNotExist:
+            return Response({'error': 'No tokens found for the user'}, status=status.HTTP_400_BAD_REQUEST)
+class UserUpdateView(generics.UpdateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        return self.request.user
+
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+
+        return Response(serializer.data)
+
+    def perform_update(self, serializer):
+        serializer.save()

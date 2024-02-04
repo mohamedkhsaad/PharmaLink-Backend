@@ -170,24 +170,22 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # AUTH_USER_MODEL='eventbrit.User'
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# AUTH_USER_MODEL='eventbrit.User'
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
-     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'User.backends.CustomBackend',
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+        'django.contrib.auth.backends.ModelBackend',  # default authentication backend
+        'User.authentication.CustomTokenAuthentication'
     ],
-    # 'DEFAULT_AUTHENTICATION_CLASSES': [
-    #     'rest_framework.authentication.BasicAuthentication',
-    #     'rest_framework.authentication.SessionAuthentication',
-    #     'rest_framework.authentication.TokenAuthentication',
-    #     'django.contrib.auth.backends.ModelBackend',  # default authentication backend
-    #     'user.authentication.CustomTokenAuthentication'
-    # ],
     # 'DEFAULT_PERMISSION_CLASSES': [
     #     'rest_framework.permissions.IsAuthenticated',
     # ]
 
 }
-
 SPECTACULAR_SETTINGS = {
     'SCHEMA_PATH_FUNC': 'drf_spectacular.views.spectacular_view',
 }
@@ -231,6 +229,7 @@ SPECTACULAR_SETTINGS = {
 # Authentication settings
 # AUTH_USER_MODEL = os.getenv('AUTH_USER_MODEL')
 
+AUTH_USER_MODEL = 'User.User'
 
 
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

@@ -3,9 +3,10 @@ from django.core.exceptions import ValidationError
 from django.core.validators import MinLengthValidator, RegexValidator
 import secrets
 from django.contrib.auth.hashers import make_password, check_password
+from django.contrib.auth.models import AbstractUser, PermissionsMixin
 
 # Create your models here.
-class User(models.Model):
+class User(AbstractUser, PermissionsMixin):
     id = models.AutoField(primary_key=True)
     fname = models.CharField(max_length=255)
     lname = models.CharField(max_length=255)

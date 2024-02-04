@@ -9,7 +9,7 @@ from rest_framework.authentication import BaseAuthentication, get_authorization_
 from rest_framework.exceptions import AuthenticationFailed
 from .models import CustomToken
 from django.contrib.auth import get_user_model
-User___ = get_user_model()
+User = get_user_model()
 class CustomTokenAuthentication(BaseAuthentication):
     keyword = 'CustomToken'
     def authenticate(self, request):
@@ -29,9 +29,11 @@ class CustomTokenAuthentication(BaseAuthentication):
         except CustomToken.DoesNotExist:
             raise AuthenticationFailed('Invalid token')
         user_email = custom_token.email
+        User = get_user_model()
+
         try:
-            user = User___.objects.get(email=user_email)
-        except User___.DoesNotExist:
+            user = User.objects.get(email=user_email)
+        except User.DoesNotExist:
             raise AuthenticationFailed('Invalid user')
         return (user, custom_token)
     

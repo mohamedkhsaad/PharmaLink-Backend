@@ -26,5 +26,9 @@ urlpatterns = [
     path('signup/', UserSignupView.as_view(), name='user_signup'),
     path('verify/<int:user_id>/', EmailVerificationView.as_view(), name='email_verification'),
     path('login/', CustomTokenLoginView.as_view(), name='user_login'),
+    path('logout/', UserLogoutView.as_view(), name='custom_logout'),
+    path('update/', UserUpdateView.as_view(), name='user-update'),
+
+
 
 ]
