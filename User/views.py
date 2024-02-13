@@ -46,16 +46,15 @@ from rest_framework.generics import UpdateAPIView
 #             from_email = 'pharmalink1190264@gmail.com'
 #             to_email = [User.email]
 #             send_mail(subject, message, from_email, to_email)
-
 #             return Response(serializer.data, status=status.HTTP_201_CREATED)
 #         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-     
+
 class UserSignupView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     def send_custom_email(self, user_id, email):
         subject = 'Verify Your Email'
-        verification_link = f"https://127.0.0.1:8000/verify/{user_id}/"
+        verification_link = f"https://127.0.0.1:8000/user/verify/{user_id}/"
         message = f'Click the following link to verify your email: {verification_link}'
         sender_email = 'pharmalink1190264@gmail.com'
         receiver_email = email
@@ -108,8 +107,9 @@ class CustomTokenLoginView(APIView):
     This is a view class for the user login. User has to verify his email after signup to be able to login
     '''
     serializer_class = AuthTokenSerializer
-
     def post(self, request, format=None):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)  # Validate the serializer
         email = request.data.get('email')
         password = request.data.get('password')
         try:
@@ -146,8 +146,6 @@ class UserLogoutView(APIView):
     def post(self, request, format=None):
         # Retrieve the user's ID
         user_id = request.user.id
-        print(user_id)
-
         # Delete all tokens associated with the user
         try:
             CustomToken.objects.filter(user_id=user_id).delete()            
@@ -158,6 +156,7 @@ class UserUpdateView(generics.UpdateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [IsAuthenticated]
+    authentication_classes = [CustomTokenAuthentication]
     def get_object(self):
         return self.request.user
     def update(self, request, *args, **kwargs):
@@ -191,6 +190,8 @@ class PasswordResetRequestView(GenericAPIView):
         except Exception as e:
             print(f"Error sending email: {e}")
     def post(self, request, *args, **kwargs):
+        # serializer = self.serializer_class(data=request.data)
+        # serializer.is_valid(raise_exception=True)  # Validate the serializer
         email = request.data.get('email')
         if email:
             try:
@@ -215,12 +216,10 @@ class PasswordResetView(UpdateAPIView):
     queryset = User.objects.all()
     permission_classes = [AllowAny]  # Allow any user to reset their password
     serializer_class = PasswordUpdateSerializer  # Create a serializer for resetting the password
-
     def get_object(self):
         # Get the user object based on the user_id provided in the URL
         user_id = self.kwargs.get('user_id')
         return User.objects.get(pk=user_id)
-
     def update(self, request, *args, **kwargs):
         # Get the user object
         user = self.get_object()
@@ -237,7 +236,6 @@ class PasswordResetView(UpdateAPIView):
                 return Response({"error": "Password must contain at least one digit."}, status=status.HTTP_400_BAD_REQUEST)
             if not any(char in "!@#$%^&*()_+{}[];:<>,./?" for char in new_password):
                 return Response({"error": "Password must contain at least one special character."}, status=status.HTTP_400_BAD_REQUEST)
-            
             # Update the user's password
             user.password = new_password
             # user.set_password(new_password)

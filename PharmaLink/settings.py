@@ -53,7 +53,6 @@ INSTALLED_APPS = [
     'django_resized',
 ]
 
-
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -167,8 +166,6 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
-
 # AUTH_USER_MODEL='eventbrit.User'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # AUTH_USER_MODEL='eventbrit.User'
@@ -230,6 +227,7 @@ SPECTACULAR_SETTINGS = {
 # AUTH_USER_MODEL = os.getenv('AUTH_USER_MODEL')
 
 AUTH_USER_MODEL = 'User.User'
+
 
 
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

@@ -1,3 +1,135 @@
-from django.db import models
+# from django.db import models
+# from django.core.validators import MinLengthValidator,RegexValidator
+# from django.core.exceptions import ValidationError
+# from django.contrib.auth.models import AbstractUser
 
-# Create your models here.
+
+# class Doctor(AbstractUser):
+#     id=models.AutoField(primary_key=True)
+#     fname=models.CharField(max_length=255)
+#     lname=models.CharField(max_length=255)
+#     gender_choices=[
+#         ("M","Male"),
+#         ("F","Female")]
+#     gender=models.CharField(max_length=1,choices=gender_choices)
+#     username=models.CharField(max_length=255,unique=True)
+#     email=models.EmailField(unique=True)
+#     birthdate=models.DateField()
+#     Phone=models.CharField(max_length=20)
+#     license_number=models.IntegerField()
+#     specialization=models.CharField(max_length=255)
+#     degree=models.CharField(max_length=255)
+#     graduation_date=models.DateField()
+#     university=models.CharField(max_length=255)
+#     password_validator = RegexValidator(
+#         regex=r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$',
+#         message="Password must contain at least one lowercase letter, one uppercase letter, one digit, and one special character."
+#     )
+#     password = models.CharField(
+#         max_length=255,
+#         validators=[MinLengthValidator(limit_value=8), password_validator]
+#     )    
+#     # image = models.ImageField(upload_to='doctor_images/', null=True, blank=True)
+#     created_at = models.DateTimeField(auto_now_add=True)
+#     is_verified = models.BooleanField(default=False)
+
+#     def clean(self):
+#         super().clean()
+#         # Custom password validation
+#         if not self.password_validator(self.password):
+#             raise ValidationError("Password does not meet the required criteria.")
+#     def __str__(self):
+#         return self.email
+from django.contrib.auth.models import AbstractUser
+from django.core.validators import RegexValidator, MinLengthValidator
+from django.db import models
+from django.core.exceptions import ValidationError
+import secrets
+
+class Doctor(AbstractUser):
+    id = models.AutoField(primary_key=True)
+    fname = models.CharField(max_length=255)
+    lname = models.CharField(max_length=255)
+    gender_choices = [
+        ("M", "Male"),
+        ("F", "Female")
+    ]
+    gender = models.CharField(max_length=1, choices=gender_choices)
+    username = models.CharField(max_length=255, unique=True)
+    email = models.EmailField(unique=True)
+    birthdate = models.DateField()
+    phone = models.CharField(max_length=20)
+    license_number = models.CharField(max_length=255)
+    specialization = models.CharField(max_length=255)
+    degree = models.CharField(max_length=255)
+    graduation_date = models.DateField()
+    university = models.CharField(max_length=255)
+    password_validator = RegexValidator(
+        regex=r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$',
+        message="Password must contain at least one lowercase letter, one uppercase letter, one digit, and one special character."
+    )
+    password = models.CharField(
+        max_length=255,
+        validators=[MinLengthValidator(limit_value=8), password_validator]
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    is_verified = models.BooleanField(default=False)
+
+    def clean(self):
+        super().clean()
+        # Custom password validation
+        if not self.password_validator(self.password):
+            raise ValidationError("Password does not meet the required criteria.")
+
+    def __str__(self):
+        return self.email
+    class Meta:
+        permissions = [("view_user", "Can view user")]
+
+    groups = models.ManyToManyField(
+        "auth.Group",
+        verbose_name="groups",
+        blank=True,
+        related_name="doctor_set",
+        related_query_name="doctor",
+    )
+    user_permissions = models.ManyToManyField(
+        "auth.Permission",
+        verbose_name="user permissions",
+        blank=True,
+        related_name="doctor_set",
+        related_query_name="doctor",
+    )
+
+
+# class CustomToken(models.Model):
+#     key = models.CharField(max_length=64, unique=True, blank=True)
+#     doctor = models.ForeignKey(Doctor, related_name='custom_tokens', on_delete=models.CASCADE)
+#     email = models.EmailField()
+#     created = models.DateTimeField(auto_now_add=True)
+#     class Meta:
+#         verbose_name = 'CustomToken'
+#         verbose_name_plural = 'CustomTokens'
+#     def save(self, *args, **kwargs):
+#         if not self.key:
+#             self.key = secrets.token_hex(32)
+#         if not self.email:
+#             self.email = self.doctor.email
+#         return super().save(*args, **kwargs)
+    
+
+class CustomToken(models.Model):
+    key = models.CharField(max_length=64, unique=True, blank=True)
+    doctor = models.ForeignKey(Doctor, related_name='custom_tokens', on_delete=models.CASCADE)
+    email = models.EmailField()
+    created = models.DateTimeField(auto_now_add=True)
+    class Meta:
+        verbose_name = 'CustomToken'
+        verbose_name_plural = 'CustomTokens'
+
+    def save(self, *args, **kwargs):
+        if not self.key:
+            self.key = secrets.token_hex(32)
+        if not self.email:
+            self.email = self.doctor.email
+        return super().save(*args, **kwargs)

@@ -2,10 +2,8 @@ from django.db import models
 from django.core.exceptions import ValidationError
 from django.core.validators import MinLengthValidator, RegexValidator
 import secrets
-from django.contrib.auth.hashers import make_password, check_password
 from django.contrib.auth.models import AbstractUser, PermissionsMixin
 
-# Create your models here.
 class User(AbstractUser, PermissionsMixin):
     id = models.AutoField(primary_key=True)
     fname = models.CharField(max_length=255)
@@ -51,13 +49,6 @@ class User(AbstractUser, PermissionsMixin):
     created_at = models.DateTimeField(auto_now_add=True)
     is_verified = models.BooleanField(default=False)
 
-
-
-    # def save(self, *args, **kwargs):
-    #     if not self.id:  # Only hash the password for new instances
-    #         self.password = make_password(self.password)
-    #     super().save(*args, **kwargs)
-   
     def clean(self):
         super().clean()
         # Custom password validation
