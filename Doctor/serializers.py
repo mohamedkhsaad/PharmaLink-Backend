@@ -3,7 +3,7 @@ from Doctor.models import*
 class Doctorserialzer(serializers.ModelSerializer):
     class Meta:
         model=Doctor
-        fields = ['id','fname','lname','username', 'password', 'birthdate', 'email', 'phone', 'gender','license_number','specialization','degree','graduation_date','university']
+        fields = ['id','fname','lname','username', 'password', 'birthdate', 'email', 'phone', 'gender','license_number','specialization','degree','graduation_date','university','image']
         extra_kwargs = {'password': {'write_only': True}}
 class DoctorAuthTokenSerializer(serializers.Serializer):
     """ 

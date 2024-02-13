@@ -333,3 +333,6 @@ import os
 
 # # Set the environment variable
 # os.environ['SSL_CERT_FILE'] = SSL_CERT_FILE_PATH
+MEDIA_URL = '/'
+MEDIA_ROOT = os.path.join(BASE_DIR, '')
+CORS_ORIGIN_ALLOW_ALL = True

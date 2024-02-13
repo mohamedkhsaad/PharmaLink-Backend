@@ -72,6 +72,8 @@ class Doctor(AbstractUser):
         max_length=255,
         validators=[MinLengthValidator(limit_value=8), password_validator]
     )
+    image = models.ImageField(upload_to='doctor_images/', null=True, blank=True)
+
     created_at = models.DateTimeField(auto_now_add=True)
     is_verified = models.BooleanField(default=False)
 

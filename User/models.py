@@ -57,6 +57,20 @@ class User(AbstractUser, PermissionsMixin):
         
     def __str__(self):
         return self.email
+
+# def add_image_fields(count):
+#     """
+#     This function generate auto image fields and resize the all images with a fix size
+#     """
+#     # Add first image field as 'image'
+#     User.add_to_class('image', ResizedImageField(size=[512, 256],  crop=['middle', 'center'],
+#                                                   upload_to='events/', blank=True, null=True, verbose_name='image'))
+#     # Add remaining image fields with field names 'image2', 'image3', ...
+#     for i in range(1, count+1):
+#         field_name = f"image{i}"
+#         field = ResizedImageField(size=[512, 256], crop=[
+#                                   'middle', 'center'], upload_to='events/', blank=True, null=True, verbose_name=field_name)
+#         User.add_to_class(field_name, field)
     
 class CustomToken(models.Model):
     key = models.CharField(max_length=64, unique=True, blank=True)
