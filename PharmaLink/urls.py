@@ -40,10 +40,10 @@ urlpatterns = [
     path('doctor/logout/',DoctorLogoutView.as_view(), name='doctor_logout'),
     path('doctor/password/reset/', DoctorPasswordResetRequestView.as_view(), name='Doctor_password_reset_request'),
     path('doctor/reset-password/<int:user_id>/', PasswordResetView.as_view(), name='password_reset'),
-
     path('Prescription/drug_search/', MedicineSearchView.as_view(), name='medicine-search'),
     path('Prescription/start-session/', StartSessionView.as_view(), name='start_session'),
     path('Prescription/verify-session/', VerifySessionView.as_view(), name='verify_session'),
+    path('Prescription/create-prescription/', CreatePrescriptionView.as_view(), name='create_prescription'),
 
 
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
