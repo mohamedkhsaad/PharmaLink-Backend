@@ -500,3 +500,20 @@ class ActivateDrugView(APIView):
         }
         # Return response
         return Response(response_data, status=status.HTTP_200_OK)
+
+
+class DeletePrescriptionView(APIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [CustomTokenAuthentication]
+
+    def delete(self, request, prescription_id):
+        # Retrieve the prescription from the database
+        try:
+            prescription = Prescription.objects.get(id=prescription_id, user_id=request.user.id)
+        except Prescription.DoesNotExist:
+            return Response({'error': 'Prescription not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        # Delete the prescription
+        prescription.delete()
+
+        return Response({'message': 'Prescription deleted successfully'}, status=status.HTTP_200_OK)

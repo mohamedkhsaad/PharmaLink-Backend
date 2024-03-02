@@ -38,6 +38,7 @@ urlpatterns = [
     path('Prescription/user/prescriptions/', PatientPrescriptionsView.as_view(), name='user_prescriptions'),
     path('Prescription/user/activate-prescription/<int:prescription_id>/', ActivatePrescriptionView.as_view(), name='activate_prescription'),
     path('Prescription/user/<int:prescription_id>/activate/<str:drug_name>/', ActivateDrugView.as_view(), name='activate_drug'),
+    path('Prescription/user/<int:prescription_id>/delete/', DeletePrescriptionView.as_view(), name='delete_prescription'),
 
 
     # Doctor
