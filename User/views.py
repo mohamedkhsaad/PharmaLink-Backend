@@ -173,7 +173,7 @@ class PasswordResetRequestView(GenericAPIView):
     serializer_class = PasswordResetRequestSerializer
     def send_password_reset_email(self,user):
         subject = 'Reset Your Password'
-        reset_link = f"https://127.0.0.1:8000/reset-password/{user.id}/"
+        reset_link = f"https://127.0.0.1:8000/user/reset-password/{user.id}/"
         message = f'Click the following link to reset your password: {reset_link}'
         sender_email = 'pharmalink1190264@gmail.com'
         receiver_email = user.email
@@ -240,7 +240,18 @@ class PasswordResetView(UpdateAPIView):
             user.password = new_password
             # user.set_password(new_password)
             user.save()
-            
             return Response({"message": "Password reset successfully."}, status=status.HTTP_200_OK)
         else:
             return Response({"error": "New password not provided."}, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+class UserInfoView(APIView):
+    def get(self, request, user_id):
+        try:
+            user = User.objects.get(id=user_id)
+        except User.DoesNotExist:
+            return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = UserSerializer(user)
+        return Response(serializer.data, status=status.HTTP_200_OK)

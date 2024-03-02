@@ -42,7 +42,7 @@ from Doctor.models import CustomToken
 from Doctor.models import Doctor
 from rest_framework.authentication import BaseAuthentication, get_authorization_header
 from rest_framework.exceptions import AuthenticationFailed
-class CustomTokenAuthentication(BaseAuthentication):
+class DoctorCustomTokenAuthentication(BaseAuthentication):
     keyword = 'CustomToken'
     def authenticate(self, request):
         auth_header = get_authorization_header(request).split()

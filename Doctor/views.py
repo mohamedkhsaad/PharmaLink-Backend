@@ -5,7 +5,7 @@ from rest_framework import generics, status
 from rest_framework.response import Response
 from Doctor.models import *
 from Doctor.serializers import *
-from Doctor.authentication import CustomTokenAuthentication
+from Doctor.authentication import DoctorCustomTokenAuthentication
 from rest_framework.views import APIView
 from django.utils.translation import gettext as _
 from django.shortcuts import get_object_or_404
@@ -96,7 +96,17 @@ class DoctorCustomTokenLoginView(APIView):
         else:
             return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
         
-#DoctorEmailVerificationView
+
+class DoctorInfoView(APIView):
+    def get(self, request, doctor_id):
+        try:
+            doctor = Doctor.objects.get(id=doctor_id)
+        except Doctor.DoesNotExist:
+            return Response({'error': ' Doctor not found'}, status=status.HTTP_404_NOT_FOUND)
+        serializer = Doctorserialzer(doctor)
+        
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
 class DoctorEmailVerificationView(APIView):
     def get(self, request, doctor_id):
         doctor = get_object_or_404(Doctor, pk=doctor_id)
@@ -109,7 +119,7 @@ class DoctorLogoutView(APIView):
     This view logs out the user by deleting all associated tokens.
     """
     permission_classes = [IsAuthenticated]
-    authentication_classes = [CustomTokenAuthentication]
+    authentication_classes = [DoctorCustomTokenAuthentication]
     def post(self, request, format=None):
         # Retrieve the doctor's ID
         doctor_id = request.user.id
@@ -124,7 +134,7 @@ class DoctorUpdateView(generics.UpdateAPIView):
     queryset = Doctor.objects.all()
     serializer_class = Doctorserialzer
     permission_classes = [IsAuthenticated]
-    authentication_classes = [CustomTokenAuthentication]
+    authentication_classes = [DoctorCustomTokenAuthentication]
     def get_object(self):
         return self.request.user
     def update(self, request, *args, **kwargs):
@@ -173,7 +183,7 @@ class DoctorPasswordResetRequestView(GenericAPIView):
     
 
 
-class PasswordResetView(UpdateAPIView):
+class DoctorPasswordResetView(UpdateAPIView):
     queryset = Doctor.objects.all()
     permission_classes = [AllowAny]  # Allow any user to reset their password
     serializer_class = DoctorPasswordUpdateSerializer  # Create a serializer for resetting the password
@@ -205,3 +215,15 @@ class PasswordResetView(UpdateAPIView):
             return Response({"message": "Password reset successfully."}, status=status.HTTP_200_OK)
         else:
             return Response({"error": "New password not provided."}, status=status.HTTP_400_BAD_REQUEST)
+        
+
+
+class DoctorPhoneNumberView(APIView):
+    def get(self, request, doctor_id):
+        try:
+            doctor = Doctor.objects.get(id=doctor_id)
+        except Doctor.DoesNotExist:
+            return Response({'error': 'Doctor not found'}, status=status.HTTP_404_NOT_FOUND)
+        
+        phone_number = doctor.phone
+        return Response({'phone_number': phone_number}, status=status.HTTP_200_OK)

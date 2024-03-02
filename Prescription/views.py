@@ -1,12 +1,12 @@
 from django.shortcuts import render
-
 # Create your views here.
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .models import DrugEye
 from .serializers import UserSerializerEmail
-from Doctor.authentication import CustomTokenAuthentication
+from Doctor.authentication import DoctorCustomTokenAuthentication
+from User.authentication import CustomTokenAuthentication
 from .serializers import DrugEyeSerializer
 from .models import *
 from .utils import generate_session_id, generate_otp, validate_session, send_otp,send_custom_email_otp
@@ -16,10 +16,12 @@ from datetime import timedelta
 from .serializers import PrescriptionSerializer
 from rest_framework.permissions import IsAuthenticated
 from fuzzywuzzy import process
+import json
+from rest_framework.exceptions import ValidationError
 
 class MedicineSearchView(APIView):
     # permission_classes = [IsAuthenticated]
-    # authentication_classes = [CustomTokenAuthentication]
+    # authentication_classes = [DoctorCustomTokenAuthentication]
     def get(self, request):
         query = request.query_params.get('query', '')
         if len(query) < 2:
@@ -41,7 +43,7 @@ class MedicineSearchView(APIView):
 
 class StartSessionView(APIView):
     permission_classes = [IsAuthenticated]
-    authentication_classes = [CustomTokenAuthentication]
+    authentication_classes = [DoctorCustomTokenAuthentication]
     serializer_class = UserSerializerEmail
     def post(self, request):
         # Get the doctor ID from the authenticated user (token)
@@ -81,7 +83,7 @@ class StartSessionView(APIView):
 
 class VerifySessionView(APIView):
     permission_classes = [IsAuthenticated]
-    authentication_classes = [CustomTokenAuthentication]
+    authentication_classes = [DoctorCustomTokenAuthentication]
     def post(self, request):
         # Get the doctor ID from the authenticated user
         doctor_id = request.user.id
@@ -144,11 +146,12 @@ class VerifySessionView(APIView):
             }
         }
     }
-}'''
+}
+'''
 
 class CreatePrescriptionView(APIView):
     permission_classes = [IsAuthenticated]
-    authentication_classes = [CustomTokenAuthentication]
+    authentication_classes = [DoctorCustomTokenAuthentication]
 
     def post(self, request):
         # Extract doctor ID from the authenticated user
@@ -181,7 +184,7 @@ class CreatePrescriptionView(APIView):
         # Automatically populate doctor_id and user_id
         request.data['doctor_id'] = doctor_id
         request.data['user_id'] = session.user_id
-        request.data['session']=session.session_id
+        request.data['session'] = session.session_id
 
         # Check if a prescription already exists for this session
         prescription = Prescription.objects.filter(doctor_id=doctor_id, user_id=session.user_id, session_id=session.session_id).first()
@@ -189,18 +192,243 @@ class CreatePrescriptionView(APIView):
         if prescription:
             return Response({'error': 'A prescription already exists for this session'}, status=status.HTTP_400_BAD_REQUEST)
 
-        # Create prescription serializer with context
+        # Fetch scientific name from DrugEye and split it into components
+        drugs_data = request.data.get('drugs', {})
+        for trade_name, drug_data in drugs_data.items():
+            try:
+                drug_eye = DrugEye.objects.get(TradeName=trade_name)
+            except DrugEye.DoesNotExist:
+                return Response({'error': f"Drug with trade name '{trade_name}' does not exist."}, status=status.HTTP_400_BAD_REQUEST)
+            
+            # Add scientific name and its components to the drug data
+            drug_data['ScName'] = drug_eye.ScName
+            sc_name_components = drug_eye.ScName.split('+')  # Splitting ScName by '+'
+            drug_data['ScNameComponents'] = sc_name_components
+
+        # Create prescription serializer with context and modified data
         prescription_serializer = PrescriptionSerializer(data=request.data, context=serializer_context)
 
-        # Check if the session has ended
-        if session.ended:
-            pass
-            # return Response({'error': 'Session has ended'}, status=status.HTTP_400_BAD_REQUEST)
-
         # Validate prescription data
-        if prescription_serializer.is_valid():
-            # Save prescription
-            prescription_serializer.save()
-            return Response({'message': 'Prescription created successfully', 'prescription': prescription_serializer.data}, status=status.HTTP_201_CREATED)
+        try:
+            prescription_serializer.is_valid(raise_exception=True)
+        except ValidationError as e:
+            # Check if the error is related to date format
+            for field, errors in e.detail.items():
+                for error in errors:
+                    if 'date' in error.lower() and 'format' in error.lower():
+                        return Response({'error': 'Date format is incorrect. Please provide the date in YYYY-MM-DD format.'}, status=status.HTTP_400_BAD_REQUEST)
+            # Return other validation errors
+            return Response({'error': e.detail}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Save prescription
+        prescription_serializer.save()
+        return Response({'message': 'Prescription created successfully', 'prescription': prescription_serializer.data}, status=status.HTTP_201_CREATED)
+    
+class UpdatePrescriptionView(APIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [DoctorCustomTokenAuthentication]
+
+    def put(self, request, prescription_id):
+        try:
+            prescription = Prescription.objects.get(pk=prescription_id)
+        except Prescription.DoesNotExist:
+            return Response({'error': 'Prescription does not exist'}, status=status.HTTP_404_NOT_FOUND)
+
+        # Check if the requesting doctor is the same as the one who created the prescription
+        requesting_doctor_id = request.user.id
+        if prescription.doctor_id != requesting_doctor_id:
+            return Response({'error': 'You are not authorized to update this prescription'}, status=status.HTTP_403_FORBIDDEN)
+
+        # Fetch scientific name from DrugEye and split it into components
+        drugs_data = request.data.get('drugs', {})
+        for trade_name, drug_data in drugs_data.items():
+            try:
+                drug_eye = DrugEye.objects.get(TradeName=trade_name)
+            except DrugEye.DoesNotExist:
+                return Response({'error': f"Drug with trade name '{trade_name}' does not exist."}, status=status.HTTP_400_BAD_REQUEST)
+            
+            # Add scientific name and its components to the drug data
+            drug_data['ScName'] = drug_eye.ScName
+            sc_name_components = drug_eye.ScName.split('+')  # Splitting ScName by '+'
+            drug_data['ScNameComponents'] = sc_name_components
+
+        # Ensure 'state' field is included in request data
+        for trade_name, drug_data in drugs_data.items():
+            if 'state' not in drug_data:
+                return Response({'error': f"State is required for drug '{trade_name}'"}, status=status.HTTP_400_BAD_REQUEST)
+
+        serializer = PrescriptionSerializer(prescription, data=request.data, partial=True)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'message': 'Prescription updated successfully', 'prescription': serializer.data}, status=status.HTTP_200_OK)
         else:
-            return Response(prescription_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+     
+class PrescriptionDetailView(APIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [DoctorCustomTokenAuthentication]
+    def get(self, request, prescription_id):
+        try:
+            prescription = Prescription.objects.get(id=prescription_id)
+        except Prescription.DoesNotExist:
+            return Response({'error': 'Prescription does not exist'}, status=status.HTTP_404_NOT_FOUND)
+        # Check if the requesting doctor is authorized to access this prescription
+        requesting_doctor_id = request.user.id
+        if prescription.doctor_id != requesting_doctor_id:
+            return Response({'error': 'You are not authorized to access this prescription'}, status=status.HTTP_403_FORBIDDEN)
+
+        serializer = PrescriptionSerializer(prescription)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+     
+class DeletePrescriptionView(APIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [DoctorCustomTokenAuthentication]
+    def delete(self, request, prescription_id):
+        try:
+            prescription = Prescription.objects.get(pk=prescription_id)
+        except Prescription.DoesNotExist:
+            return Response({'error': 'Prescription does not exist'}, status=status.HTTP_404_NOT_FOUND)
+
+        # Ensure that the requesting user is the doctor who created the prescription
+        requesting_doctor_id = request.user.id
+        if prescription.doctor_id != requesting_doctor_id:
+            return Response({'error': 'You are not authorized to delete this prescription'}, status=status.HTTP_403_FORBIDDEN)
+
+        # Delete the prescription
+        prescription.delete()
+        return Response({'message': 'Prescription deleted successfully'}, status=status.HTTP_204_NO_CONTENT) 
+
+"""
+Retreive Prescriptions during the session
+"""
+# all Doctor prescreptions that he prescriped for the patient in the session, could see during the session only
+class DoctorPrescriptionsForUserView(APIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [DoctorCustomTokenAuthentication]
+    def get(self, request, user_id):
+        # Extract doctor ID from the authenticated user
+        doctor_id = request.user.id
+        # Ensure session is verified and not ended
+        try:
+            session = Session.objects.filter(doctor_id=doctor_id).latest('created_at')
+        except Session.DoesNotExist:
+            return Response({'error': 'No active session found for this doctor'}, status=status.HTTP_404_NOT_FOUND)
+
+        if not session.verified:
+            return Response({'error': 'Session is not verified'}, status=status.HTTP_400_BAD_REQUEST)
+        if session.ended:
+            return Response({'error': 'Session has ended'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Retrieve prescriptions created by the doctor for the specified user
+        prescriptions = Prescription.objects.filter(doctor_id=doctor_id, user_id=user_id)
+        
+        # Serialize the prescriptions
+        serializer = PrescriptionSerializer(prescriptions, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+# all user prescreptions that the doctor could see during the session only
+class UserPrescriptionsView(APIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [DoctorCustomTokenAuthentication]
+    def get(self, request):
+        # Extract doctor ID from the authenticated user
+        doctor_id = request.user.id
+        # Ensure session is verified and not ended
+        try:
+            session = Session.objects.filter(doctor_id=doctor_id).latest('created_at')
+        except Session.DoesNotExist:
+            return Response({'error': 'No active session found for this doctor'}, status=status.HTTP_404_NOT_FOUND)
+        if not session.verified:
+            return Response({'error': 'Session is not verified'}, status=status.HTTP_400_BAD_REQUEST)
+        if session.ended:
+            return Response({'error': 'Session has ended'}, status=status.HTTP_400_BAD_REQUEST)
+        # Retrieve prescriptions based on doctor and session information
+        if doctor_id == session.doctor_id:
+            # Doctor is the same as the one in the session, retrieve prescriptions by any doctor
+            prescriptions = Prescription.objects.filter(user_id=session.user_id)
+        else:
+            # Doctor is different from the one in the session, return empty queryset
+            prescriptions = Prescription.objects.none()
+        
+        # Serialize the prescriptions
+        serializer = PrescriptionSerializer(prescriptions, many=True)
+        
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+
+class ActivePrescriptionsView(APIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [DoctorCustomTokenAuthentication]
+    def get(self, request):
+        # Extract doctor ID from the authenticated user
+        doctor_id = request.user.id
+        # Ensure session is verified and not ended
+        try:
+            session = Session.objects.filter(doctor_id=doctor_id).latest('created_at')
+        except Session.DoesNotExist:
+            return Response({'error': 'No active session found for this doctor'}, status=status.HTTP_404_NOT_FOUND)
+
+        if not session.verified:
+            return Response({'error': 'Session is not verified'}, status=status.HTTP_400_BAD_REQUEST)
+
+        if session.ended:
+            return Response({'error': 'Session has ended'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Retrieve prescriptions based on doctor and session information
+        if doctor_id == session.doctor_id:
+            # Doctor is the same as the one in the session, retrieve prescriptions by any doctor
+            prescriptions = Prescription.objects.filter(user_id=session.user_id)
+            print(prescriptions)
+        else:
+            # Doctor is different from the one in the session, return empty queryset
+            prescriptions = Prescription.objects.none()
+        
+        # Filter prescriptions to get only active ones
+        active_prescriptions = []
+        for prescription in prescriptions:
+            drugs_data = prescription.drugs  # Assuming prescription.drugs is already a dictionary
+            for drug_name, drug_info in drugs_data.items():
+                if drug_info['state'] == 'active':
+                    active_prescriptions.append(prescription)
+                    break  # Break out of the inner loop once an active drug is found
+
+       
+        
+        # Serialize the active prescriptions
+        serializer = PrescriptionSerializer(active_prescriptions, many=True)
+        
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+
+"""
+Doctor
+"""
+class DoctorPrescriptionsView(APIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [DoctorCustomTokenAuthentication]
+    def get(self, request):
+        # The doctor ID is extracted from the authenticated user
+        doctor_id = request.user.id
+        # Retrieve prescriptions created by the doctor for the specified user
+        prescriptions = Prescription.objects.filter(doctor_id=doctor_id)
+        # Serialize the prescriptions
+        serializer = PrescriptionSerializer(prescriptions, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+"""
+Patient
+"""
+class PatientPrescriptionsView(APIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [CustomTokenAuthentication]
+    def get(self, request):
+        # The doctor ID is extracted from the authenticated user
+        user_id = request.user.id
+        # Retrieve prescriptions created by the doctor for the specified user
+        prescriptions = Prescription.objects.filter(user_id=user_id)
+        # Serialize the prescriptions
+        serializer = PrescriptionSerializer(prescriptions, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)

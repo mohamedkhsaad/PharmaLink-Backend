@@ -18,18 +18,9 @@ class UserSerializerEmail(serializers.ModelSerializer):
         model = User
         fields = ['email']
 
-# class DrugSerializer(serializers.Serializer):
-#     # drug_id = serializers.IntegerField()
-#     state = serializers.ChoiceField(choices=Drug.STATE_CHOICES)
-#     start_date = serializers.DateField()
-#     end_date = serializers.DateField()
-#     quantity = serializers.IntegerField()
-#     quantity_unit = serializers.CharField(max_length=100)
-#     rate = serializers.DecimalField(max_digits=10, decimal_places=2)
-#     rate_unit = serializers.CharField(max_length=100)
-#     TradeName = serializers.CharField(max_length=255)
-
 class PrescriptionSerializer(serializers.ModelSerializer):
+    DATE_FORMAT = '%Y-%m-%d'  # Specify the expected date format
+
     def validate_drugs(self, drugs):
         """
         Validate drugs data and link them with DrugEye model
@@ -41,14 +32,25 @@ class PrescriptionSerializer(serializers.ModelSerializer):
                 raise serializers.ValidationError(f"Drug with trade name '{trade_name}' does not exist.")
 
             # Validate the drug data fields
-            state = drug_data.get('state')
+            state = drug_data.get('state', 'new')  # Set default state to 'new' if not provided
             if state not in ['active', 'inactive', 'new']:
                 raise serializers.ValidationError(f"Invalid state '{state}' for drug '{trade_name}'.")
 
             start_date = drug_data.get('start_date')
+            if start_date:
+                try:
+                    timezone.datetime.strptime(start_date, self.DATE_FORMAT)
+                except ValueError:
+                    raise serializers.ValidationError(f"Invalid date format for drug '{trade_name}'. Date should be in format '{self.DATE_FORMAT}'.")
+
             end_date = drug_data.get('end_date')
-            if start_date and end_date and start_date > end_date:
-                raise serializers.ValidationError(f"End date must be after start date for drug '{trade_name}'.")
+            if start_date and end_date:
+                start_date_obj = timezone.datetime.strptime(start_date, self.DATE_FORMAT).date()  # Convert to datetime.date
+                end_date_obj = timezone.datetime.strptime(end_date, self.DATE_FORMAT).date()  # Convert to datetime.date
+                if start_date_obj > end_date_obj:
+                    raise serializers.ValidationError(f"End date must be after or equal to start date for drug '{trade_name}'.")
+                if start_date_obj < timezone.now().date():
+                    raise serializers.ValidationError(f"Start date must be in the future for drug '{trade_name}'.")
 
             quantity = drug_data.get('quantity')
             if not isinstance(quantity, int) or quantity <= 0:
@@ -75,7 +77,25 @@ class PrescriptionSerializer(serializers.ModelSerializer):
         validated_data['doctor_id'] = self.context['request'].user.id
         validated_data['user_id'] = session.user_id
         validated_data['session'] = session
+        validated_data['created_at'] = timezone.now()  # Ensure created_at is set
+
+        drugs = validated_data.get('drugs')
+        for trade_name, drug_data in drugs.items():
+            start_date = drug_data.get('start_date')
+            if start_date:
+                try:
+                    timezone.datetime.strptime(start_date, self.DATE_FORMAT)
+                except ValueError:
+                    raise serializers.ValidationError(f"Invalid date format for drug '{trade_name}'. Date should be in format '{self.DATE_FORMAT}'.")
+
+        # Set the state to 'new' automatically
+        validated_data['drugs'] = {
+            trade_name: {**drug_data, 'state': 'new'}
+            for trade_name, drug_data in drugs.items()
+        }
+
         return super().create(validated_data)
+
     class Meta:
         model = Prescription
         fields = ['id', 'doctor_id', 'user_id', 'created_at', 'drugs']

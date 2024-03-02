@@ -63,6 +63,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'Prescription.middleware.SessionExpirationMiddleware',
+
     # 'django.contrib.sessions.middleware.SessionMiddleware',
     # 'django.middleware.security.SecurityMiddleware',
     # 'django_otp.middleware.OTPMiddleware',
