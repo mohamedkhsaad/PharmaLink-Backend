@@ -18,8 +18,6 @@ from rest_framework.generics import GenericAPIView
 from rest_framework.generics import UpdateAPIView
 from rest_framework.permissions import AllowAny
 
-# Create your views here.
-
 class DoctorSignupView(generics.CreateAPIView):
     queryset = Doctor.objects.all()
     serializer_class = Doctorserialzer
@@ -96,7 +94,6 @@ class DoctorCustomTokenLoginView(APIView):
         else:
             return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
         
-
 class DoctorInfoView(APIView):
     def get(self, request, doctor_id):
         try:
@@ -147,7 +144,6 @@ class DoctorUpdateView(generics.UpdateAPIView):
     def perform_update(self, serializer):
         serializer.save()
 
-
 class DoctorPasswordResetRequestView(GenericAPIView):
     serializer_class = DoctorPasswordResetRequestSerializer
     def send_password_reset_email(self,doctor):
@@ -181,8 +177,6 @@ class DoctorPasswordResetRequestView(GenericAPIView):
                 return Response({"error": "User with this email does not exist."}, status=status.HTTP_404_NOT_FOUND)
         return Response({"error": "Email not provided."}, status=status.HTTP_400_BAD_REQUEST)
     
-
-
 class DoctorPasswordResetView(UpdateAPIView):
     queryset = Doctor.objects.all()
     permission_classes = [AllowAny]  # Allow any user to reset their password
@@ -216,8 +210,6 @@ class DoctorPasswordResetView(UpdateAPIView):
         else:
             return Response({"error": "New password not provided."}, status=status.HTTP_400_BAD_REQUEST)
         
-
-
 class DoctorPhoneNumberView(APIView):
     def get(self, request, doctor_id):
         try:

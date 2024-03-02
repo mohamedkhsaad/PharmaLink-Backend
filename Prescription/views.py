@@ -325,8 +325,7 @@ class DoctorPrescriptionsForUserView(APIView):
         
         # Serialize the prescriptions
         serializer = PrescriptionSerializer(prescriptions, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-    
+        return Response(serializer.data, status=status.HTTP_200_OK) 
 # all user prescreptions that the doctor could see during the session only
 class UserPrescriptionsView(APIView):
     permission_classes = [IsAuthenticated]
@@ -355,8 +354,7 @@ class UserPrescriptionsView(APIView):
         serializer = PrescriptionSerializer(prescriptions, many=True)
         
         return Response(serializer.data, status=status.HTTP_200_OK)
-
-
+    
 class ActivePrescriptionsView(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [DoctorCustomTokenAuthentication]
@@ -401,7 +399,6 @@ class ActivePrescriptionsView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-
 """
 Doctor
 """
@@ -432,7 +429,6 @@ class PatientPrescriptionsView(APIView):
         serializer = PrescriptionSerializer(prescriptions, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     
-
 class ActivatePrescriptionView(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [CustomTokenAuthentication]
@@ -468,7 +464,6 @@ class ActivatePrescriptionView(APIView):
         # Return response
         return Response(response_data, status=status.HTTP_200_OK)
 
-
 class ActivateDrugView(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [CustomTokenAuthentication]
@@ -499,7 +494,6 @@ class ActivateDrugView(APIView):
         }
         # Return response
         return Response(response_data, status=status.HTTP_200_OK)
-
 
 class DeletePrescriptionView(APIView):
     permission_classes = [IsAuthenticated]
@@ -535,5 +529,4 @@ class ActivePrescriptionsForUserView(APIView):
         
         # Serialize the active prescriptions
         serializer = PrescriptionSerializer(active_prescriptions, many=True)
-        
         return Response(serializer.data, status=status.HTTP_200_OK)

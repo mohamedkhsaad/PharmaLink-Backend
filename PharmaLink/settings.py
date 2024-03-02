@@ -327,9 +327,6 @@ CSRF_COOKIE_SECURE = True
 # EMAIL_SSL_KEYFILE = '/etc/letsencrypt/live/event-us.me/privkey.pem'
 
 
-
-import os
-
 # Set the path to the CA certificate bundle
 # SSL_CERT_FILE_PATH = '/etc/ssl/certs/ca-certificates.crt'
 

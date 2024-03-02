@@ -20,35 +20,6 @@ from email.mime.text import MIMEText
 from django.core.mail import send_mail
 from rest_framework.generics import UpdateAPIView
 
-# ssl error
-# class UserSignupView(generics.CreateAPIView):
-#     queryset = User.objects.all()
-#     serializer_class = UserSerializer
-
-#     def create(self, request, *args, **kwargs):
-#         # Check if the username is already taken
-#         existing_username = User.objects.filter(username=request.data.get('username')).first()
-#         if existing_username:
-#             return Response({"error": "Username is already taken. Please choose a different one."},
-#                             status=status.HTTP_400_BAD_REQUEST)
-#         # Check if the email is already taken
-#         existing_email = User.objects.filter(email=request.data.get('email')).first()
-#         if existing_email:
-#             return Response({"error": "An account with that email address already exists. Please log in to continue."},
-#                             status=status.HTTP_400_BAD_REQUEST)
-#         serializer = UserSerializer(data=request.data)
-#         if serializer.is_valid():
-#             serializer.save()
-#             # Send verification email
-#             verification_link = f"https://PharmaLink.com/verify/{User.id}/"
-#             subject = 'Verify Your Email'
-#             message = f'Click the following link to verify your email: {verification_link}'
-#             from_email = 'pharmalink1190264@gmail.com'
-#             to_email = [User.email]
-#             send_mail(subject, message, from_email, to_email)
-#             return Response(serializer.data, status=status.HTTP_201_CREATED)
-#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 class UserSignupView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -93,8 +64,6 @@ class UserSignupView(generics.CreateAPIView):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
-
 class EmailVerificationView(APIView):
     def get(self, request, user_id):
         user = get_object_or_404(User, pk=user_id)
@@ -133,10 +102,7 @@ class CustomTokenLoginView(APIView):
             return Response(response_data, status=status.HTTP_200_OK)
         else:
             return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
-
-
-
-
+        
 class UserLogoutView(APIView):
     """
     This view logs out the user by deleting all associated tokens.
@@ -152,6 +118,7 @@ class UserLogoutView(APIView):
             return Response({'message': 'Logout successful', 'user_id': user_id}, status=status.HTTP_200_OK)
         except CustomToken.DoesNotExist:
             return Response({'error': 'No tokens found for the user'}, status=status.HTTP_400_BAD_REQUEST)
+        
 class UserUpdateView(generics.UpdateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -243,8 +210,6 @@ class PasswordResetView(UpdateAPIView):
             return Response({"message": "Password reset successfully."}, status=status.HTTP_200_OK)
         else:
             return Response({"error": "New password not provided."}, status=status.HTTP_400_BAD_REQUEST)
-
-
 
 class UserInfoView(APIView):
     def get(self, request, user_id):
