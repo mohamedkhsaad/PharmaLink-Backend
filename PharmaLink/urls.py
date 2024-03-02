@@ -36,6 +36,9 @@ urlpatterns = [
     path('user/password/reset/', PasswordResetRequestView.as_view(), name='password_reset_request'),
     path('user/reset-password/<int:user_id>/', PasswordResetView.as_view(), name='password_reset'),
     path('Prescription/user/prescriptions/', PatientPrescriptionsView.as_view(), name='user_prescriptions'),
+    path('Prescription/user/activate-prescription/<int:prescription_id>/', ActivatePrescriptionView.as_view(), name='activate_prescription'),
+    path('Prescription/user/<int:prescription_id>/activate/<str:drug_name>/', ActivateDrugView.as_view(), name='activate_drug'),
+
 
     # Doctor
     path('doctor/signup/', DoctorSignupView.as_view(), name='doctor_signup'),

@@ -432,3 +432,71 @@ class PatientPrescriptionsView(APIView):
         # Serialize the prescriptions
         serializer = PrescriptionSerializer(prescriptions, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+
+class ActivatePrescriptionView(APIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [CustomTokenAuthentication]
+    def post(self, request, prescription_id):
+        # Extract user ID from the authenticated user
+        user_id = request.user.id
+        # Retrieve the prescription from the database
+        try:
+            prescription = Prescription.objects.get(id=prescription_id, user_id=user_id)
+        except Prescription.DoesNotExist:
+            return Response({'error': 'Prescription not found'}, status=status.HTTP_404_NOT_FOUND) 
+        # Retrieve drugs data from the prescription
+        drugs_data = prescription.drugs
+        # Initialize lists to keep track of already activated and newly activated drugs
+        already_activated_drugs = []
+        newly_activated_drugs = []
+        # Check if any drug in the prescription is already activated
+        for drug_name, drug_info in drugs_data.items():
+            if drug_info['state'] == 'active':
+                already_activated_drugs.append(drug_name)
+            else:
+                # Activate the drug if it is not already active
+                drug_info['state'] = 'active'
+                newly_activated_drugs.append(drug_name)
+        # Save the updated prescription
+        prescription.save()
+        # Prepare response message
+        response_data = {}
+        if already_activated_drugs:
+            response_data['message'] = f"The following drugs are already activated: {', '.join(already_activated_drugs)}"
+        if newly_activated_drugs:
+            response_data['message'] = response_data.get('message', '') + f"\nActivated the following drugs: {', '.join(newly_activated_drugs)}"
+        # Return response
+        return Response(response_data, status=status.HTTP_200_OK)
+
+
+class ActivateDrugView(APIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [CustomTokenAuthentication]
+
+    def post(self, request, prescription_id, drug_name):
+        # Extract user ID from the authenticated user
+        user_id = request.user.id
+        # Retrieve the prescription from the database
+        try:
+            prescription = Prescription.objects.get(id=prescription_id, user_id=user_id)
+        except Prescription.DoesNotExist:
+            return Response({'error': 'Prescription not found'}, status=status.HTTP_404_NOT_FOUND)
+        # Retrieve drugs data from the prescription
+        drugs_data = prescription.drugs
+        # Check if the specified drug exists in the prescription
+        if drug_name not in drugs_data:
+            return Response({'error': 'Drug not found in the prescription'}, status=status.HTTP_404_NOT_FOUND)
+        # Check if the specified drug is already activated
+        if drugs_data[drug_name]['state'] == 'active':
+            return Response({'error': 'Drug is already activated'}, status=status.HTTP_400_BAD_REQUEST)
+        # Activate the specified drug
+        drugs_data[drug_name]['state'] = 'active'
+        # Save the updated prescription
+        prescription.save() 
+        # Prepare response message
+        response_data = {
+            'message': f"Drug '{drug_name}' activated successfully"
+        }
+        # Return response
+        return Response(response_data, status=status.HTTP_200_OK)
