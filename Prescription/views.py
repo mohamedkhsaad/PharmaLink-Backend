@@ -357,7 +357,6 @@ class UserPrescriptionsView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-
 class ActivePrescriptionsView(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [DoctorCustomTokenAuthentication]
@@ -515,5 +514,26 @@ class DeletePrescriptionView(APIView):
 
         # Delete the prescription
         prescription.delete()
-
         return Response({'message': 'Prescription deleted successfully'}, status=status.HTTP_200_OK)
+    
+class ActivePrescriptionsForUserView(APIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [CustomTokenAuthentication]
+    def get(self, request):
+        # Obtain the user ID from the authenticated user
+        user_id = request.user.id
+        # Retrieve all prescriptions for the user
+        prescriptions = Prescription.objects.filter(user_id=user_id)
+        # Filter prescriptions to get only active ones
+        active_prescriptions = []
+        for prescription in prescriptions:
+            drugs_data = prescription.drugs  # Assuming prescription.drugs is already a dictionary
+            for drug_name, drug_info in drugs_data.items():
+                if drug_info.get('state') == 'active':  # Ensure 'state' key exists and its value is 'active'
+                    active_prescriptions.append(prescription)
+                    break  # Break out of the inner loop once an active drug is found
+        
+        # Serialize the active prescriptions
+        serializer = PrescriptionSerializer(active_prescriptions, many=True)
+        
+        return Response(serializer.data, status=status.HTTP_200_OK)
