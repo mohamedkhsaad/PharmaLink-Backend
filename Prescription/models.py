@@ -3,8 +3,9 @@ from django.db import models
 from django.utils import timezone
 
 class DrugEye(models.Model):
+    id = models.AutoField(primary_key=True)
     TradeName = models.CharField(max_length=255)
-    ID = models.IntegerField(primary_key=True) 
+    ID = models.CharField(max_length=255)
     ScName = models.CharField(max_length=255)
     HOWMUCH = models.IntegerField()
     Unit = models.CharField(max_length=100)
@@ -37,7 +38,6 @@ class Drug(models.Model):
     rate = models.IntegerField()
     rate_unit = models.CharField(max_length=100)
     
-
 class Prescription(models.Model):
     id = models.AutoField(primary_key=True)
     session = models.ForeignKey(Session, related_name='prescriptions', on_delete=models.CASCADE)

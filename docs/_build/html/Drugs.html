@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Drugs package &mdash; PharmaLink 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=8d563738"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Drugs.migrations package" href="Drugs.migrations.html" />
+    <link rel="prev" title="Doctor.migrations package" href="Doctor.migrations.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            PharmaLink
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">PharmaLink</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Doctor.html">Doctor package</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Drugs package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Drugs.migrations.html">Drugs.migrations package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-Drugs.admin">Drugs.admin module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-Drugs.apps">Drugs.apps module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Drugs.apps.DrugsConfig"><code class="docutils literal notranslate"><span class="pre">DrugsConfig</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-Drugs.models">Drugs.models module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Drugs.models.DDIInteraction"><code class="docutils literal notranslate"><span class="pre">DDIInteraction</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-Drugs.tests">Drugs.tests module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-Drugs.views">Drugs.views module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Drugs.views.DrugInteractionByTradeNameView"><code class="docutils literal notranslate"><span class="pre">DrugInteractionByTradeNameView</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Drugs.views.DrugInteractionCheckView"><code class="docutils literal notranslate"><span class="pre">DrugInteractionCheckView</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Drugs.views.DrugInteractionCheckViewForAllUserPrescriptions"><code class="docutils literal notranslate"><span class="pre">DrugInteractionCheckViewForAllUserPrescriptions</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Drugs.views.DrugInteractionCheckViewForUser"><code class="docutils literal notranslate"><span class="pre">DrugInteractionCheckViewForUser</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-Drugs">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="PharmaLink.html">PharmaLink package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Prescription.html">Prescription package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="User.html">User package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="manage.html">manage module</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">PharmaLink</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">PharmaLink</a></li>
+      <li class="breadcrumb-item active">Drugs package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/Drugs.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="drugs-package">
+<h1>Drugs package<a class="headerlink" href="#drugs-package" title="Link to this heading"></a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Drugs.migrations.html">Drugs.migrations package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Drugs.migrations.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Drugs.migrations.html#module-Drugs.migrations.0001_initial">Drugs.migrations.0001_initial module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Drugs.migrations.html#Drugs.migrations.0001_initial.Migration"><code class="docutils literal notranslate"><span class="pre">Migration</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Drugs.migrations.html#Drugs.migrations.0001_initial.Migration.dependencies"><code class="docutils literal notranslate"><span class="pre">Migration.dependencies</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Drugs.migrations.html#Drugs.migrations.0001_initial.Migration.initial"><code class="docutils literal notranslate"><span class="pre">Migration.initial</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Drugs.migrations.html#Drugs.migrations.0001_initial.Migration.operations"><code class="docutils literal notranslate"><span class="pre">Migration.operations</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Drugs.migrations.html#module-Drugs.migrations">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-Drugs.admin">
+<span id="drugs-admin-module"></span><h2>Drugs.admin module<a class="headerlink" href="#module-Drugs.admin" title="Link to this heading"></a></h2>
+</section>
+<section id="module-Drugs.apps">
+<span id="drugs-apps-module"></span><h2>Drugs.apps module<a class="headerlink" href="#module-Drugs.apps" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="Drugs.apps.DrugsConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Drugs.apps.</span></span><span class="sig-name descname"><span class="pre">DrugsConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app_module</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Drugs.apps.DrugsConfig" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">AppConfig</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Drugs.apps.DrugsConfig.default_auto_field">
+<span class="sig-name descname"><span class="pre">default_auto_field</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'django.db.models.BigAutoField'</span></em><a class="headerlink" href="#Drugs.apps.DrugsConfig.default_auto_field" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Drugs.apps.DrugsConfig.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Drugs'</span></em><a class="headerlink" href="#Drugs.apps.DrugsConfig.name" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-Drugs.models">
+<span id="drugs-models-module"></span><h2>Drugs.models module<a class="headerlink" href="#module-Drugs.models" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="Drugs.models.DDIInteraction">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Drugs.models.</span></span><span class="sig-name descname"><span class="pre">DDIInteraction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drug1_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drug2_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drug1_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drug2_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interaction_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Drugs.models.DDIInteraction" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></p>
+<dl class="py exception">
+<dt class="sig sig-object py" id="Drugs.models.DDIInteraction.DoesNotExist">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#Drugs.models.DDIInteraction.DoesNotExist" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="Drugs.models.DDIInteraction.MultipleObjectsReturned">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#Drugs.models.DDIInteraction.MultipleObjectsReturned" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Drugs.models.DDIInteraction.drug1_id">
+<span class="sig-name descname"><span class="pre">drug1_id</span></span><a class="headerlink" href="#Drugs.models.DDIInteraction.drug1_id" title="Link to this definition"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Drugs.models.DDIInteraction.drug1_name">
+<span class="sig-name descname"><span class="pre">drug1_name</span></span><a class="headerlink" href="#Drugs.models.DDIInteraction.drug1_name" title="Link to this definition"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Drugs.models.DDIInteraction.drug2_id">
+<span class="sig-name descname"><span class="pre">drug2_id</span></span><a class="headerlink" href="#Drugs.models.DDIInteraction.drug2_id" title="Link to this definition"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Drugs.models.DDIInteraction.drug2_name">
+<span class="sig-name descname"><span class="pre">drug2_name</span></span><a class="headerlink" href="#Drugs.models.DDIInteraction.drug2_name" title="Link to this definition"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Drugs.models.DDIInteraction.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#Drugs.models.DDIInteraction.id" title="Link to this definition"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Drugs.models.DDIInteraction.interaction_type">
+<span class="sig-name descname"><span class="pre">interaction_type</span></span><a class="headerlink" href="#Drugs.models.DDIInteraction.interaction_type" title="Link to this definition"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Drugs.models.DDIInteraction.objects">
+<span class="sig-name descname"><span class="pre">objects</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;django.db.models.manager.Manager</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#Drugs.models.DDIInteraction.objects" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-Drugs.tests">
+<span id="drugs-tests-module"></span><h2>Drugs.tests module<a class="headerlink" href="#module-Drugs.tests" title="Link to this heading"></a></h2>
+</section>
+<section id="module-Drugs.views">
+<span id="drugs-views-module"></span><h2>Drugs.views module<a class="headerlink" href="#module-Drugs.views" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="Drugs.views.DrugInteractionByTradeNameView">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Drugs.views.</span></span><span class="sig-name descname"><span class="pre">DrugInteractionByTradeNameView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Drugs.views.DrugInteractionByTradeNameView" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">APIView</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Drugs.views.DrugInteractionByTradeNameView.authentication_classes">
+<span class="sig-name descname"><span class="pre">authentication_classes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[&lt;class</span> <span class="pre">'User.authentication.CustomTokenAuthentication'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'Doctor.authentication.DoctorCustomTokenAuthentication'&gt;]</span></em><a class="headerlink" href="#Drugs.views.DrugInteractionByTradeNameView.authentication_classes" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Drugs.views.DrugInteractionByTradeNameView.check_interaction">
+<span class="sig-name descname"><span class="pre">check_interaction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">components1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">components2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Drugs.views.DrugInteractionByTradeNameView.check_interaction" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Drugs.views.DrugInteractionByTradeNameView.get_drug_info">
+<span class="sig-name descname"><span class="pre">get_drug_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trade_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Drugs.views.DrugInteractionByTradeNameView.get_drug_info" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Drugs.views.DrugInteractionByTradeNameView.get_interactions">
+<span class="sig-name descname"><span class="pre">get_interactions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">component1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">component2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Drugs.views.DrugInteractionByTradeNameView.get_interactions" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Drugs.views.DrugInteractionByTradeNameView.permission_classes">
+<span class="sig-name descname"><span class="pre">permission_classes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[&lt;class</span> <span class="pre">'rest_framework.permissions.IsAuthenticated'&gt;]</span></em><a class="headerlink" href="#Drugs.views.DrugInteractionByTradeNameView.permission_classes" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Drugs.views.DrugInteractionByTradeNameView.post">
+<span class="sig-name descname"><span class="pre">post</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Drugs.views.DrugInteractionByTradeNameView.post" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="Drugs.views.DrugInteractionCheckView">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Drugs.views.</span></span><span class="sig-name descname"><span class="pre">DrugInteractionCheckView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Drugs.views.DrugInteractionCheckView" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">APIView</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Drugs.views.DrugInteractionCheckView.authentication_classes">
+<span class="sig-name descname"><span class="pre">authentication_classes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[&lt;class</span> <span class="pre">'User.authentication.CustomTokenAuthentication'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'Doctor.authentication.DoctorCustomTokenAuthentication'&gt;]</span></em><a class="headerlink" href="#Drugs.views.DrugInteractionCheckView.authentication_classes" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Drugs.views.DrugInteractionCheckView.check_interaction">
+<span class="sig-name descname"><span class="pre">check_interaction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">component1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">component2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Drugs.views.DrugInteractionCheckView.check_interaction" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Drugs.views.DrugInteractionCheckView.permission_classes">
+<span class="sig-name descname"><span class="pre">permission_classes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[&lt;class</span> <span class="pre">'rest_framework.permissions.IsAuthenticated'&gt;]</span></em><a class="headerlink" href="#Drugs.views.DrugInteractionCheckView.permission_classes" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Drugs.views.DrugInteractionCheckView.post">
+<span class="sig-name descname"><span class="pre">post</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prescription_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Drugs.views.DrugInteractionCheckView.post" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="Drugs.views.DrugInteractionCheckViewForAllUserPrescriptions">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Drugs.views.</span></span><span class="sig-name descname"><span class="pre">DrugInteractionCheckViewForAllUserPrescriptions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Drugs.views.DrugInteractionCheckViewForAllUserPrescriptions" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">APIView</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Drugs.views.DrugInteractionCheckViewForAllUserPrescriptions.authentication_classes">
+<span class="sig-name descname"><span class="pre">authentication_classes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[&lt;class</span> <span class="pre">'Doctor.authentication.DoctorCustomTokenAuthentication'&gt;]</span></em><a class="headerlink" href="#Drugs.views.DrugInteractionCheckViewForAllUserPrescriptions.authentication_classes" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Drugs.views.DrugInteractionCheckViewForAllUserPrescriptions.check_interaction">
+<span class="sig-name descname"><span class="pre">check_interaction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">component1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">component2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Drugs.views.DrugInteractionCheckViewForAllUserPrescriptions.check_interaction" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Drugs.views.DrugInteractionCheckViewForAllUserPrescriptions.permission_classes">
+<span class="sig-name descname"><span class="pre">permission_classes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[&lt;class</span> <span class="pre">'rest_framework.permissions.IsAuthenticated'&gt;]</span></em><a class="headerlink" href="#Drugs.views.DrugInteractionCheckViewForAllUserPrescriptions.permission_classes" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Drugs.views.DrugInteractionCheckViewForAllUserPrescriptions.post">
+<span class="sig-name descname"><span class="pre">post</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Drugs.views.DrugInteractionCheckViewForAllUserPrescriptions.post" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="Drugs.views.DrugInteractionCheckViewForUser">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Drugs.views.</span></span><span class="sig-name descname"><span class="pre">DrugInteractionCheckViewForUser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Drugs.views.DrugInteractionCheckViewForUser" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">APIView</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Drugs.views.DrugInteractionCheckViewForUser.authentication_classes">
+<span class="sig-name descname"><span class="pre">authentication_classes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[&lt;class</span> <span class="pre">'User.authentication.CustomTokenAuthentication'&gt;]</span></em><a class="headerlink" href="#Drugs.views.DrugInteractionCheckViewForUser.authentication_classes" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Drugs.views.DrugInteractionCheckViewForUser.check_interaction">
+<span class="sig-name descname"><span class="pre">check_interaction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">component1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">component2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Drugs.views.DrugInteractionCheckViewForUser.check_interaction" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Drugs.views.DrugInteractionCheckViewForUser.permission_classes">
+<span class="sig-name descname"><span class="pre">permission_classes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[&lt;class</span> <span class="pre">'rest_framework.permissions.IsAuthenticated'&gt;]</span></em><a class="headerlink" href="#Drugs.views.DrugInteractionCheckViewForUser.permission_classes" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Drugs.views.DrugInteractionCheckViewForUser.post">
+<span class="sig-name descname"><span class="pre">post</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Drugs.views.DrugInteractionCheckViewForUser.post" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-Drugs">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-Drugs" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Doctor.migrations.html" class="btn btn-neutral float-left" title="Doctor.migrations package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Drugs.migrations.html" class="btn btn-neutral float-right" title="Drugs.migrations package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Ismail.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

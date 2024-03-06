@@ -20,8 +20,8 @@ import json
 from rest_framework.exceptions import ValidationError
 
 class MedicineSearchView(APIView):
-    # permission_classes = [IsAuthenticated]
-    # authentication_classes = [DoctorCustomTokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [DoctorCustomTokenAuthentication,CustomTokenAuthentication]
     def get(self, request):
         query = request.query_params.get('query', '')
         if len(query) < 2:
@@ -267,17 +267,19 @@ class UpdatePrescriptionView(APIView):
      
 class PrescriptionDetailView(APIView):
     permission_classes = [IsAuthenticated]
-    authentication_classes = [DoctorCustomTokenAuthentication]
+    authentication_classes = [DoctorCustomTokenAuthentication,CustomTokenAuthentication]
     def get(self, request, prescription_id):
         try:
             prescription = Prescription.objects.get(id=prescription_id)
         except Prescription.DoesNotExist:
             return Response({'error': 'Prescription does not exist'}, status=status.HTTP_404_NOT_FOUND)
-        # Check if the requesting doctor is authorized to access this prescription
-        requesting_doctor_id = request.user.id
-        if prescription.doctor_id != requesting_doctor_id:
+         # Extract user and doctor IDs from the prescription
+        user_id = prescription.user_id
+        doctor_id = prescription.doctor_id
+        # Check if the requesting user is authorized to access this prescription
+        if not (request.user.id == user_id or request.user.id == doctor_id):
             return Response({'error': 'You are not authorized to access this prescription'}, status=status.HTTP_403_FORBIDDEN)
-
+        
         serializer = PrescriptionSerializer(prescription)
         return Response(serializer.data, status=status.HTTP_200_OK)
      

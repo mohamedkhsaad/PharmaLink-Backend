@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PharmaLink &mdash; PharmaLink 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=8d563738"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Doctor package" href="Doctor.html" />
+    <link rel="prev" title="Welcome to PharmaLink’s documentation!" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            PharmaLink
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">PharmaLink</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Doctor.html">Doctor package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Drugs.html">Drugs package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="PharmaLink.html">PharmaLink package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Prescription.html">Prescription package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="User.html">User package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="manage.html">manage module</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">PharmaLink</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">PharmaLink</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/modules.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="pharmalink">
+<h1>PharmaLink<a class="headerlink" href="#pharmalink" title="Link to this heading"></a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Doctor.html">Doctor package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Doctor.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Doctor.migrations.html">Doctor.migrations package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.migrations.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.migrations.html#module-Doctor.migrations.0001_initial">Doctor.migrations.0001_initial module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.migrations.html#module-Doctor.migrations.0002_customtoken">Doctor.migrations.0002_customtoken module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.migrations.html#module-Doctor.migrations.0003_doctor_image">Doctor.migrations.0003_doctor_image module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.migrations.html#module-Doctor.migrations">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Doctor.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Doctor.html#module-Doctor.admin">Doctor.admin module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Doctor.html#module-Doctor.apps">Doctor.apps module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Doctor.html#Doctor.apps.DoctorConfig"><code class="docutils literal notranslate"><span class="pre">DoctorConfig</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.apps.DoctorConfig.default_auto_field"><code class="docutils literal notranslate"><span class="pre">DoctorConfig.default_auto_field</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.apps.DoctorConfig.name"><code class="docutils literal notranslate"><span class="pre">DoctorConfig.name</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Doctor.html#module-Doctor.authentication">Doctor.authentication module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Doctor.html#Doctor.authentication.DoctorCustomTokenAuthentication"><code class="docutils literal notranslate"><span class="pre">DoctorCustomTokenAuthentication</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.authentication.DoctorCustomTokenAuthentication.authenticate"><code class="docutils literal notranslate"><span class="pre">DoctorCustomTokenAuthentication.authenticate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.authentication.DoctorCustomTokenAuthentication.authenticate_header"><code class="docutils literal notranslate"><span class="pre">DoctorCustomTokenAuthentication.authenticate_header()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.authentication.DoctorCustomTokenAuthentication.keyword"><code class="docutils literal notranslate"><span class="pre">DoctorCustomTokenAuthentication.keyword</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Doctor.html#module-Doctor.models">Doctor.models module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Doctor.html#Doctor.models.CustomToken"><code class="docutils literal notranslate"><span class="pre">CustomToken</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.models.CustomToken.DoesNotExist"><code class="docutils literal notranslate"><span class="pre">CustomToken.DoesNotExist</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.models.CustomToken.MultipleObjectsReturned"><code class="docutils literal notranslate"><span class="pre">CustomToken.MultipleObjectsReturned</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.models.CustomToken.created"><code class="docutils literal notranslate"><span class="pre">CustomToken.created</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.models.CustomToken.doctor"><code class="docutils literal notranslate"><span class="pre">CustomToken.doctor</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.models.CustomToken.doctor_id"><code class="docutils literal notranslate"><span class="pre">CustomToken.doctor_id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.models.CustomToken.email"><code class="docutils literal notranslate"><span class="pre">CustomToken.email</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.models.CustomToken.get_next_by_created"><code class="docutils literal notranslate"><span class="pre">CustomToken.get_next_by_created()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.models.CustomToken.get_previous_by_created"><code class="docutils literal notranslate"><span class="pre">CustomToken.get_previous_by_created()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.models.CustomToken.id"><code class="docutils literal notranslate"><span class="pre">CustomToken.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.models.CustomToken.key"><code class="docutils literal notranslate"><span class="pre">CustomToken.key</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.models.CustomToken.objects"><code class="docutils literal notranslate"><span class="pre">CustomToken.objects</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.models.CustomToken.save"><code class="docutils literal notranslate"><span class="pre">CustomToken.save()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Doctor.html#Doctor.models.Doctor"><code class="docutils literal notranslate"><span class="pre">Doctor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.models.Doctor.DoesNotExist"><code class="docutils literal notranslate"><span class="pre">Doctor.DoesNotExist</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.models.Doctor.MultipleObjectsReturned"><code class="docutils literal notranslate"><span class="pre">Doctor.MultipleObjectsReturned</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.models.Doctor.birthdate"><code class="docutils literal notranslate"><span class="pre">Doctor.birthdate</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.models.Doctor.clean"><code class="docutils literal notranslate"><span class="pre">Doctor.clean()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.models.Doctor.created_at"><code class="docutils literal notranslate"><span class="pre">Doctor.created_at</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.models.Doctor.custom_tokens"><code class="docutils literal notranslate"><span class="pre">Doctor.custom_tokens</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.models.Doctor.date_joined"><code class="docutils literal notranslate"><span class="pre">Doctor.date_joined</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.models.Doctor.degree"><code class="docutils literal notranslate"><span class="pre">Doctor.degree</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.models.Doctor.email"><code class="docutils literal notranslate"><span class="pre">Doctor.email</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.models.Doctor.first_name"><code class="docutils literal notranslate"><span class="pre">Doctor.first_name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.models.Doctor.fname"><code class="docutils literal notranslate"><span class="pre">Doctor.fname</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.models.Doctor.gender"><code class="docutils literal notranslate"><span class="pre">Doctor.gender</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.models.Doctor.gender_choices"><code class="docutils literal notranslate"><span class="pre">Doctor.gender_choices</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.models.Doctor.get_gender_display"><code class="docutils literal notranslate"><span class="pre">Doctor.get_gender_display()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.models.Doctor.get_next_by_birthdate"><code class="docutils literal notranslate"><span class="pre">Doctor.get_next_by_birthdate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.models.Doctor.get_next_by_created_at"><code class="docutils literal notranslate"><span class="pre">Doctor.get_next_by_created_at()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.models.Doctor.get_next_by_date_joined"><code class="docutils literal notranslate"><span class="pre">Doctor.get_next_by_date_joined()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.models.Doctor.get_next_by_graduation_date"><code class="docutils literal notranslate"><span class="pre">Doctor.get_next_by_graduation_date()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.models.Doctor.get_previous_by_birthdate"><code class="docutils literal notranslate"><span class="pre">Doctor.get_previous_by_birthdate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.models.Doctor.get_previous_by_created_at"><code class="docutils literal notranslate"><span class="pre">Doctor.get_previous_by_created_at()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.models.Doctor.get_previous_by_date_joined"><code class="docutils literal notranslate"><span class="pre">Doctor.get_previous_by_date_joined()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.models.Doctor.get_previous_by_graduation_date"><code class="docutils literal notranslate"><span class="pre">Doctor.get_previous_by_graduation_date()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.models.Doctor.graduation_date"><code class="docutils literal notranslate"><span class="pre">Doctor.graduation_date</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.models.Doctor.groups"><code class="docutils literal notranslate"><span class="pre">Doctor.groups</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.models.Doctor.id"><code class="docutils literal notranslate"><span class="pre">Doctor.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.models.Doctor.image"><code class="docutils literal notranslate"><span class="pre">Doctor.image</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.models.Doctor.is_active"><code class="docutils literal notranslate"><span class="pre">Doctor.is_active</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.models.Doctor.is_staff"><code class="docutils literal notranslate"><span class="pre">Doctor.is_staff</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.models.Doctor.is_superuser"><code class="docutils literal notranslate"><span class="pre">Doctor.is_superuser</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.models.Doctor.is_verified"><code class="docutils literal notranslate"><span class="pre">Doctor.is_verified</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.models.Doctor.last_login"><code class="docutils literal notranslate"><span class="pre">Doctor.last_login</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.models.Doctor.last_name"><code class="docutils literal notranslate"><span class="pre">Doctor.last_name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.models.Doctor.license_number"><code class="docutils literal notranslate"><span class="pre">Doctor.license_number</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.models.Doctor.lname"><code class="docutils literal notranslate"><span class="pre">Doctor.lname</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.models.Doctor.password"><code class="docutils literal notranslate"><span class="pre">Doctor.password</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.models.Doctor.password_validator"><code class="docutils literal notranslate"><span class="pre">Doctor.password_validator</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.models.Doctor.phone"><code class="docutils literal notranslate"><span class="pre">Doctor.phone</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.models.Doctor.specialization"><code class="docutils literal notranslate"><span class="pre">Doctor.specialization</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.models.Doctor.university"><code class="docutils literal notranslate"><span class="pre">Doctor.university</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.models.Doctor.user_permissions"><code class="docutils literal notranslate"><span class="pre">Doctor.user_permissions</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.models.Doctor.username"><code class="docutils literal notranslate"><span class="pre">Doctor.username</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Doctor.html#module-Doctor.serializers">Doctor.serializers module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Doctor.html#Doctor.serializers.DoctorAuthTokenSerializer"><code class="docutils literal notranslate"><span class="pre">DoctorAuthTokenSerializer</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="Doctor.html#Doctor.serializers.DoctorPasswordResetRequestSerializer"><code class="docutils literal notranslate"><span class="pre">DoctorPasswordResetRequestSerializer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.serializers.DoctorPasswordResetRequestSerializer.Meta"><code class="docutils literal notranslate"><span class="pre">DoctorPasswordResetRequestSerializer.Meta</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Doctor.html#Doctor.serializers.DoctorPasswordUpdateSerializer"><code class="docutils literal notranslate"><span class="pre">DoctorPasswordUpdateSerializer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.serializers.DoctorPasswordUpdateSerializer.update"><code class="docutils literal notranslate"><span class="pre">DoctorPasswordUpdateSerializer.update()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Doctor.html#Doctor.serializers.Doctorserialzer"><code class="docutils literal notranslate"><span class="pre">Doctorserialzer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.serializers.Doctorserialzer.Meta"><code class="docutils literal notranslate"><span class="pre">Doctorserialzer.Meta</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Doctor.html#module-Doctor.tests">Doctor.tests module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Doctor.html#module-Doctor.views">Doctor.views module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Doctor.html#Doctor.views.DoctorCustomTokenLoginView"><code class="docutils literal notranslate"><span class="pre">DoctorCustomTokenLoginView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.views.DoctorCustomTokenLoginView.post"><code class="docutils literal notranslate"><span class="pre">DoctorCustomTokenLoginView.post()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.views.DoctorCustomTokenLoginView.serializer_class"><code class="docutils literal notranslate"><span class="pre">DoctorCustomTokenLoginView.serializer_class</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Doctor.html#Doctor.views.DoctorEmailVerificationView"><code class="docutils literal notranslate"><span class="pre">DoctorEmailVerificationView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.views.DoctorEmailVerificationView.get"><code class="docutils literal notranslate"><span class="pre">DoctorEmailVerificationView.get()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Doctor.html#Doctor.views.DoctorInfoView"><code class="docutils literal notranslate"><span class="pre">DoctorInfoView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.views.DoctorInfoView.get"><code class="docutils literal notranslate"><span class="pre">DoctorInfoView.get()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Doctor.html#Doctor.views.DoctorLogoutView"><code class="docutils literal notranslate"><span class="pre">DoctorLogoutView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.views.DoctorLogoutView.authentication_classes"><code class="docutils literal notranslate"><span class="pre">DoctorLogoutView.authentication_classes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.views.DoctorLogoutView.permission_classes"><code class="docutils literal notranslate"><span class="pre">DoctorLogoutView.permission_classes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.views.DoctorLogoutView.post"><code class="docutils literal notranslate"><span class="pre">DoctorLogoutView.post()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Doctor.html#Doctor.views.DoctorPasswordResetRequestView"><code class="docutils literal notranslate"><span class="pre">DoctorPasswordResetRequestView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.views.DoctorPasswordResetRequestView.post"><code class="docutils literal notranslate"><span class="pre">DoctorPasswordResetRequestView.post()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.views.DoctorPasswordResetRequestView.send_password_reset_email"><code class="docutils literal notranslate"><span class="pre">DoctorPasswordResetRequestView.send_password_reset_email()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.views.DoctorPasswordResetRequestView.serializer_class"><code class="docutils literal notranslate"><span class="pre">DoctorPasswordResetRequestView.serializer_class</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Doctor.html#Doctor.views.DoctorPasswordResetView"><code class="docutils literal notranslate"><span class="pre">DoctorPasswordResetView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.views.DoctorPasswordResetView.get_object"><code class="docutils literal notranslate"><span class="pre">DoctorPasswordResetView.get_object()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.views.DoctorPasswordResetView.permission_classes"><code class="docutils literal notranslate"><span class="pre">DoctorPasswordResetView.permission_classes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.views.DoctorPasswordResetView.queryset"><code class="docutils literal notranslate"><span class="pre">DoctorPasswordResetView.queryset</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.views.DoctorPasswordResetView.serializer_class"><code class="docutils literal notranslate"><span class="pre">DoctorPasswordResetView.serializer_class</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.views.DoctorPasswordResetView.update"><code class="docutils literal notranslate"><span class="pre">DoctorPasswordResetView.update()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Doctor.html#Doctor.views.DoctorPhoneNumberView"><code class="docutils literal notranslate"><span class="pre">DoctorPhoneNumberView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.views.DoctorPhoneNumberView.get"><code class="docutils literal notranslate"><span class="pre">DoctorPhoneNumberView.get()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Doctor.html#Doctor.views.DoctorSignupView"><code class="docutils literal notranslate"><span class="pre">DoctorSignupView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.views.DoctorSignupView.create"><code class="docutils literal notranslate"><span class="pre">DoctorSignupView.create()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.views.DoctorSignupView.queryset"><code class="docutils literal notranslate"><span class="pre">DoctorSignupView.queryset</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.views.DoctorSignupView.send_custom_email"><code class="docutils literal notranslate"><span class="pre">DoctorSignupView.send_custom_email()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.views.DoctorSignupView.serializer_class"><code class="docutils literal notranslate"><span class="pre">DoctorSignupView.serializer_class</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Doctor.html#Doctor.views.DoctorUpdateView"><code class="docutils literal notranslate"><span class="pre">DoctorUpdateView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.views.DoctorUpdateView.authentication_classes"><code class="docutils literal notranslate"><span class="pre">DoctorUpdateView.authentication_classes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.views.DoctorUpdateView.get_object"><code class="docutils literal notranslate"><span class="pre">DoctorUpdateView.get_object()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.views.DoctorUpdateView.perform_update"><code class="docutils literal notranslate"><span class="pre">DoctorUpdateView.perform_update()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.views.DoctorUpdateView.permission_classes"><code class="docutils literal notranslate"><span class="pre">DoctorUpdateView.permission_classes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.views.DoctorUpdateView.queryset"><code class="docutils literal notranslate"><span class="pre">DoctorUpdateView.queryset</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.views.DoctorUpdateView.serializer_class"><code class="docutils literal notranslate"><span class="pre">DoctorUpdateView.serializer_class</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Doctor.html#Doctor.views.DoctorUpdateView.update"><code class="docutils literal notranslate"><span class="pre">DoctorUpdateView.update()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Doctor.html#module-Doctor">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Drugs.html">Drugs package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Drugs.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Drugs.migrations.html">Drugs.migrations package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Drugs.migrations.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Drugs.migrations.html#module-Drugs.migrations.0001_initial">Drugs.migrations.0001_initial module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Drugs.migrations.html#module-Drugs.migrations">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Drugs.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Drugs.html#module-Drugs.admin">Drugs.admin module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Drugs.html#module-Drugs.apps">Drugs.apps module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Drugs.html#Drugs.apps.DrugsConfig"><code class="docutils literal notranslate"><span class="pre">DrugsConfig</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Drugs.html#Drugs.apps.DrugsConfig.default_auto_field"><code class="docutils literal notranslate"><span class="pre">DrugsConfig.default_auto_field</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Drugs.html#Drugs.apps.DrugsConfig.name"><code class="docutils literal notranslate"><span class="pre">DrugsConfig.name</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Drugs.html#module-Drugs.models">Drugs.models module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Drugs.html#Drugs.models.DDIInteraction"><code class="docutils literal notranslate"><span class="pre">DDIInteraction</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Drugs.html#Drugs.models.DDIInteraction.DoesNotExist"><code class="docutils literal notranslate"><span class="pre">DDIInteraction.DoesNotExist</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Drugs.html#Drugs.models.DDIInteraction.MultipleObjectsReturned"><code class="docutils literal notranslate"><span class="pre">DDIInteraction.MultipleObjectsReturned</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Drugs.html#Drugs.models.DDIInteraction.drug1_id"><code class="docutils literal notranslate"><span class="pre">DDIInteraction.drug1_id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Drugs.html#Drugs.models.DDIInteraction.drug1_name"><code class="docutils literal notranslate"><span class="pre">DDIInteraction.drug1_name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Drugs.html#Drugs.models.DDIInteraction.drug2_id"><code class="docutils literal notranslate"><span class="pre">DDIInteraction.drug2_id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Drugs.html#Drugs.models.DDIInteraction.drug2_name"><code class="docutils literal notranslate"><span class="pre">DDIInteraction.drug2_name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Drugs.html#Drugs.models.DDIInteraction.id"><code class="docutils literal notranslate"><span class="pre">DDIInteraction.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Drugs.html#Drugs.models.DDIInteraction.interaction_type"><code class="docutils literal notranslate"><span class="pre">DDIInteraction.interaction_type</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Drugs.html#Drugs.models.DDIInteraction.objects"><code class="docutils literal notranslate"><span class="pre">DDIInteraction.objects</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Drugs.html#module-Drugs.tests">Drugs.tests module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Drugs.html#module-Drugs.views">Drugs.views module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Drugs.html#Drugs.views.DrugInteractionByTradeNameView"><code class="docutils literal notranslate"><span class="pre">DrugInteractionByTradeNameView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Drugs.html#Drugs.views.DrugInteractionByTradeNameView.authentication_classes"><code class="docutils literal notranslate"><span class="pre">DrugInteractionByTradeNameView.authentication_classes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Drugs.html#Drugs.views.DrugInteractionByTradeNameView.check_interaction"><code class="docutils literal notranslate"><span class="pre">DrugInteractionByTradeNameView.check_interaction()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Drugs.html#Drugs.views.DrugInteractionByTradeNameView.get_drug_info"><code class="docutils literal notranslate"><span class="pre">DrugInteractionByTradeNameView.get_drug_info()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Drugs.html#Drugs.views.DrugInteractionByTradeNameView.get_interactions"><code class="docutils literal notranslate"><span class="pre">DrugInteractionByTradeNameView.get_interactions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Drugs.html#Drugs.views.DrugInteractionByTradeNameView.permission_classes"><code class="docutils literal notranslate"><span class="pre">DrugInteractionByTradeNameView.permission_classes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Drugs.html#Drugs.views.DrugInteractionByTradeNameView.post"><code class="docutils literal notranslate"><span class="pre">DrugInteractionByTradeNameView.post()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Drugs.html#Drugs.views.DrugInteractionCheckView"><code class="docutils literal notranslate"><span class="pre">DrugInteractionCheckView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Drugs.html#Drugs.views.DrugInteractionCheckView.authentication_classes"><code class="docutils literal notranslate"><span class="pre">DrugInteractionCheckView.authentication_classes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Drugs.html#Drugs.views.DrugInteractionCheckView.check_interaction"><code class="docutils literal notranslate"><span class="pre">DrugInteractionCheckView.check_interaction()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Drugs.html#Drugs.views.DrugInteractionCheckView.permission_classes"><code class="docutils literal notranslate"><span class="pre">DrugInteractionCheckView.permission_classes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Drugs.html#Drugs.views.DrugInteractionCheckView.post"><code class="docutils literal notranslate"><span class="pre">DrugInteractionCheckView.post()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Drugs.html#Drugs.views.DrugInteractionCheckViewForAllUserPrescriptions"><code class="docutils literal notranslate"><span class="pre">DrugInteractionCheckViewForAllUserPrescriptions</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Drugs.html#Drugs.views.DrugInteractionCheckViewForAllUserPrescriptions.authentication_classes"><code class="docutils literal notranslate"><span class="pre">DrugInteractionCheckViewForAllUserPrescriptions.authentication_classes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Drugs.html#Drugs.views.DrugInteractionCheckViewForAllUserPrescriptions.check_interaction"><code class="docutils literal notranslate"><span class="pre">DrugInteractionCheckViewForAllUserPrescriptions.check_interaction()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Drugs.html#Drugs.views.DrugInteractionCheckViewForAllUserPrescriptions.permission_classes"><code class="docutils literal notranslate"><span class="pre">DrugInteractionCheckViewForAllUserPrescriptions.permission_classes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Drugs.html#Drugs.views.DrugInteractionCheckViewForAllUserPrescriptions.post"><code class="docutils literal notranslate"><span class="pre">DrugInteractionCheckViewForAllUserPrescriptions.post()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Drugs.html#Drugs.views.DrugInteractionCheckViewForUser"><code class="docutils literal notranslate"><span class="pre">DrugInteractionCheckViewForUser</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Drugs.html#Drugs.views.DrugInteractionCheckViewForUser.authentication_classes"><code class="docutils literal notranslate"><span class="pre">DrugInteractionCheckViewForUser.authentication_classes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Drugs.html#Drugs.views.DrugInteractionCheckViewForUser.check_interaction"><code class="docutils literal notranslate"><span class="pre">DrugInteractionCheckViewForUser.check_interaction()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Drugs.html#Drugs.views.DrugInteractionCheckViewForUser.permission_classes"><code class="docutils literal notranslate"><span class="pre">DrugInteractionCheckViewForUser.permission_classes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Drugs.html#Drugs.views.DrugInteractionCheckViewForUser.post"><code class="docutils literal notranslate"><span class="pre">DrugInteractionCheckViewForUser.post()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Drugs.html#module-Drugs">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="PharmaLink.html">PharmaLink package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="PharmaLink.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="PharmaLink.html#module-PharmaLink.asgi">PharmaLink.asgi module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="PharmaLink.html#module-PharmaLink.certificate">PharmaLink.certificate module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="PharmaLink.html#module-PharmaLink.settings">PharmaLink.settings module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="PharmaLink.html#module-PharmaLink.urls">PharmaLink.urls module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="PharmaLink.html#module-PharmaLink.wsgi">PharmaLink.wsgi module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="PharmaLink.html#module-PharmaLink">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Prescription.html">Prescription package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Prescription.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Prescription.migrations.html">Prescription.migrations package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.migrations.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.migrations.html#module-Prescription.migrations.0001_initial">Prescription.migrations.0001_initial module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.migrations.html#module-Prescription.migrations">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Prescription.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Prescription.html#module-Prescription.admin">Prescription.admin module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Prescription.html#module-Prescription.apps">Prescription.apps module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Prescription.html#Prescription.apps.PrescriptionConfig"><code class="docutils literal notranslate"><span class="pre">PrescriptionConfig</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.apps.PrescriptionConfig.default_auto_field"><code class="docutils literal notranslate"><span class="pre">PrescriptionConfig.default_auto_field</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.apps.PrescriptionConfig.name"><code class="docutils literal notranslate"><span class="pre">PrescriptionConfig.name</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Prescription.html#module-Prescription.middleware">Prescription.middleware module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Prescription.html#Prescription.middleware.SessionExpirationMiddleware"><code class="docutils literal notranslate"><span class="pre">SessionExpirationMiddleware</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Prescription.html#module-Prescription.models">Prescription.models module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Prescription.html#Prescription.models.Drug"><code class="docutils literal notranslate"><span class="pre">Drug</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.models.Drug.DoesNotExist"><code class="docutils literal notranslate"><span class="pre">Drug.DoesNotExist</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.models.Drug.DrugEye"><code class="docutils literal notranslate"><span class="pre">Drug.DrugEye</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.models.Drug.DrugEye_id"><code class="docutils literal notranslate"><span class="pre">Drug.DrugEye_id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.models.Drug.MultipleObjectsReturned"><code class="docutils literal notranslate"><span class="pre">Drug.MultipleObjectsReturned</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.models.Drug.STATE_CHOICES"><code class="docutils literal notranslate"><span class="pre">Drug.STATE_CHOICES</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.models.Drug.end_date"><code class="docutils literal notranslate"><span class="pre">Drug.end_date</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.models.Drug.get_next_by_end_date"><code class="docutils literal notranslate"><span class="pre">Drug.get_next_by_end_date()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.models.Drug.get_next_by_start_date"><code class="docutils literal notranslate"><span class="pre">Drug.get_next_by_start_date()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.models.Drug.get_previous_by_end_date"><code class="docutils literal notranslate"><span class="pre">Drug.get_previous_by_end_date()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.models.Drug.get_previous_by_start_date"><code class="docutils literal notranslate"><span class="pre">Drug.get_previous_by_start_date()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.models.Drug.get_state_display"><code class="docutils literal notranslate"><span class="pre">Drug.get_state_display()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.models.Drug.id"><code class="docutils literal notranslate"><span class="pre">Drug.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.models.Drug.objects"><code class="docutils literal notranslate"><span class="pre">Drug.objects</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.models.Drug.quantity"><code class="docutils literal notranslate"><span class="pre">Drug.quantity</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.models.Drug.quantity_unit"><code class="docutils literal notranslate"><span class="pre">Drug.quantity_unit</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.models.Drug.rate"><code class="docutils literal notranslate"><span class="pre">Drug.rate</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.models.Drug.rate_unit"><code class="docutils literal notranslate"><span class="pre">Drug.rate_unit</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.models.Drug.start_date"><code class="docutils literal notranslate"><span class="pre">Drug.start_date</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.models.Drug.state"><code class="docutils literal notranslate"><span class="pre">Drug.state</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Prescription.html#Prescription.models.DrugEye"><code class="docutils literal notranslate"><span class="pre">DrugEye</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.models.DrugEye.CLASSIFICATION"><code class="docutils literal notranslate"><span class="pre">DrugEye.CLASSIFICATION</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.models.DrugEye.DoesNotExist"><code class="docutils literal notranslate"><span class="pre">DrugEye.DoesNotExist</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.models.DrugEye.HOWMUCH"><code class="docutils literal notranslate"><span class="pre">DrugEye.HOWMUCH</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.models.DrugEye.ID"><code class="docutils literal notranslate"><span class="pre">DrugEye.ID</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.models.DrugEye.MultipleObjectsReturned"><code class="docutils literal notranslate"><span class="pre">DrugEye.MultipleObjectsReturned</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.models.DrugEye.ScName"><code class="docutils literal notranslate"><span class="pre">DrugEye.ScName</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.models.DrugEye.TradeName"><code class="docutils literal notranslate"><span class="pre">DrugEye.TradeName</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.models.DrugEye.Unit"><code class="docutils literal notranslate"><span class="pre">DrugEye.Unit</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.models.DrugEye.drug_set"><code class="docutils literal notranslate"><span class="pre">DrugEye.drug_set</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.models.DrugEye.id"><code class="docutils literal notranslate"><span class="pre">DrugEye.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.models.DrugEye.objects"><code class="docutils literal notranslate"><span class="pre">DrugEye.objects</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Prescription.html#Prescription.models.Prescription"><code class="docutils literal notranslate"><span class="pre">Prescription</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.models.Prescription.DoesNotExist"><code class="docutils literal notranslate"><span class="pre">Prescription.DoesNotExist</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.models.Prescription.MultipleObjectsReturned"><code class="docutils literal notranslate"><span class="pre">Prescription.MultipleObjectsReturned</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.models.Prescription.created_at"><code class="docutils literal notranslate"><span class="pre">Prescription.created_at</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.models.Prescription.doctor_id"><code class="docutils literal notranslate"><span class="pre">Prescription.doctor_id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.models.Prescription.drugs"><code class="docutils literal notranslate"><span class="pre">Prescription.drugs</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.models.Prescription.get_next_by_created_at"><code class="docutils literal notranslate"><span class="pre">Prescription.get_next_by_created_at()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.models.Prescription.get_previous_by_created_at"><code class="docutils literal notranslate"><span class="pre">Prescription.get_previous_by_created_at()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.models.Prescription.id"><code class="docutils literal notranslate"><span class="pre">Prescription.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.models.Prescription.objects"><code class="docutils literal notranslate"><span class="pre">Prescription.objects</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.models.Prescription.session"><code class="docutils literal notranslate"><span class="pre">Prescription.session</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.models.Prescription.session_id"><code class="docutils literal notranslate"><span class="pre">Prescription.session_id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.models.Prescription.user_id"><code class="docutils literal notranslate"><span class="pre">Prescription.user_id</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Prescription.html#Prescription.models.Session"><code class="docutils literal notranslate"><span class="pre">Session</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.models.Session.DoesNotExist"><code class="docutils literal notranslate"><span class="pre">Session.DoesNotExist</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.models.Session.MultipleObjectsReturned"><code class="docutils literal notranslate"><span class="pre">Session.MultipleObjectsReturned</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.models.Session.created_at"><code class="docutils literal notranslate"><span class="pre">Session.created_at</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.models.Session.doctor_id"><code class="docutils literal notranslate"><span class="pre">Session.doctor_id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.models.Session.ended"><code class="docutils literal notranslate"><span class="pre">Session.ended</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.models.Session.get_next_by_created_at"><code class="docutils literal notranslate"><span class="pre">Session.get_next_by_created_at()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.models.Session.get_previous_by_created_at"><code class="docutils literal notranslate"><span class="pre">Session.get_previous_by_created_at()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.models.Session.objects"><code class="docutils literal notranslate"><span class="pre">Session.objects</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.models.Session.otp"><code class="docutils literal notranslate"><span class="pre">Session.otp</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.models.Session.prescriptions"><code class="docutils literal notranslate"><span class="pre">Session.prescriptions</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.models.Session.session_id"><code class="docutils literal notranslate"><span class="pre">Session.session_id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.models.Session.user_id"><code class="docutils literal notranslate"><span class="pre">Session.user_id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.models.Session.verified"><code class="docutils literal notranslate"><span class="pre">Session.verified</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Prescription.html#module-Prescription.serializers">Prescription.serializers module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Prescription.html#Prescription.serializers.DrugEyeSerializer"><code class="docutils literal notranslate"><span class="pre">DrugEyeSerializer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.serializers.DrugEyeSerializer.Meta"><code class="docutils literal notranslate"><span class="pre">DrugEyeSerializer.Meta</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Prescription.html#Prescription.serializers.PrescriptionSerializer"><code class="docutils literal notranslate"><span class="pre">PrescriptionSerializer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.serializers.PrescriptionSerializer.DATE_FORMAT"><code class="docutils literal notranslate"><span class="pre">PrescriptionSerializer.DATE_FORMAT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.serializers.PrescriptionSerializer.Meta"><code class="docutils literal notranslate"><span class="pre">PrescriptionSerializer.Meta</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.serializers.PrescriptionSerializer.create"><code class="docutils literal notranslate"><span class="pre">PrescriptionSerializer.create()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.serializers.PrescriptionSerializer.validate_drugs"><code class="docutils literal notranslate"><span class="pre">PrescriptionSerializer.validate_drugs()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Prescription.html#Prescription.serializers.UserIdSerializer"><code class="docutils literal notranslate"><span class="pre">UserIdSerializer</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="Prescription.html#Prescription.serializers.UserSerializerEmail"><code class="docutils literal notranslate"><span class="pre">UserSerializerEmail</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.serializers.UserSerializerEmail.Meta"><code class="docutils literal notranslate"><span class="pre">UserSerializerEmail.Meta</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Prescription.html#module-Prescription.tests">Prescription.tests module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Prescription.html#module-Prescription.utils">Prescription.utils module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Prescription.html#Prescription.utils.generate_otp"><code class="docutils literal notranslate"><span class="pre">generate_otp()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="Prescription.html#Prescription.utils.generate_session_id"><code class="docutils literal notranslate"><span class="pre">generate_session_id()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="Prescription.html#Prescription.utils.send_custom_email_otp"><code class="docutils literal notranslate"><span class="pre">send_custom_email_otp()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="Prescription.html#Prescription.utils.send_otp"><code class="docutils literal notranslate"><span class="pre">send_otp()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="Prescription.html#Prescription.utils.validate_session"><code class="docutils literal notranslate"><span class="pre">validate_session()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Prescription.html#module-Prescription.views">Prescription.views module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Prescription.html#Prescription.views.ActivateDrugView"><code class="docutils literal notranslate"><span class="pre">ActivateDrugView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.views.ActivateDrugView.authentication_classes"><code class="docutils literal notranslate"><span class="pre">ActivateDrugView.authentication_classes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.views.ActivateDrugView.permission_classes"><code class="docutils literal notranslate"><span class="pre">ActivateDrugView.permission_classes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.views.ActivateDrugView.post"><code class="docutils literal notranslate"><span class="pre">ActivateDrugView.post()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Prescription.html#Prescription.views.ActivatePrescriptionView"><code class="docutils literal notranslate"><span class="pre">ActivatePrescriptionView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.views.ActivatePrescriptionView.authentication_classes"><code class="docutils literal notranslate"><span class="pre">ActivatePrescriptionView.authentication_classes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.views.ActivatePrescriptionView.permission_classes"><code class="docutils literal notranslate"><span class="pre">ActivatePrescriptionView.permission_classes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.views.ActivatePrescriptionView.post"><code class="docutils literal notranslate"><span class="pre">ActivatePrescriptionView.post()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Prescription.html#Prescription.views.ActivePrescriptionsForUserView"><code class="docutils literal notranslate"><span class="pre">ActivePrescriptionsForUserView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.views.ActivePrescriptionsForUserView.authentication_classes"><code class="docutils literal notranslate"><span class="pre">ActivePrescriptionsForUserView.authentication_classes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.views.ActivePrescriptionsForUserView.get"><code class="docutils literal notranslate"><span class="pre">ActivePrescriptionsForUserView.get()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.views.ActivePrescriptionsForUserView.permission_classes"><code class="docutils literal notranslate"><span class="pre">ActivePrescriptionsForUserView.permission_classes</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Prescription.html#Prescription.views.ActivePrescriptionsView"><code class="docutils literal notranslate"><span class="pre">ActivePrescriptionsView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.views.ActivePrescriptionsView.authentication_classes"><code class="docutils literal notranslate"><span class="pre">ActivePrescriptionsView.authentication_classes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.views.ActivePrescriptionsView.get"><code class="docutils literal notranslate"><span class="pre">ActivePrescriptionsView.get()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.views.ActivePrescriptionsView.permission_classes"><code class="docutils literal notranslate"><span class="pre">ActivePrescriptionsView.permission_classes</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Prescription.html#Prescription.views.CreatePrescriptionView"><code class="docutils literal notranslate"><span class="pre">CreatePrescriptionView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.views.CreatePrescriptionView.authentication_classes"><code class="docutils literal notranslate"><span class="pre">CreatePrescriptionView.authentication_classes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.views.CreatePrescriptionView.permission_classes"><code class="docutils literal notranslate"><span class="pre">CreatePrescriptionView.permission_classes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.views.CreatePrescriptionView.post"><code class="docutils literal notranslate"><span class="pre">CreatePrescriptionView.post()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Prescription.html#Prescription.views.DeletePrescriptionView"><code class="docutils literal notranslate"><span class="pre">DeletePrescriptionView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.views.DeletePrescriptionView.authentication_classes"><code class="docutils literal notranslate"><span class="pre">DeletePrescriptionView.authentication_classes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.views.DeletePrescriptionView.delete"><code class="docutils literal notranslate"><span class="pre">DeletePrescriptionView.delete()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.views.DeletePrescriptionView.permission_classes"><code class="docutils literal notranslate"><span class="pre">DeletePrescriptionView.permission_classes</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Prescription.html#Prescription.views.DoctorPrescriptionsForUserView"><code class="docutils literal notranslate"><span class="pre">DoctorPrescriptionsForUserView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.views.DoctorPrescriptionsForUserView.authentication_classes"><code class="docutils literal notranslate"><span class="pre">DoctorPrescriptionsForUserView.authentication_classes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.views.DoctorPrescriptionsForUserView.get"><code class="docutils literal notranslate"><span class="pre">DoctorPrescriptionsForUserView.get()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.views.DoctorPrescriptionsForUserView.permission_classes"><code class="docutils literal notranslate"><span class="pre">DoctorPrescriptionsForUserView.permission_classes</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Prescription.html#Prescription.views.DoctorPrescriptionsView"><code class="docutils literal notranslate"><span class="pre">DoctorPrescriptionsView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.views.DoctorPrescriptionsView.authentication_classes"><code class="docutils literal notranslate"><span class="pre">DoctorPrescriptionsView.authentication_classes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.views.DoctorPrescriptionsView.get"><code class="docutils literal notranslate"><span class="pre">DoctorPrescriptionsView.get()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.views.DoctorPrescriptionsView.permission_classes"><code class="docutils literal notranslate"><span class="pre">DoctorPrescriptionsView.permission_classes</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Prescription.html#Prescription.views.MedicineSearchView"><code class="docutils literal notranslate"><span class="pre">MedicineSearchView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.views.MedicineSearchView.authentication_classes"><code class="docutils literal notranslate"><span class="pre">MedicineSearchView.authentication_classes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.views.MedicineSearchView.get"><code class="docutils literal notranslate"><span class="pre">MedicineSearchView.get()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.views.MedicineSearchView.permission_classes"><code class="docutils literal notranslate"><span class="pre">MedicineSearchView.permission_classes</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Prescription.html#Prescription.views.PatientPrescriptionsView"><code class="docutils literal notranslate"><span class="pre">PatientPrescriptionsView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.views.PatientPrescriptionsView.authentication_classes"><code class="docutils literal notranslate"><span class="pre">PatientPrescriptionsView.authentication_classes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.views.PatientPrescriptionsView.get"><code class="docutils literal notranslate"><span class="pre">PatientPrescriptionsView.get()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.views.PatientPrescriptionsView.permission_classes"><code class="docutils literal notranslate"><span class="pre">PatientPrescriptionsView.permission_classes</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Prescription.html#Prescription.views.PrescriptionDetailView"><code class="docutils literal notranslate"><span class="pre">PrescriptionDetailView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.views.PrescriptionDetailView.authentication_classes"><code class="docutils literal notranslate"><span class="pre">PrescriptionDetailView.authentication_classes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.views.PrescriptionDetailView.get"><code class="docutils literal notranslate"><span class="pre">PrescriptionDetailView.get()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.views.PrescriptionDetailView.permission_classes"><code class="docutils literal notranslate"><span class="pre">PrescriptionDetailView.permission_classes</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Prescription.html#Prescription.views.StartSessionView"><code class="docutils literal notranslate"><span class="pre">StartSessionView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.views.StartSessionView.authentication_classes"><code class="docutils literal notranslate"><span class="pre">StartSessionView.authentication_classes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.views.StartSessionView.permission_classes"><code class="docutils literal notranslate"><span class="pre">StartSessionView.permission_classes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.views.StartSessionView.post"><code class="docutils literal notranslate"><span class="pre">StartSessionView.post()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.views.StartSessionView.serializer_class"><code class="docutils literal notranslate"><span class="pre">StartSessionView.serializer_class</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Prescription.html#Prescription.views.UpdatePrescriptionView"><code class="docutils literal notranslate"><span class="pre">UpdatePrescriptionView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.views.UpdatePrescriptionView.authentication_classes"><code class="docutils literal notranslate"><span class="pre">UpdatePrescriptionView.authentication_classes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.views.UpdatePrescriptionView.permission_classes"><code class="docutils literal notranslate"><span class="pre">UpdatePrescriptionView.permission_classes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.views.UpdatePrescriptionView.put"><code class="docutils literal notranslate"><span class="pre">UpdatePrescriptionView.put()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Prescription.html#Prescription.views.UserPrescriptionsView"><code class="docutils literal notranslate"><span class="pre">UserPrescriptionsView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.views.UserPrescriptionsView.authentication_classes"><code class="docutils literal notranslate"><span class="pre">UserPrescriptionsView.authentication_classes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.views.UserPrescriptionsView.get"><code class="docutils literal notranslate"><span class="pre">UserPrescriptionsView.get()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.views.UserPrescriptionsView.permission_classes"><code class="docutils literal notranslate"><span class="pre">UserPrescriptionsView.permission_classes</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Prescription.html#Prescription.views.VerifySessionView"><code class="docutils literal notranslate"><span class="pre">VerifySessionView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.views.VerifySessionView.authentication_classes"><code class="docutils literal notranslate"><span class="pre">VerifySessionView.authentication_classes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.views.VerifySessionView.permission_classes"><code class="docutils literal notranslate"><span class="pre">VerifySessionView.permission_classes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Prescription.html#Prescription.views.VerifySessionView.post"><code class="docutils literal notranslate"><span class="pre">VerifySessionView.post()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Prescription.html#module-Prescription">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="User.html">User package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="User.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="User.migrations.html">User.migrations package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="User.migrations.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.migrations.html#module-User.migrations.0001_initial">User.migrations.0001_initial module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.migrations.html#module-User.migrations.0002_user_fname_user_lname">User.migrations.0002_user_fname_user_lname module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.migrations.html#module-User.migrations.0003_customtoken">User.migrations.0003_customtoken module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.migrations.html#module-User.migrations.0004_user_is_verified_alter_user_gender">User.migrations.0004_user_is_verified_alter_user_gender module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.migrations.html#module-User.migrations.0005_alter_user_options_alter_user_managers_and_more">User.migrations.0005_alter_user_options_alter_user_managers_and_more module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.migrations.html#module-User.migrations">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="User.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="User.html#module-User.admin">User.admin module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="User.html#module-User.apps">User.apps module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="User.html#User.apps.UserConfig"><code class="docutils literal notranslate"><span class="pre">UserConfig</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.apps.UserConfig.default_auto_field"><code class="docutils literal notranslate"><span class="pre">UserConfig.default_auto_field</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.apps.UserConfig.name"><code class="docutils literal notranslate"><span class="pre">UserConfig.name</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="User.html#module-User.authentication">User.authentication module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="User.html#User.authentication.CustomTokenAuthentication"><code class="docutils literal notranslate"><span class="pre">CustomTokenAuthentication</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.authentication.CustomTokenAuthentication.authenticate"><code class="docutils literal notranslate"><span class="pre">CustomTokenAuthentication.authenticate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.authentication.CustomTokenAuthentication.authenticate_header"><code class="docutils literal notranslate"><span class="pre">CustomTokenAuthentication.authenticate_header()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.authentication.CustomTokenAuthentication.keyword"><code class="docutils literal notranslate"><span class="pre">CustomTokenAuthentication.keyword</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="User.html#module-User.backends">User.backends module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="User.html#User.backends.CustomBackend"><code class="docutils literal notranslate"><span class="pre">CustomBackend</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.backends.CustomBackend.authenticate"><code class="docutils literal notranslate"><span class="pre">CustomBackend.authenticate()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="User.html#module-User.models">User.models module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="User.html#User.models.CustomToken"><code class="docutils literal notranslate"><span class="pre">CustomToken</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.models.CustomToken.DoesNotExist"><code class="docutils literal notranslate"><span class="pre">CustomToken.DoesNotExist</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.models.CustomToken.MultipleObjectsReturned"><code class="docutils literal notranslate"><span class="pre">CustomToken.MultipleObjectsReturned</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.models.CustomToken.created"><code class="docutils literal notranslate"><span class="pre">CustomToken.created</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.models.CustomToken.email"><code class="docutils literal notranslate"><span class="pre">CustomToken.email</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.models.CustomToken.get_next_by_created"><code class="docutils literal notranslate"><span class="pre">CustomToken.get_next_by_created()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.models.CustomToken.get_previous_by_created"><code class="docutils literal notranslate"><span class="pre">CustomToken.get_previous_by_created()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.models.CustomToken.id"><code class="docutils literal notranslate"><span class="pre">CustomToken.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.models.CustomToken.key"><code class="docutils literal notranslate"><span class="pre">CustomToken.key</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.models.CustomToken.objects"><code class="docutils literal notranslate"><span class="pre">CustomToken.objects</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.models.CustomToken.save"><code class="docutils literal notranslate"><span class="pre">CustomToken.save()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.models.CustomToken.user"><code class="docutils literal notranslate"><span class="pre">CustomToken.user</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.models.CustomToken.user_id"><code class="docutils literal notranslate"><span class="pre">CustomToken.user_id</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="User.html#User.models.User"><code class="docutils literal notranslate"><span class="pre">User</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.models.User.CHRONIC_DISEASE_CHOICES"><code class="docutils literal notranslate"><span class="pre">User.CHRONIC_DISEASE_CHOICES</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.models.User.DoesNotExist"><code class="docutils literal notranslate"><span class="pre">User.DoesNotExist</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.models.User.MultipleObjectsReturned"><code class="docutils literal notranslate"><span class="pre">User.MultipleObjectsReturned</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.models.User.auth_token"><code class="docutils literal notranslate"><span class="pre">User.auth_token</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.models.User.birthdate"><code class="docutils literal notranslate"><span class="pre">User.birthdate</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.models.User.chronic_disease"><code class="docutils literal notranslate"><span class="pre">User.chronic_disease</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.models.User.clean"><code class="docutils literal notranslate"><span class="pre">User.clean()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.models.User.created_at"><code class="docutils literal notranslate"><span class="pre">User.created_at</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.models.User.custom_tokens"><code class="docutils literal notranslate"><span class="pre">User.custom_tokens</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.models.User.date_joined"><code class="docutils literal notranslate"><span class="pre">User.date_joined</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.models.User.email"><code class="docutils literal notranslate"><span class="pre">User.email</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.models.User.first_name"><code class="docutils literal notranslate"><span class="pre">User.first_name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.models.User.fname"><code class="docutils literal notranslate"><span class="pre">User.fname</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.models.User.gender"><code class="docutils literal notranslate"><span class="pre">User.gender</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.models.User.gender_choices"><code class="docutils literal notranslate"><span class="pre">User.gender_choices</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.models.User.get_gender_display"><code class="docutils literal notranslate"><span class="pre">User.get_gender_display()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.models.User.get_next_by_birthdate"><code class="docutils literal notranslate"><span class="pre">User.get_next_by_birthdate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.models.User.get_next_by_created_at"><code class="docutils literal notranslate"><span class="pre">User.get_next_by_created_at()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.models.User.get_next_by_date_joined"><code class="docutils literal notranslate"><span class="pre">User.get_next_by_date_joined()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.models.User.get_previous_by_birthdate"><code class="docutils literal notranslate"><span class="pre">User.get_previous_by_birthdate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.models.User.get_previous_by_created_at"><code class="docutils literal notranslate"><span class="pre">User.get_previous_by_created_at()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.models.User.get_previous_by_date_joined"><code class="docutils literal notranslate"><span class="pre">User.get_previous_by_date_joined()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.models.User.groups"><code class="docutils literal notranslate"><span class="pre">User.groups</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.models.User.id"><code class="docutils literal notranslate"><span class="pre">User.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.models.User.image"><code class="docutils literal notranslate"><span class="pre">User.image</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.models.User.is_active"><code class="docutils literal notranslate"><span class="pre">User.is_active</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.models.User.is_staff"><code class="docutils literal notranslate"><span class="pre">User.is_staff</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.models.User.is_superuser"><code class="docutils literal notranslate"><span class="pre">User.is_superuser</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.models.User.is_verified"><code class="docutils literal notranslate"><span class="pre">User.is_verified</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.models.User.last_login"><code class="docutils literal notranslate"><span class="pre">User.last_login</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.models.User.last_name"><code class="docutils literal notranslate"><span class="pre">User.last_name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.models.User.lname"><code class="docutils literal notranslate"><span class="pre">User.lname</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.models.User.logentry_set"><code class="docutils literal notranslate"><span class="pre">User.logentry_set</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.models.User.password"><code class="docutils literal notranslate"><span class="pre">User.password</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.models.User.password_validator"><code class="docutils literal notranslate"><span class="pre">User.password_validator</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.models.User.phone"><code class="docutils literal notranslate"><span class="pre">User.phone</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.models.User.user_permissions"><code class="docutils literal notranslate"><span class="pre">User.user_permissions</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.models.User.username"><code class="docutils literal notranslate"><span class="pre">User.username</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="User.html#module-User.serializers">User.serializers module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="User.html#User.serializers.AuthTokenSerializer"><code class="docutils literal notranslate"><span class="pre">AuthTokenSerializer</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="User.html#User.serializers.LoginSerializer"><code class="docutils literal notranslate"><span class="pre">LoginSerializer</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="User.html#User.serializers.PasswordResetRequestSerializer"><code class="docutils literal notranslate"><span class="pre">PasswordResetRequestSerializer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.serializers.PasswordResetRequestSerializer.Meta"><code class="docutils literal notranslate"><span class="pre">PasswordResetRequestSerializer.Meta</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="User.html#User.serializers.PasswordUpdateSerializer"><code class="docutils literal notranslate"><span class="pre">PasswordUpdateSerializer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.serializers.PasswordUpdateSerializer.update"><code class="docutils literal notranslate"><span class="pre">PasswordUpdateSerializer.update()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="User.html#User.serializers.UserSerializer"><code class="docutils literal notranslate"><span class="pre">UserSerializer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.serializers.UserSerializer.Meta"><code class="docutils literal notranslate"><span class="pre">UserSerializer.Meta</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="User.html#module-User.tests">User.tests module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="User.html#module-User.views">User.views module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="User.html#User.views.CustomTokenLoginView"><code class="docutils literal notranslate"><span class="pre">CustomTokenLoginView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.views.CustomTokenLoginView.post"><code class="docutils literal notranslate"><span class="pre">CustomTokenLoginView.post()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.views.CustomTokenLoginView.serializer_class"><code class="docutils literal notranslate"><span class="pre">CustomTokenLoginView.serializer_class</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="User.html#User.views.EmailVerificationView"><code class="docutils literal notranslate"><span class="pre">EmailVerificationView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.views.EmailVerificationView.get"><code class="docutils literal notranslate"><span class="pre">EmailVerificationView.get()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="User.html#User.views.PasswordResetRequestView"><code class="docutils literal notranslate"><span class="pre">PasswordResetRequestView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.views.PasswordResetRequestView.post"><code class="docutils literal notranslate"><span class="pre">PasswordResetRequestView.post()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.views.PasswordResetRequestView.send_password_reset_email"><code class="docutils literal notranslate"><span class="pre">PasswordResetRequestView.send_password_reset_email()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.views.PasswordResetRequestView.serializer_class"><code class="docutils literal notranslate"><span class="pre">PasswordResetRequestView.serializer_class</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="User.html#User.views.PasswordResetView"><code class="docutils literal notranslate"><span class="pre">PasswordResetView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.views.PasswordResetView.get_object"><code class="docutils literal notranslate"><span class="pre">PasswordResetView.get_object()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.views.PasswordResetView.permission_classes"><code class="docutils literal notranslate"><span class="pre">PasswordResetView.permission_classes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.views.PasswordResetView.queryset"><code class="docutils literal notranslate"><span class="pre">PasswordResetView.queryset</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.views.PasswordResetView.serializer_class"><code class="docutils literal notranslate"><span class="pre">PasswordResetView.serializer_class</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.views.PasswordResetView.update"><code class="docutils literal notranslate"><span class="pre">PasswordResetView.update()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="User.html#User.views.UserInfoView"><code class="docutils literal notranslate"><span class="pre">UserInfoView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.views.UserInfoView.get"><code class="docutils literal notranslate"><span class="pre">UserInfoView.get()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="User.html#User.views.UserLogoutView"><code class="docutils literal notranslate"><span class="pre">UserLogoutView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.views.UserLogoutView.permission_classes"><code class="docutils literal notranslate"><span class="pre">UserLogoutView.permission_classes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.views.UserLogoutView.post"><code class="docutils literal notranslate"><span class="pre">UserLogoutView.post()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="User.html#User.views.UserSignupView"><code class="docutils literal notranslate"><span class="pre">UserSignupView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.views.UserSignupView.create"><code class="docutils literal notranslate"><span class="pre">UserSignupView.create()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.views.UserSignupView.queryset"><code class="docutils literal notranslate"><span class="pre">UserSignupView.queryset</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.views.UserSignupView.send_custom_email"><code class="docutils literal notranslate"><span class="pre">UserSignupView.send_custom_email()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.views.UserSignupView.serializer_class"><code class="docutils literal notranslate"><span class="pre">UserSignupView.serializer_class</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="User.html#User.views.UserUpdateView"><code class="docutils literal notranslate"><span class="pre">UserUpdateView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.views.UserUpdateView.authentication_classes"><code class="docutils literal notranslate"><span class="pre">UserUpdateView.authentication_classes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.views.UserUpdateView.get_object"><code class="docutils literal notranslate"><span class="pre">UserUpdateView.get_object()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.views.UserUpdateView.perform_update"><code class="docutils literal notranslate"><span class="pre">UserUpdateView.perform_update()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.views.UserUpdateView.permission_classes"><code class="docutils literal notranslate"><span class="pre">UserUpdateView.permission_classes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.views.UserUpdateView.queryset"><code class="docutils literal notranslate"><span class="pre">UserUpdateView.queryset</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.views.UserUpdateView.serializer_class"><code class="docutils literal notranslate"><span class="pre">UserUpdateView.serializer_class</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.views.UserUpdateView.update"><code class="docutils literal notranslate"><span class="pre">UserUpdateView.update()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="User.html#module-User">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="manage.html">manage module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="manage.html#manage.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to PharmaLink’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Doctor.html" class="btn btn-neutral float-right" title="Doctor package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Ismail.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

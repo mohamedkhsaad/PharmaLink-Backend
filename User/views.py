@@ -21,18 +21,31 @@ from django.core.mail import send_mail
 from rest_framework.generics import UpdateAPIView
 
 class UserSignupView(generics.CreateAPIView):
+    """
+    This view allows users to sign up by providing their details.
+    Upon successful signup, a verification email is sent to the user's provided email address.
+    """
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    
     def send_custom_email(self, user_id, email):
+        """
+        Sends a custom verification email to the user's provided email address.
+        """
+        # Compose email message
         subject = 'Verify Your Email'
         verification_link = f"https://127.0.0.1:8000/user/verify/{user_id}/"
         message = f'Click the following link to verify your email: {verification_link}'
         sender_email = 'pharmalink1190264@gmail.com'
         receiver_email = email
+        
+        # Construct email object
         msg = MIMEText(message)
         msg["Subject"] = subject
         msg["From"] = sender_email
         msg["To"] = receiver_email
+        
+        # Send email
         try:
             server = smtplib.SMTP_SSL("smtp.gmail.com", 465)
             server.login(sender_email, "azuk ngik jmqo udcb")
@@ -41,7 +54,13 @@ class UserSignupView(generics.CreateAPIView):
             print("Email sent successfully.")
         except Exception as e:
             print(f"Error sending email: {e}")
+    
     def create(self, request, *args, **kwargs):
+        """
+        Handles user signup requests.
+        Checks for existing username and email.
+        Sends verification email upon successful signup.
+        """
         # Check if the username is already taken
         existing_username = User.objects.filter(username=request.data.get('username')).first()
         if existing_username:
@@ -56,8 +75,9 @@ class UserSignupView(generics.CreateAPIView):
 
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
+            # Save new user
             user = serializer.save()
-            # Send verification email using custom logic
+            # Send verification email
             self.send_custom_email(user.id, user.email)
 
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -65,31 +85,60 @@ class UserSignupView(generics.CreateAPIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class EmailVerificationView(APIView):
+    """
+    This view handles email verification requests.
+    """
     def get(self, request, user_id):
+        """
+        Handles GET requests for email verification.
+        Marks the user with the provided user ID as verified.
+        """
+        # Retrieve user object or return 404 if not found
         user = get_object_or_404(User, pk=user_id)
+        
+        # Mark user as verified
         user.is_verified = True
         user.save()
+        
+        # Respond with success message
         return Response({'message': 'Email verified successfully'}, status=status.HTTP_200_OK)
 
 class CustomTokenLoginView(APIView):
-    '''
-    This is a view class for the user login. User has to verify his email after signup to be able to login
-    '''
+    """
+    This view handles user login using custom tokens.
+    """
     serializer_class = AuthTokenSerializer
+
     def post(self, request, format=None):
+        """
+        Handles user login requests.
+        Validates the provided credentials and generates a custom token for authenticated users.
+        """
+        # Validate serializer
         serializer = self.serializer_class(data=request.data)
-        serializer.is_valid(raise_exception=True)  # Validate the serializer
+        serializer.is_valid(raise_exception=True)
+
+        # Retrieve email and password from request data
         email = request.data.get('email')
         password = request.data.get('password')
+
         try:
+            # Attempt to retrieve user with provided email
             user = User.objects.get(email=email)
         except User.DoesNotExist:
+            # Return error response if user does not exist
             return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+
+        # Check if user's email is verified
         if not user.is_verified:
             return Response({'error': _('Email not verified')}, status=status.HTTP_401_UNAUTHORIZED)
+
+        # Validate password
         if password == user.password:
+            # Generate custom token for authenticated user
             custom_token = CustomToken.objects.create(user=user)
             user_id = user.id
+            # Construct response data
             response_data = {
                 'id': user_id,
                 'email': user.email,
@@ -99,55 +148,97 @@ class CustomTokenLoginView(APIView):
                 'initials': (user.fname[0] if user.fname else '') + (user.lname[0] if user.lname else '')
             }
             response_data['initials'] = response_data['initials'].upper()
+            # Return success response with user data and token
             return Response(response_data, status=status.HTTP_200_OK)
         else:
+            # Return error response if password is incorrect
             return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
-        
+
 class UserLogoutView(APIView):
     """
-    This view logs out the user by deleting all associated tokens.
+    This view logs out the user by deleting associated tokens.
     """
     permission_classes = [IsAuthenticated]
-    # authentication_classes = [CustomTokenAuthentication]
+
     def post(self, request, format=None):
+        """
+        Handles user logout requests.
+        Deletes all tokens associated with the authenticated user.
+        """
         # Retrieve the user's ID
         user_id = request.user.id
-        # Delete all tokens associated with the user
+
         try:
+            # Delete all tokens associated with the user
             CustomToken.objects.filter(user_id=user_id).delete()            
             return Response({'message': 'Logout successful', 'user_id': user_id}, status=status.HTTP_200_OK)
         except CustomToken.DoesNotExist:
+            # Return error response if no tokens found for the user
             return Response({'error': 'No tokens found for the user'}, status=status.HTTP_400_BAD_REQUEST)
         
 class UserUpdateView(generics.UpdateAPIView):
+    """
+    This view allows authenticated users to update their profile information.
+    """
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [IsAuthenticated]
     authentication_classes = [CustomTokenAuthentication]
+
     def get_object(self):
+        """
+        Retrieves the authenticated user object.
+        """
         return self.request.user
+
     def update(self, request, *args, **kwargs):
+        """
+        Handles user profile update requests.
+        """
+        # Determine if the update is partial or full
         partial = kwargs.pop('partial', False)
+        
+        # Retrieve the authenticated user object
         instance = self.get_object()
+        
+        # Validate and update user data
         serializer = self.get_serializer(instance, data=request.data, partial=partial)
         serializer.is_valid(raise_exception=True)
         self.perform_update(serializer)
+        
+        # Return updated user data
         return Response(serializer.data)
+
     def perform_update(self, serializer):
+        """
+        Saves the updated user data.
+        """
         serializer.save()
 
 class PasswordResetRequestView(GenericAPIView):
+    """
+    This view allows users to request a password reset by providing their email address.
+    Upon successful request, a password reset email is sent to the user's provided email address.
+    """
     serializer_class = PasswordResetRequestSerializer
-    def send_password_reset_email(self,user):
+
+    def send_password_reset_email(self, user):
+        """
+        Sends a password reset email to the user's provided email address.
+        """
         subject = 'Reset Your Password'
         reset_link = f"https://127.0.0.1:8000/user/reset-password/{user.id}/"
         message = f'Click the following link to reset your password: {reset_link}'
         sender_email = 'pharmalink1190264@gmail.com'
         receiver_email = user.email
+        
+        # Construct email object
         msg = MIMEText(message)
         msg["Subject"] = subject
         msg["From"] = sender_email
         msg["To"] = user.email
+        
+        # Send email
         try:
             server = smtplib.SMTP_SSL("smtp.gmail.com", 465)
             server.login(sender_email, "azuk ngik jmqo udcb")
@@ -156,18 +247,28 @@ class PasswordResetRequestView(GenericAPIView):
             print("Email sent successfully.")
         except Exception as e:
             print(f"Error sending email: {e}")
+
     def post(self, request, *args, **kwargs):
-        # serializer = self.serializer_class(data=request.data)
-        # serializer.is_valid(raise_exception=True)  # Validate the serializer
+        """
+        Handles password reset requests.
+        Sends a password reset email to the user's provided email address.
+        """
+        # Retrieve email from request data
         email = request.data.get('email')
+        
         if email:
             try:
+                # Attempt to retrieve user with provided email
                 user = User.objects.get(email=email)
+                # Send password reset email
                 self.send_password_reset_email(user)
                 return Response({"message": "Password reset email sent successfully."}, status=status.HTTP_200_OK)
             except User.DoesNotExist:
+                # Return error response if user does not exist
                 return Response({"error": "User with this email does not exist."}, status=status.HTTP_404_NOT_FOUND)
-        return Response({"error": "Email not provided."}, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            # Return error response if email is not provided
+            return Response({"error": "Email not provided."}, status=status.HTTP_400_BAD_REQUEST)    
     # email validation error
     # def post(self, request, *args, **kwargs):
     #     serializer = self.get_serializer(data=request.data)
@@ -180,19 +281,31 @@ class PasswordResetRequestView(GenericAPIView):
     #         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class PasswordResetView(UpdateAPIView):
+    """
+    This view allows any user to reset their password.
+    """
     queryset = User.objects.all()
     permission_classes = [AllowAny]  # Allow any user to reset their password
     serializer_class = PasswordUpdateSerializer  # Create a serializer for resetting the password
+
     def get_object(self):
-        # Get the user object based on the user_id provided in the URL
+        """
+        Retrieves the user object based on the user_id provided in the URL.
+        """
         user_id = self.kwargs.get('user_id')
         return User.objects.get(pk=user_id)
+
     def update(self, request, *args, **kwargs):
+        """
+        Handles password reset requests.
+        Validates the new password and updates the user's password.
+        """
         # Get the user object
         user = self.get_object()
-        # Update the password
+        
+        # Retrieve the new password from request data
         new_password = request.data.get('password')
-        print(new_password)
+        
         if new_password:
             # Validate the new password
             if not any(char.islower() for char in new_password):
@@ -203,20 +316,31 @@ class PasswordResetView(UpdateAPIView):
                 return Response({"error": "Password must contain at least one digit."}, status=status.HTTP_400_BAD_REQUEST)
             if not any(char in "!@#$%^&*()_+{}[];:<>,./?" for char in new_password):
                 return Response({"error": "Password must contain at least one special character."}, status=status.HTTP_400_BAD_REQUEST)
+            
             # Update the user's password
             user.password = new_password
-            # user.set_password(new_password)
             user.save()
+            
             return Response({"message": "Password reset successfully."}, status=status.HTTP_200_OK)
         else:
+            # Return error response if new password is not provided
             return Response({"error": "New password not provided."}, status=status.HTTP_400_BAD_REQUEST)
 
 class UserInfoView(APIView):
+    """
+    This view retrieves user information based on the provided user ID.
+    """
     def get(self, request, user_id):
+        """
+        Handles GET requests to retrieve user information.
+        """
         try:
+            # Retrieve user object based on the provided user ID
             user = User.objects.get(id=user_id)
         except User.DoesNotExist:
+            # Return error response if user does not exist
             return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
 
+        # Serialize user data and return response
         serializer = UserSerializer(user)
         return Response(serializer.data, status=status.HTTP_200_OK)
