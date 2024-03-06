@@ -9,9 +9,9 @@ from rest_framework.authentication import BaseAuthentication, get_authorization_
 from rest_framework.exceptions import AuthenticationFailed
 from .models import CustomToken
 from django.contrib.auth import get_user_model
-User = get_user_model()
+# User = get_user_model()
 class CustomTokenAuthentication(BaseAuthentication):
-    keyword = 'CustomToken'
+    keyword = 'PatientCustomToken'
     def authenticate(self, request):
         auth_header = get_authorization_header(request).split()
         # print(f"auth header: {auth_header}")

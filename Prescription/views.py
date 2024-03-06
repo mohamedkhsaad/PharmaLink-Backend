@@ -349,12 +349,9 @@ class UserPrescriptionsView(APIView):
         else:
             # Doctor is different from the one in the session, return empty queryset
             prescriptions = Prescription.objects.none()
-        
         # Serialize the prescriptions
         serializer = PrescriptionSerializer(prescriptions, many=True)
-        
         return Response(serializer.data, status=status.HTTP_200_OK)
-    
 class ActivePrescriptionsView(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [DoctorCustomTokenAuthentication]
@@ -421,9 +418,9 @@ class PatientPrescriptionsView(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [CustomTokenAuthentication]
     def get(self, request):
-        # The doctor ID is extracted from the authenticated user
+        # The patient ID is extracted from the authenticated user
         user_id = request.user.id
-        # Retrieve prescriptions created by the doctor for the specified user
+        # Retrieve prescripti for specified user
         prescriptions = Prescription.objects.filter(user_id=user_id)
         # Serialize the prescriptions
         serializer = PrescriptionSerializer(prescriptions, many=True)

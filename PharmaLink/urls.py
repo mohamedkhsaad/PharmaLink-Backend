@@ -22,6 +22,7 @@ from Doctor.views import *
 from django.conf.urls.static import static
 from django.conf import settings
 from Prescription.views import *
+from Drugs.views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/schema/', SpectacularAPIView.as_view(), name='api-schema'),
@@ -69,4 +70,10 @@ urlpatterns = [
     path('Prescription/user-prescriptions/', UserPrescriptionsView.as_view(), name='user_prescriptions'),
     path('Prescription/active-prescriptions/', ActivePrescriptionsView.as_view(), name='active_prescriptions'),
     
+    # Drugs
+    path('Drugs/<int:prescription_id>/check-drug-interaction/', DrugInteractionCheckView.as_view(), name='check_drug_interaction'),
+    path('Drugs/check-drug-interaction-TradeName/', DrugInteractionByTradeNameView.as_view(), name='check_drug_interaction_by_tradename'),
+    path('Drugs/check-drug-interaction-All/', DrugInteractionCheckViewForAllUserPrescriptions.as_view(), name='check_drug_interaction_for_all_user_prescriptions'),
+    path('Drugs/User/check-interactions/', DrugInteractionCheckViewForUser.as_view(), name='user_check_interactions'),
+
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
