@@ -66,10 +66,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#User.authentication.CustomTokenAuthentication"><code class="docutils literal notranslate"><span class="pre">CustomTokenAuthentication</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#module-User.backends">User.backends module</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#User.backends.CustomBackend"><code class="docutils literal notranslate"><span class="pre">CustomBackend</span></code></a></li>
-</ul>
-</li>
+<li class="toctree-l3"><a class="reference internal" href="#user-backends-module">User.backends module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-User.models">User.models module</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#User.models.CustomToken"><code class="docutils literal notranslate"><span class="pre">CustomToken</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#User.models.User"><code class="docutils literal notranslate"><span class="pre">User</span></code></a></li>
@@ -210,23 +207,21 @@
 </section>
 <section id="module-User.authentication">
 <span id="user-authentication-module"></span><h2>User.authentication module<a class="headerlink" href="#module-User.authentication" title="Link to this heading"></a></h2>
-<p>A file to define a custom token authentication system for our project</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="User.authentication.CustomTokenAuthentication">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">User.authentication.</span></span><span class="sig-name descname"><span class="pre">CustomTokenAuthentication</span></span><a class="headerlink" href="#User.authentication.CustomTokenAuthentication" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseAuthentication</span></code></p>
+<p>Custom token authentication class.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="User.authentication.CustomTokenAuthentication.authenticate">
 <span class="sig-name descname"><span class="pre">authenticate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#User.authentication.CustomTokenAuthentication.authenticate" title="Link to this definition"></a></dt>
-<dd><p>Authenticate the request and return a two-tuple of (user, token).</p>
+<dd><p>Method to authenticate the user based on the provided token.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="User.authentication.CustomTokenAuthentication.authenticate_header">
 <span class="sig-name descname"><span class="pre">authenticate_header</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#User.authentication.CustomTokenAuthentication.authenticate_header" title="Link to this definition"></a></dt>
-<dd><p>Return a string to be used as the value of the <cite>WWW-Authenticate</cite>
-header in a <cite>401 Unauthenticated</cite> response, or <cite>None</cite> if the
-authentication scheme should return <cite>403 Permission Denied</cite> responses.</p>
+<dd><p>Method to specify the authentication header keyword.</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -237,26 +232,16 @@ authentication scheme should return <cite>403 Permission Denied</cite> responses
 </dd></dl>
 
 </section>
-<section id="module-User.backends">
-<span id="user-backends-module"></span><h2>User.backends module<a class="headerlink" href="#module-User.backends" title="Link to this heading"></a></h2>
-<dl class="py class">
-<dt class="sig sig-object py" id="User.backends.CustomBackend">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">User.backends.</span></span><span class="sig-name descname"><span class="pre">CustomBackend</span></span><a class="headerlink" href="#User.backends.CustomBackend" title="Link to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ModelBackend</span></code></p>
-<dl class="py method">
-<dt class="sig sig-object py" id="User.backends.CustomBackend.authenticate">
-<span class="sig-name descname"><span class="pre">authenticate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#User.backends.CustomBackend.authenticate" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
+<section id="user-backends-module">
+<h2>User.backends module<a class="headerlink" href="#user-backends-module" title="Link to this heading"></a></h2>
 </section>
 <section id="module-User.models">
 <span id="user-models-module"></span><h2>User.models module<a class="headerlink" href="#module-User.models" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="User.models.CustomToken">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">User.models.</span></span><span class="sig-name descname"><span class="pre">CustomToken</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">email</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">created</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#User.models.CustomToken" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">User.models.</span></span><span class="sig-name descname"><span class="pre">CustomToken</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#User.models.CustomToken" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></p>
+<p>Custom token model representing tokens used for user authentication.</p>
 <dl class="py exception">
 <dt class="sig sig-object py" id="User.models.CustomToken.DoesNotExist">
 <em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#User.models.CustomToken.DoesNotExist" title="Link to this definition"></a></dt>
@@ -315,11 +300,7 @@ object the first time, the query is executed.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="User.models.CustomToken.save">
 <span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#User.models.CustomToken.save" title="Link to this definition"></a></dt>
-<dd><p>Save the current instance. Override this in a subclass if you want to
-control the saving process.</p>
-<p>The ‘force_insert’ and ‘force_update’ parameters can be used to insist
-that the “save” must be an SQL insert or update (or equivalent for
-non-SQL backends), respectively. Normally, they should not be set.</p>
+<dd><p>Custom save method to generate token key and set email if not provided.</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -344,11 +325,12 @@ one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="User.models.User">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">User.models.</span></span><span class="sig-name descname"><span class="pre">User</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">last_login</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_superuser</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">first_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">last_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_staff</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_active</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date_joined</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">birthdate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">email</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phone</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gender</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chronic_disease</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">created_at</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_verified</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#User.models.User" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">User.models.</span></span><span class="sig-name descname"><span class="pre">User</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#User.models.User" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractUser</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">PermissionsMixin</span></code></p>
+<p>Custom user model representing a user of the application.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="User.models.User.CHRONIC_DISEASE_CHOICES">
-<span class="sig-name descname"><span class="pre">CHRONIC_DISEASE_CHOICES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[('ALS',</span> <span class="pre">&quot;ALS</span> <span class="pre">(Lou</span> <span class="pre">Gehrig's</span> <span class="pre">Disease)&quot;),</span> <span class="pre">('Alzheimer',</span> <span class="pre">&quot;Alzheimer's</span> <span class="pre">Disease</span> <span class="pre">and</span> <span class="pre">other</span> <span class="pre">Dementias&quot;),</span> <span class="pre">('Arthritis',</span> <span class="pre">'Arthritis'),</span> <span class="pre">('Asthma',</span> <span class="pre">'Asthma'),</span> <span class="pre">('Cancer',</span> <span class="pre">'Cancer'),</span> <span class="pre">('COPD',</span> <span class="pre">'Chronic</span> <span class="pre">Obstructive</span> <span class="pre">Pulmonary</span> <span class="pre">Disease</span> <span class="pre">(COPD)'),</span> <span class="pre">('Crohns',</span> <span class="pre">&quot;Crohn's</span> <span class="pre">Disease,</span> <span class="pre">Ulcerative</span> <span class="pre">Colitis,</span> <span class="pre">Other</span> <span class="pre">Inflammatory</span> <span class="pre">Bowel</span> <span class="pre">Diseases,</span> <span class="pre">Irritable</span> <span class="pre">Bowel</span> <span class="pre">Syndrome&quot;),</span> <span class="pre">('CysticFibrosis',</span> <span class="pre">'Cystic</span> <span class="pre">Fibrosis'),</span> <span class="pre">('Diabetes',</span> <span class="pre">'Diabetes'),</span> <span class="pre">('EatingDisorders',</span> <span class="pre">'Eating</span> <span class="pre">Disorders'),</span> <span class="pre">('HeartDisease',</span> <span class="pre">'Heart</span> <span class="pre">Disease'),</span> <span class="pre">('Obesity',</span> <span class="pre">'Obesity'),</span> <span class="pre">('OralHealth',</span> <span class="pre">'Oral</span> <span class="pre">Health'),</span> <span class="pre">('Osteoporosis',</span> <span class="pre">'Osteoporosis'),</span> <span class="pre">('RSD',</span> <span class="pre">'Reflex</span> <span class="pre">Sympathetic</span> <span class="pre">Dystrophy</span> <span class="pre">(RSD)</span> <span class="pre">Syndrome'),</span> <span class="pre">('SCA',</span> <span class="pre">'Sudden</span> <span class="pre">Cardiac</span> <span class="pre">Arrest</span> <span class="pre">(SCA)</span> <span class="pre">in</span> <span class="pre">Youth'),</span> <span class="pre">('TobaccoUse',</span> <span class="pre">'Tobacco</span> <span class="pre">Use</span> <span class="pre">and</span> <span class="pre">Related</span> <span class="pre">Conditions')]</span></em><a class="headerlink" href="#User.models.User.CHRONIC_DISEASE_CHOICES" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">CHRONIC_DISEASE_CHOICES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[('ALS',</span> <span class="pre">&quot;ALS</span> <span class="pre">(Lou</span> <span class="pre">Gehrig's</span> <span class="pre">Disease)&quot;),</span> <span class="pre">('Alzheimer',</span> <span class="pre">&quot;Alzheimer's</span> <span class="pre">Disease</span> <span class="pre">and</span> <span class="pre">other</span> <span class="pre">Dementias&quot;)]</span></em><a class="headerlink" href="#User.models.User.CHRONIC_DISEASE_CHOICES" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py exception">
@@ -393,10 +375,7 @@ object the first time, the query is executed.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="User.models.User.clean">
 <span class="sig-name descname"><span class="pre">clean</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#User.models.User.clean" title="Link to this definition"></a></dt>
-<dd><p>Hook for doing any extra model-wide validation after clean() has been
-called on every field by self.clean_fields. Any ValidationError raised
-by this method will not be associated with a particular field; it will
-have a special-case association with the field defined by NON_FIELD_ERRORS.</p>
+<dd><p>Custom clean method to perform additional validation.</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -641,19 +620,21 @@ object the first time, the query is executed.</p>
 <dt class="sig sig-object py" id="User.serializers.AuthTokenSerializer">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">User.serializers.</span></span><span class="sig-name descname"><span class="pre">AuthTokenSerializer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#User.serializers.AuthTokenSerializer" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Serializer</span></code></p>
-<p>Serializer for the user auth Token</p>
+<p>Serializer for user authentication token.</p>
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="User.serializers.LoginSerializer">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">User.serializers.</span></span><span class="sig-name descname"><span class="pre">LoginSerializer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#User.serializers.LoginSerializer" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Serializer</span></code></p>
+<p>Serializer for user login.</p>
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="User.serializers.PasswordResetRequestSerializer">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">User.serializers.</span></span><span class="sig-name descname"><span class="pre">PasswordResetRequestSerializer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#User.serializers.PasswordResetRequestSerializer" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ModelSerializer</span></code></p>
+<p>Serializer for password reset request.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="User.serializers.PasswordResetRequestSerializer.Meta">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Meta</span></span><a class="headerlink" href="#User.serializers.PasswordResetRequestSerializer.Meta" title="Link to this definition"></a></dt>
@@ -677,10 +658,12 @@ object the first time, the query is executed.</p>
 <dt class="sig sig-object py" id="User.serializers.PasswordUpdateSerializer">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">User.serializers.</span></span><span class="sig-name descname"><span class="pre">PasswordUpdateSerializer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#User.serializers.PasswordUpdateSerializer" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Serializer</span></code></p>
+<p>Serializer for updating user password.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="User.serializers.PasswordUpdateSerializer.update">
 <span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validated_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#User.serializers.PasswordUpdateSerializer.update" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Updates the user’s password.</p>
+</dd></dl>
 
 </dd></dl>
 
@@ -688,6 +671,7 @@ object the first time, the query is executed.</p>
 <dt class="sig sig-object py" id="User.serializers.UserSerializer">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">User.serializers.</span></span><span class="sig-name descname"><span class="pre">UserSerializer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#User.serializers.UserSerializer" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ModelSerializer</span></code></p>
+<p>Serializer for the User model.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="User.serializers.UserSerializer.Meta">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Meta</span></span><a class="headerlink" href="#User.serializers.UserSerializer.Meta" title="Link to this definition"></a></dt>
