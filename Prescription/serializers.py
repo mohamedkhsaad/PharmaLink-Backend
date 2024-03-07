@@ -1,17 +1,45 @@
+# Import necessary modules
 from rest_framework import serializers
 from User.models import User
 from rest_framework import serializers
 from .models import *
 
 class DrugEyeSerializer(serializers.ModelSerializer):
+    """
+    Serializer for the DrugEye model.
+
+    This serializer is used to convert DrugEye model instances into JSON representations,
+    making them suitable for transmission over HTTP as responses from API endpoints.
+
+    Attributes:
+        model (class): The DrugEye model class to be serialized.
+        fields (list or tuple): Specifies the fields to include in the serialized output.
+            Using '__all__' includes all fields from the model.
+    """
     class Meta:
         model = DrugEye
         fields = '__all__'
 
 class UserIdSerializer(serializers.Serializer):
+    """
+    Serializer for validating user ID.
+
+    This serializer is used to validate user IDs provided in API requests.
+
+    Attributes:
+        user_id (IntegerField): Field for user ID, expected to be an integer.
+    """
     user_id = serializers.IntegerField()
 
 class UserSerializerEmail(serializers.ModelSerializer):
+    """
+    Serializer for user email.
+
+    This serializer is used to serialize and validate user email fields.
+
+    Attributes:
+        email (EmailField): Field for user email, expected to be in a valid email format.
+    """
     email = serializers.EmailField()
 
     class Meta:
@@ -19,20 +47,43 @@ class UserSerializerEmail(serializers.ModelSerializer):
         fields = ['email']
 
 class PrescriptionSerializer(serializers.ModelSerializer):
+    """
+    Serializer for Prescription model.
+
+    This serializer is used to serialize and validate prescription data before saving it to the database.
+
+    Attributes:
+        DATE_FORMAT (str): Expected date format for start_date and end_date fields.
+
+    Methods:
+        validate_drugs(self, drugs): Validate drugs data and link them with DrugEye model.
+        create(self, validated_data): Create a new prescription instance with validated data.
+    """
+
     DATE_FORMAT = '%Y-%m-%d'  # Specify the expected date format
 
     def validate_drugs(self, drugs):
         """
-        Validate drugs data and link them with DrugEye model
+        Validate drugs data and link them with DrugEye model.
+
+        Args:
+            drugs (dict): Dictionary containing drug data with trade names as keys.
+
+        Returns:
+            dict: Validated drugs data with DrugEye IDs added.
+
+        Raises:
+            serializers.ValidationError: If any drug data fails validation.
         """
         for trade_name, drug_data in drugs.items():
             try:
+                # Fetch the DrugEye instance based on the trade name
                 drug_eye = DrugEye.objects.get(TradeName=trade_name)
             except DrugEye.DoesNotExist:
                 raise serializers.ValidationError(f"Drug with trade name '{trade_name}' does not exist.")
 
-            # Validate the drug data fields
-            state = drug_data.get('state', 'new')  # Set default state to 'new' if not provided
+            # Validate drug data fields
+            state = drug_data.get('state', 'new')
             if state not in ['active', 'inactive', 'new']:
                 raise serializers.ValidationError(f"Invalid state '{state}' for drug '{trade_name}'.")
 
@@ -45,8 +96,8 @@ class PrescriptionSerializer(serializers.ModelSerializer):
 
             end_date = drug_data.get('end_date')
             if start_date and end_date:
-                start_date_obj = timezone.datetime.strptime(start_date, self.DATE_FORMAT).date()  # Convert to datetime.date
-                end_date_obj = timezone.datetime.strptime(end_date, self.DATE_FORMAT).date()  # Convert to datetime.date
+                start_date_obj = timezone.datetime.strptime(start_date, self.DATE_FORMAT).date()
+                end_date_obj = timezone.datetime.strptime(end_date, self.DATE_FORMAT).date()
                 if start_date_obj > end_date_obj:
                     raise serializers.ValidationError(f"End date must be after or equal to start date for drug '{trade_name}'.")
                 if start_date_obj < timezone.now().date():
@@ -73,6 +124,15 @@ class PrescriptionSerializer(serializers.ModelSerializer):
         return drugs
 
     def create(self, validated_data):
+        """
+        Create a new prescription instance with validated data.
+
+        Args:
+            validated_data (dict): Validated data for creating the prescription.
+
+        Returns:
+            Prescription: Newly created prescription instance.
+        """
         session = self.context.get('session')
         validated_data['doctor_id'] = self.context['request'].user.id
         validated_data['user_id'] = session.user_id
