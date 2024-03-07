@@ -159,8 +159,13 @@
 <span id="drugs-models-module"></span><h2>Drugs.models module<a class="headerlink" href="#module-Drugs.models" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="Drugs.models.DDIInteraction">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Drugs.models.</span></span><span class="sig-name descname"><span class="pre">DDIInteraction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drug1_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drug2_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drug1_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drug2_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interaction_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Drugs.models.DDIInteraction" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Drugs.models.</span></span><span class="sig-name descname"><span class="pre">DDIInteraction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Drugs.models.DDIInteraction" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></p>
+<p>Django model to represent drug-drug interactions.</p>
+<ul class="simple">
+<li><p>Inherits from the Django’s <cite>models.Model</cite> class.</p></li>
+<li><p>Represents a table in the database to store drug-drug interaction data.</p></li>
+</ul>
 <dl class="py exception">
 <dt class="sig sig-object py" id="Drugs.models.DDIInteraction.DoesNotExist">
 <em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#Drugs.models.DDIInteraction.DoesNotExist" title="Link to this definition"></a></dt>
@@ -228,10 +233,21 @@ object the first time, the query is executed.</p>
 </section>
 <section id="module-Drugs.views">
 <span id="drugs-views-module"></span><h2>Drugs.views module<a class="headerlink" href="#module-Drugs.views" title="Link to this heading"></a></h2>
+<p>This file contains API views for handling drug interaction checks and related functionalities.
+It includes views for checking drug interactions in a prescription, based on trade names of drugs,
+among all active prescriptions for a user, and for all user prescriptions. 
+These views are designed to provide information about potential drug interactions, if any are found,
+while ensuring proper authentication and authorization for patients and doctors.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="Drugs.views.DrugInteractionByTradeNameView">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Drugs.views.</span></span><span class="sig-name descname"><span class="pre">DrugInteractionByTradeNameView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Drugs.views.DrugInteractionByTradeNameView" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">APIView</span></code></p>
+<p>API view to check for drug interactions based on trade names of drugs.</p>
+<ul class="simple">
+<li><p>Inherits from APIView provided by Django REST Framework.</p></li>
+<li><p>Requires authentication using custom tokens for both patients and doctors.</p></li>
+<li><p>Requires the requesting user to be authenticated.</p></li>
+</ul>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Drugs.views.DrugInteractionByTradeNameView.authentication_classes">
 <span class="sig-name descname"><span class="pre">authentication_classes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[&lt;class</span> <span class="pre">'User.authentication.CustomTokenAuthentication'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'Doctor.authentication.DoctorCustomTokenAuthentication'&gt;]</span></em><a class="headerlink" href="#Drugs.views.DrugInteractionByTradeNameView.authentication_classes" title="Link to this definition"></a></dt>
@@ -240,17 +256,52 @@ object the first time, the query is executed.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="Drugs.views.DrugInteractionByTradeNameView.check_interaction">
 <span class="sig-name descname"><span class="pre">check_interaction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">components1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">components2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Drugs.views.DrugInteractionByTradeNameView.check_interaction" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Helper method to check for drug interactions between components of two drugs.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><ul class="simple">
+<li><p>components1 (list): A list of components of the first drug.</p></li>
+<li><p>components2 (list): A list of components of the second drug.</p></li>
+</ul>
+</dd>
+<dt>Returns:</dt><dd><ul class="simple">
+<li><p>list: A list of interaction types found between the two drugs’ components.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="Drugs.views.DrugInteractionByTradeNameView.get_drug_info">
 <span class="sig-name descname"><span class="pre">get_drug_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trade_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Drugs.views.DrugInteractionByTradeNameView.get_drug_info" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Helper method to fetch drug information from DrugEye based on trade name.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><ul class="simple">
+<li><p>trade_name (str): The trade name of the drug.</p></li>
+</ul>
+</dd>
+<dt>Returns:</dt><dd><ul class="simple">
+<li><p>dict or None: A dictionary containing drug information if found, else None.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="Drugs.views.DrugInteractionByTradeNameView.get_interactions">
 <span class="sig-name descname"><span class="pre">get_interactions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">component1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">component2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Drugs.views.DrugInteractionByTradeNameView.get_interactions" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Helper method to retrieve interactions between two components from the DDI database.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><ul class="simple">
+<li><p>component1 (str): The first drug component.</p></li>
+<li><p>component2 (str): The second drug component.</p></li>
+</ul>
+</dd>
+<dt>Returns:</dt><dd><ul class="simple">
+<li><p>list: A list of interaction types found between the two components.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Drugs.views.DrugInteractionByTradeNameView.permission_classes">
@@ -260,7 +311,18 @@ object the first time, the query is executed.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="Drugs.views.DrugInteractionByTradeNameView.post">
 <span class="sig-name descname"><span class="pre">post</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Drugs.views.DrugInteractionByTradeNameView.post" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Handles POST requests to check for drug interactions based on trade names of drugs.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><ul class="simple">
+<li><p>request (HttpRequest): The request object.</p></li>
+</ul>
+</dd>
+<dt>Returns:</dt><dd><ul class="simple">
+<li><p>Response: A response containing information about drug interactions, if any are found.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 
@@ -268,6 +330,12 @@ object the first time, the query is executed.</p>
 <dt class="sig sig-object py" id="Drugs.views.DrugInteractionCheckView">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Drugs.views.</span></span><span class="sig-name descname"><span class="pre">DrugInteractionCheckView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Drugs.views.DrugInteractionCheckView" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">APIView</span></code></p>
+<p>API view to check for drug interactions in a prescription.</p>
+<ul class="simple">
+<li><p>Inherits from APIView provided by Django REST Framework.</p></li>
+<li><p>Requires authentication using custom tokens for both patients and doctors.</p></li>
+<li><p>Requires the requesting user to be authenticated.</p></li>
+</ul>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Drugs.views.DrugInteractionCheckView.authentication_classes">
 <span class="sig-name descname"><span class="pre">authentication_classes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[&lt;class</span> <span class="pre">'User.authentication.CustomTokenAuthentication'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'Doctor.authentication.DoctorCustomTokenAuthentication'&gt;]</span></em><a class="headerlink" href="#Drugs.views.DrugInteractionCheckView.authentication_classes" title="Link to this definition"></a></dt>
@@ -276,7 +344,19 @@ object the first time, the query is executed.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="Drugs.views.DrugInteractionCheckView.check_interaction">
 <span class="sig-name descname"><span class="pre">check_interaction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">component1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">component2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Drugs.views.DrugInteractionCheckView.check_interaction" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Method to check for drug interactions between two drug components.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><ul class="simple">
+<li><p>component1 (str): The first drug component to check.</p></li>
+<li><p>component2 (str): The second drug component to check.</p></li>
+</ul>
+</dd>
+<dt>Returns:</dt><dd><ul class="simple">
+<li><p>str: The type of interaction found, if any.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Drugs.views.DrugInteractionCheckView.permission_classes">
@@ -286,7 +366,19 @@ object the first time, the query is executed.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="Drugs.views.DrugInteractionCheckView.post">
 <span class="sig-name descname"><span class="pre">post</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prescription_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Drugs.views.DrugInteractionCheckView.post" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Handles POST requests to check for drug interactions in a prescription.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><ul class="simple">
+<li><p>request (HttpRequest): The request object.</p></li>
+<li><p>prescription_id (int): The ID of the prescription to check for interactions.</p></li>
+</ul>
+</dd>
+<dt>Returns:</dt><dd><ul class="simple">
+<li><p>Response: A response containing information about drug interactions, if any are found.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 
@@ -294,6 +386,12 @@ object the first time, the query is executed.</p>
 <dt class="sig sig-object py" id="Drugs.views.DrugInteractionCheckViewForAllUserPrescriptions">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Drugs.views.</span></span><span class="sig-name descname"><span class="pre">DrugInteractionCheckViewForAllUserPrescriptions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Drugs.views.DrugInteractionCheckViewForAllUserPrescriptions" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">APIView</span></code></p>
+<p>API view to check for drug interactions among all active prescriptions for a user.</p>
+<ul class="simple">
+<li><p>Inherits from APIView provided by Django REST Framework.</p></li>
+<li><p>Requires authentication using custom tokens for doctors.</p></li>
+<li><p>Requires the requesting user to be authenticated.</p></li>
+</ul>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Drugs.views.DrugInteractionCheckViewForAllUserPrescriptions.authentication_classes">
 <span class="sig-name descname"><span class="pre">authentication_classes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[&lt;class</span> <span class="pre">'Doctor.authentication.DoctorCustomTokenAuthentication'&gt;]</span></em><a class="headerlink" href="#Drugs.views.DrugInteractionCheckViewForAllUserPrescriptions.authentication_classes" title="Link to this definition"></a></dt>
@@ -302,7 +400,19 @@ object the first time, the query is executed.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="Drugs.views.DrugInteractionCheckViewForAllUserPrescriptions.check_interaction">
 <span class="sig-name descname"><span class="pre">check_interaction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">component1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">component2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Drugs.views.DrugInteractionCheckViewForAllUserPrescriptions.check_interaction" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Helper method to check for interactions between two drug components.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><ul class="simple">
+<li><p>component1 (str): The first drug component.</p></li>
+<li><p>component2 (str): The second drug component.</p></li>
+</ul>
+</dd>
+<dt>Returns:</dt><dd><ul class="simple">
+<li><p>list: A list of interaction types found between the two components.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Drugs.views.DrugInteractionCheckViewForAllUserPrescriptions.permission_classes">
@@ -312,7 +422,18 @@ object the first time, the query is executed.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="Drugs.views.DrugInteractionCheckViewForAllUserPrescriptions.post">
 <span class="sig-name descname"><span class="pre">post</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Drugs.views.DrugInteractionCheckViewForAllUserPrescriptions.post" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Handles POST requests to check for drug interactions among all active prescriptions for a user.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><ul class="simple">
+<li><p>request (HttpRequest): The request object.</p></li>
+</ul>
+</dd>
+<dt>Returns:</dt><dd><ul class="simple">
+<li><p>Response: A response containing information about drug interactions, if any are found.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 
@@ -320,6 +441,12 @@ object the first time, the query is executed.</p>
 <dt class="sig sig-object py" id="Drugs.views.DrugInteractionCheckViewForUser">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Drugs.views.</span></span><span class="sig-name descname"><span class="pre">DrugInteractionCheckViewForUser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Drugs.views.DrugInteractionCheckViewForUser" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">APIView</span></code></p>
+<p>API view to check for drug interactions among all active prescriptions for a specific user.</p>
+<ul class="simple">
+<li><p>Inherits from APIView provided by Django REST Framework.</p></li>
+<li><p>Requires authentication using custom tokens for patients.</p></li>
+<li><p>Requires the requesting user to be authenticated.</p></li>
+</ul>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Drugs.views.DrugInteractionCheckViewForUser.authentication_classes">
 <span class="sig-name descname"><span class="pre">authentication_classes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[&lt;class</span> <span class="pre">'User.authentication.CustomTokenAuthentication'&gt;]</span></em><a class="headerlink" href="#Drugs.views.DrugInteractionCheckViewForUser.authentication_classes" title="Link to this definition"></a></dt>
@@ -328,7 +455,19 @@ object the first time, the query is executed.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="Drugs.views.DrugInteractionCheckViewForUser.check_interaction">
 <span class="sig-name descname"><span class="pre">check_interaction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">component1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">component2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Drugs.views.DrugInteractionCheckViewForUser.check_interaction" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Helper method to check for interactions between two drug components.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><ul class="simple">
+<li><p>component1 (str): The first drug component.</p></li>
+<li><p>component2 (str): The second drug component.</p></li>
+</ul>
+</dd>
+<dt>Returns:</dt><dd><ul class="simple">
+<li><p>list: A list of interaction types found between the two components.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Drugs.views.DrugInteractionCheckViewForUser.permission_classes">
@@ -338,7 +477,18 @@ object the first time, the query is executed.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="Drugs.views.DrugInteractionCheckViewForUser.post">
 <span class="sig-name descname"><span class="pre">post</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Drugs.views.DrugInteractionCheckViewForUser.post" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Handles POST requests to check for drug interactions among all active prescriptions for a specific user.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><ul class="simple">
+<li><p>request (HttpRequest): The request object.</p></li>
+</ul>
+</dd>
+<dt>Returns:</dt><dd><ul class="simple">
+<li><p>Response: A response containing information about drug interactions, if any are found.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 
