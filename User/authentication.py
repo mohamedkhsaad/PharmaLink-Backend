@@ -1,12 +1,27 @@
+"""
+The following class defines a custom token authentication mechanism.
+"""
+
+# Import necessary modules and classes
 from django.contrib.auth.backends import BaseBackend
 from rest_framework.authentication import BaseAuthentication, get_authorization_header
 from rest_framework.exceptions import AuthenticationFailed
 from .models import CustomToken
 from django.contrib.auth import get_user_model
 
+# Custom token authentication class
 class CustomTokenAuthentication(BaseAuthentication):
     """
     Custom token authentication class.
+    
+    - Extends BaseAuthentication to implement custom token-based authentication logic.
+    - Defines a keyword used for token authentication in the HTTP header.
+    - Implements the authenticate() method to authenticate the user based on the provided token.
+    - Checks the authorization header for the presence of the custom token keyword.
+    - Decodes and retrieves the token from the header, then validates it against stored custom tokens.
+    - Retrieves the associated user based on the token's email.
+    - Raises AuthenticationFailed exceptions for various error scenarios, such as invalid token header, missing credentials, invalid token, or invalid user.
+    - Implements the authenticate_header() method to specify the authentication header keyword.
     """
     keyword = 'PatientCustomToken'
 

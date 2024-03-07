@@ -1,5 +1,8 @@
+"""
+The following views implement various functionalities related to users in the application.
+"""
+# Import necessary modules and classes
 from django.shortcuts import render
-# Create your views here.
 from rest_framework import generics, status
 from rest_framework.response import Response
 from User.models import *
@@ -20,10 +23,16 @@ from email.mime.text import MIMEText
 from django.core.mail import send_mail
 from rest_framework.generics import UpdateAPIView
 
+# View for user signup
 class UserSignupView(generics.CreateAPIView):
     """
     This view allows users to sign up by providing their details.
     Upon successful signup, a verification email is sent to the user's provided email address.
+    
+    - Handles HTTP POST requests to create a new user account.
+    - Validates user input data using the UserSerializer.
+    - Checks for existing usernames and emails to prevent duplicates.
+    - Upon successful signup, sends a verification email containing a verification link.
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -84,9 +93,14 @@ class UserSignupView(generics.CreateAPIView):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+# View for email verification
 class EmailVerificationView(APIView):
     """
     This view handles email verification requests.
+    
+    - Handles HTTP GET requests to mark the user's email as verified.
+    - Requires the user ID in the URL to identify the user.
+    - Sets the 'is_verified' flag to True in the User model.
     """
     def get(self, request, user_id):
         """
@@ -103,9 +117,15 @@ class EmailVerificationView(APIView):
         # Respond with success message
         return Response({'message': 'Email verified successfully'}, status=status.HTTP_200_OK)
 
+# View for user login
 class CustomTokenLoginView(APIView):
     """
     This view handles user login using custom tokens.
+    
+    - Handles HTTP POST requests for user login.
+    - Validates user credentials (email and password).
+    - Generates a custom token for authenticated users.
+    - Checks if the user's email is verified before allowing login.
     """
     serializer_class = AuthTokenSerializer
 
@@ -153,10 +173,15 @@ class CustomTokenLoginView(APIView):
         else:
             # Return error response if password is incorrect
             return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
-
+        
+# View for user logout
 class UserLogoutView(APIView):
     """
     This view logs out the user by deleting associated tokens.
+    
+    - Handles HTTP POST requests for user logout.
+    - Requires user authentication using custom token authentication.
+    - Deletes all tokens associated with the authenticated user.
     """
     permission_classes = [IsAuthenticated]
 
@@ -176,9 +201,15 @@ class UserLogoutView(APIView):
             # Return error response if no tokens found for the user
             return Response({'error': 'No tokens found for the user'}, status=status.HTTP_400_BAD_REQUEST)
         
+# View for updating user profile
 class UserUpdateView(generics.UpdateAPIView):
     """
     This view allows authenticated users to update their profile information.
+    
+    - Handles HTTP PUT requests to update user profile information.
+    - Requires user authentication using custom token authentication.
+    - Retrieves the authenticated user object.
+    - Validates and updates user data using the UserSerializer.
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -215,10 +246,15 @@ class UserUpdateView(generics.UpdateAPIView):
         """
         serializer.save()
 
+# View for password reset request
 class PasswordResetRequestView(GenericAPIView):
     """
     This view allows users to request a password reset by providing their email address.
     Upon successful request, a password reset email is sent to the user's provided email address.
+    
+    - Handles HTTP POST requests for password reset requests.
+    - Validates the email provided by the user.
+    - Sends a password reset email containing a reset link to the user's email address.
     """
     serializer_class = PasswordResetRequestSerializer
 
@@ -280,9 +316,14 @@ class PasswordResetRequestView(GenericAPIView):
     #     else:
     #         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+# View for password reset
 class PasswordResetView(UpdateAPIView):
     """
     This view allows any user to reset their password.
+    
+    - Handles HTTP PUT requests for password reset.
+    - Validates the new password provided by the user.
+    - Updates the user's password in the database upon successful validation.
     """
     queryset = User.objects.all()
     permission_classes = [AllowAny]  # Allow any user to reset their password
@@ -326,9 +367,14 @@ class PasswordResetView(UpdateAPIView):
             # Return error response if new password is not provided
             return Response({"error": "New password not provided."}, status=status.HTTP_400_BAD_REQUEST)
 
+# View for retrieving user information
 class UserInfoView(APIView):
     """
     This view retrieves user information based on the provided user ID.
+    
+    - Handles HTTP GET requests to retrieve user information.
+    - Requires the user ID in the URL to identify the user.
+    - Retrieves user data from the User model and serializes it using the UserSerializer.
     """
     def get(self, request, user_id):
         """

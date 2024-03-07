@@ -1,12 +1,25 @@
+"""
+The following models define the structure for user data and custom tokens used for user authentication.
+"""
+
+# Import necessary modules and classes
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.core.validators import MinLengthValidator, RegexValidator
 import secrets
 from django.contrib.auth.models import AbstractUser, PermissionsMixin
 
+# Custom user model representing a user of the application
 class User(AbstractUser, PermissionsMixin):
     """
     Custom user model representing a user of the application.
+    
+    - Extends AbstractUser and PermissionsMixin to inherit authentication and permission-related fields and methods.
+    - Defines fields for user data such as first name, last name, username, password, birthdate, email, phone, gender, chronic disease, etc.
+    - Provides custom validation for the password field using a RegexValidator to enforce specific criteria (minimum length, lowercase, uppercase, digit, special character).
+    - Includes choices for the gender field and chronic disease field.
+    - Implements a clean() method to perform additional validation, ensuring the password meets the required criteria.
+    - Overrides the __str__() method to provide a string representation of the user object (email).
     """
     id = models.AutoField(primary_key=True)
     fname = models.CharField(max_length=255)
@@ -60,9 +73,16 @@ class User(AbstractUser, PermissionsMixin):
         """
         return self.email
 
+# Custom token model representing tokens used for user authentication
 class CustomToken(models.Model):
     """
     Custom token model representing tokens used for user authentication.
+    
+    - Defines fields for token key, associated user, email, and creation timestamp.
+    - Ensures token key uniqueness and sets it as a random hex string if not provided.
+    - Sets the associated email from the user object if not provided.
+    - Overrides the save() method to handle token key generation and email assignment.
+    - Provides verbose names for the model and its plural form for better readability in the admin interface.
     """
     key = models.CharField(max_length=64, unique=True, blank=True)
     user = models.ForeignKey(User, related_name='custom_tokens', on_delete=models.CASCADE)
