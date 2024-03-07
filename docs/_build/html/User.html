@@ -207,11 +207,22 @@
 </section>
 <section id="module-User.authentication">
 <span id="user-authentication-module"></span><h2>User.authentication module<a class="headerlink" href="#module-User.authentication" title="Link to this heading"></a></h2>
+<p>The following class defines a custom token authentication mechanism.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="User.authentication.CustomTokenAuthentication">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">User.authentication.</span></span><span class="sig-name descname"><span class="pre">CustomTokenAuthentication</span></span><a class="headerlink" href="#User.authentication.CustomTokenAuthentication" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseAuthentication</span></code></p>
 <p>Custom token authentication class.</p>
+<ul class="simple">
+<li><p>Extends BaseAuthentication to implement custom token-based authentication logic.</p></li>
+<li><p>Defines a keyword used for token authentication in the HTTP header.</p></li>
+<li><p>Implements the authenticate() method to authenticate the user based on the provided token.</p></li>
+<li><p>Checks the authorization header for the presence of the custom token keyword.</p></li>
+<li><p>Decodes and retrieves the token from the header, then validates it against stored custom tokens.</p></li>
+<li><p>Retrieves the associated user based on the token’s email.</p></li>
+<li><p>Raises AuthenticationFailed exceptions for various error scenarios, such as invalid token header, missing credentials, invalid token, or invalid user.</p></li>
+<li><p>Implements the authenticate_header() method to specify the authentication header keyword.</p></li>
+</ul>
 <dl class="py method">
 <dt class="sig sig-object py" id="User.authentication.CustomTokenAuthentication.authenticate">
 <span class="sig-name descname"><span class="pre">authenticate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#User.authentication.CustomTokenAuthentication.authenticate" title="Link to this definition"></a></dt>
@@ -237,11 +248,19 @@
 </section>
 <section id="module-User.models">
 <span id="user-models-module"></span><h2>User.models module<a class="headerlink" href="#module-User.models" title="Link to this heading"></a></h2>
+<p>The following models define the structure for user data and custom tokens used for user authentication.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="User.models.CustomToken">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">User.models.</span></span><span class="sig-name descname"><span class="pre">CustomToken</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#User.models.CustomToken" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></p>
 <p>Custom token model representing tokens used for user authentication.</p>
+<ul class="simple">
+<li><p>Defines fields for token key, associated user, email, and creation timestamp.</p></li>
+<li><p>Ensures token key uniqueness and sets it as a random hex string if not provided.</p></li>
+<li><p>Sets the associated email from the user object if not provided.</p></li>
+<li><p>Overrides the save() method to handle token key generation and email assignment.</p></li>
+<li><p>Provides verbose names for the model and its plural form for better readability in the admin interface.</p></li>
+</ul>
 <dl class="py exception">
 <dt class="sig sig-object py" id="User.models.CustomToken.DoesNotExist">
 <em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#User.models.CustomToken.DoesNotExist" title="Link to this definition"></a></dt>
@@ -328,6 +347,14 @@ one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">User.models.</span></span><span class="sig-name descname"><span class="pre">User</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#User.models.User" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractUser</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">PermissionsMixin</span></code></p>
 <p>Custom user model representing a user of the application.</p>
+<ul class="simple">
+<li><p>Extends AbstractUser and PermissionsMixin to inherit authentication and permission-related fields and methods.</p></li>
+<li><p>Defines fields for user data such as first name, last name, username, password, birthdate, email, phone, gender, chronic disease, etc.</p></li>
+<li><p>Provides custom validation for the password field using a RegexValidator to enforce specific criteria (minimum length, lowercase, uppercase, digit, special character).</p></li>
+<li><p>Includes choices for the gender field and chronic disease field.</p></li>
+<li><p>Implements a clean() method to perform additional validation, ensuring the password meets the required criteria.</p></li>
+<li><p>Overrides the __str__() method to provide a string representation of the user object (email).</p></li>
+</ul>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="User.models.User.CHRONIC_DISEASE_CHOICES">
 <span class="sig-name descname"><span class="pre">CHRONIC_DISEASE_CHOICES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[('ALS',</span> <span class="pre">&quot;ALS</span> <span class="pre">(Lou</span> <span class="pre">Gehrig's</span> <span class="pre">Disease)&quot;),</span> <span class="pre">('Alzheimer',</span> <span class="pre">&quot;Alzheimer's</span> <span class="pre">Disease</span> <span class="pre">and</span> <span class="pre">other</span> <span class="pre">Dementias&quot;)]</span></em><a class="headerlink" href="#User.models.User.CHRONIC_DISEASE_CHOICES" title="Link to this definition"></a></dt>
@@ -616,11 +643,17 @@ object the first time, the query is executed.</p>
 </section>
 <section id="module-User.serializers">
 <span id="user-serializers-module"></span><h2>User.serializers module<a class="headerlink" href="#module-User.serializers" title="Link to this heading"></a></h2>
+<p>The following serializers define the structure for data serialization and validation 
+related to the User model and user authentication.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="User.serializers.AuthTokenSerializer">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">User.serializers.</span></span><span class="sig-name descname"><span class="pre">AuthTokenSerializer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#User.serializers.AuthTokenSerializer" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Serializer</span></code></p>
 <p>Serializer for user authentication token.</p>
+<ul class="simple">
+<li><p>Defines the structure for serializing user authentication data.</p></li>
+<li><p>Includes fields for email and password, with password input type set to ‘password’.</p></li>
+</ul>
 </dd></dl>
 
 <dl class="py class">
@@ -628,6 +661,10 @@ object the first time, the query is executed.</p>
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">User.serializers.</span></span><span class="sig-name descname"><span class="pre">LoginSerializer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#User.serializers.LoginSerializer" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Serializer</span></code></p>
 <p>Serializer for user login.</p>
+<ul class="simple">
+<li><p>Defines the structure for serializing user login data.</p></li>
+<li><p>Includes fields for username/email and password.</p></li>
+</ul>
 </dd></dl>
 
 <dl class="py class">
@@ -635,6 +672,10 @@ object the first time, the query is executed.</p>
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">User.serializers.</span></span><span class="sig-name descname"><span class="pre">PasswordResetRequestSerializer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#User.serializers.PasswordResetRequestSerializer" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ModelSerializer</span></code></p>
 <p>Serializer for password reset request.</p>
+<ul class="simple">
+<li><p>Defines the structure for serializing password reset requests.</p></li>
+<li><p>Includes a field for the user’s email.</p></li>
+</ul>
 <dl class="py class">
 <dt class="sig sig-object py" id="User.serializers.PasswordResetRequestSerializer.Meta">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Meta</span></span><a class="headerlink" href="#User.serializers.PasswordResetRequestSerializer.Meta" title="Link to this definition"></a></dt>
@@ -659,6 +700,11 @@ object the first time, the query is executed.</p>
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">User.serializers.</span></span><span class="sig-name descname"><span class="pre">PasswordUpdateSerializer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#User.serializers.PasswordUpdateSerializer" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Serializer</span></code></p>
 <p>Serializer for updating user password.</p>
+<ul class="simple">
+<li><p>Defines the structure for serializing data required to update user passwords.</p></li>
+<li><p>Includes a field for the new password.</p></li>
+<li><p>Overrides the ‘update’ method to set the new password and save the instance.</p></li>
+</ul>
 <dl class="py method">
 <dt class="sig sig-object py" id="User.serializers.PasswordUpdateSerializer.update">
 <span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validated_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#User.serializers.PasswordUpdateSerializer.update" title="Link to this definition"></a></dt>
@@ -672,6 +718,11 @@ object the first time, the query is executed.</p>
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">User.serializers.</span></span><span class="sig-name descname"><span class="pre">UserSerializer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#User.serializers.UserSerializer" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ModelSerializer</span></code></p>
 <p>Serializer for the User model.</p>
+<ul class="simple">
+<li><p>Defines the structure for serializing User model fields.</p></li>
+<li><p>Specifies the fields to be serialized.</p></li>
+<li><p>Sets ‘write_only’ attribute for the password field to ensure it’s not included in responses.</p></li>
+</ul>
 <dl class="py class">
 <dt class="sig sig-object py" id="User.serializers.UserSerializer.Meta">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Meta</span></span><a class="headerlink" href="#User.serializers.UserSerializer.Meta" title="Link to this definition"></a></dt>
@@ -702,11 +753,18 @@ object the first time, the query is executed.</p>
 </section>
 <section id="module-User.views">
 <span id="user-views-module"></span><h2>User.views module<a class="headerlink" href="#module-User.views" title="Link to this heading"></a></h2>
+<p>The following views implement various functionalities related to users in the application.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="User.views.CustomTokenLoginView">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">User.views.</span></span><span class="sig-name descname"><span class="pre">CustomTokenLoginView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#User.views.CustomTokenLoginView" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">APIView</span></code></p>
 <p>This view handles user login using custom tokens.</p>
+<ul class="simple">
+<li><p>Handles HTTP POST requests for user login.</p></li>
+<li><p>Validates user credentials (email and password).</p></li>
+<li><p>Generates a custom token for authenticated users.</p></li>
+<li><p>Checks if the user’s email is verified before allowing login.</p></li>
+</ul>
 <dl class="py method">
 <dt class="sig sig-object py" id="User.views.CustomTokenLoginView.post">
 <span class="sig-name descname"><span class="pre">post</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#User.views.CustomTokenLoginView.post" title="Link to this definition"></a></dt>
@@ -727,6 +785,11 @@ Validates the provided credentials and generates a custom token for authenticate
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">User.views.</span></span><span class="sig-name descname"><span class="pre">EmailVerificationView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#User.views.EmailVerificationView" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">APIView</span></code></p>
 <p>This view handles email verification requests.</p>
+<ul class="simple">
+<li><p>Handles HTTP GET requests to mark the user’s email as verified.</p></li>
+<li><p>Requires the user ID in the URL to identify the user.</p></li>
+<li><p>Sets the ‘is_verified’ flag to True in the User model.</p></li>
+</ul>
 <dl class="py method">
 <dt class="sig sig-object py" id="User.views.EmailVerificationView.get">
 <span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#User.views.EmailVerificationView.get" title="Link to this definition"></a></dt>
@@ -742,6 +805,11 @@ Marks the user with the provided user ID as verified.</p>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">GenericAPIView</span></code></p>
 <p>This view allows users to request a password reset by providing their email address.
 Upon successful request, a password reset email is sent to the user’s provided email address.</p>
+<ul class="simple">
+<li><p>Handles HTTP POST requests for password reset requests.</p></li>
+<li><p>Validates the email provided by the user.</p></li>
+<li><p>Sends a password reset email containing a reset link to the user’s email address.</p></li>
+</ul>
 <dl class="py method">
 <dt class="sig sig-object py" id="User.views.PasswordResetRequestView.post">
 <span class="sig-name descname"><span class="pre">post</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#User.views.PasswordResetRequestView.post" title="Link to this definition"></a></dt>
@@ -768,6 +836,11 @@ Sends a password reset email to the user’s provided email address.</p>
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">User.views.</span></span><span class="sig-name descname"><span class="pre">PasswordResetView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#User.views.PasswordResetView" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">UpdateAPIView</span></code></p>
 <p>This view allows any user to reset their password.</p>
+<ul class="simple">
+<li><p>Handles HTTP PUT requests for password reset.</p></li>
+<li><p>Validates the new password provided by the user.</p></li>
+<li><p>Updates the user’s password in the database upon successful validation.</p></li>
+</ul>
 <dl class="py method">
 <dt class="sig sig-object py" id="User.views.PasswordResetView.get_object">
 <span class="sig-name descname"><span class="pre">get_object</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#User.views.PasswordResetView.get_object" title="Link to this definition"></a></dt>
@@ -804,6 +877,11 @@ Validates the new password and updates the user’s password.</p>
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">User.views.</span></span><span class="sig-name descname"><span class="pre">UserInfoView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#User.views.UserInfoView" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">APIView</span></code></p>
 <p>This view retrieves user information based on the provided user ID.</p>
+<ul class="simple">
+<li><p>Handles HTTP GET requests to retrieve user information.</p></li>
+<li><p>Requires the user ID in the URL to identify the user.</p></li>
+<li><p>Retrieves user data from the User model and serializes it using the UserSerializer.</p></li>
+</ul>
 <dl class="py method">
 <dt class="sig sig-object py" id="User.views.UserInfoView.get">
 <span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#User.views.UserInfoView.get" title="Link to this definition"></a></dt>
@@ -817,6 +895,11 @@ Validates the new password and updates the user’s password.</p>
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">User.views.</span></span><span class="sig-name descname"><span class="pre">UserLogoutView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#User.views.UserLogoutView" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">APIView</span></code></p>
 <p>This view logs out the user by deleting associated tokens.</p>
+<ul class="simple">
+<li><p>Handles HTTP POST requests for user logout.</p></li>
+<li><p>Requires user authentication using custom token authentication.</p></li>
+<li><p>Deletes all tokens associated with the authenticated user.</p></li>
+</ul>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="User.views.UserLogoutView.permission_classes">
 <span class="sig-name descname"><span class="pre">permission_classes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[&lt;class</span> <span class="pre">'rest_framework.permissions.IsAuthenticated'&gt;]</span></em><a class="headerlink" href="#User.views.UserLogoutView.permission_classes" title="Link to this definition"></a></dt>
@@ -837,6 +920,12 @@ Deletes all tokens associated with the authenticated user.</p>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">CreateAPIView</span></code></p>
 <p>This view allows users to sign up by providing their details.
 Upon successful signup, a verification email is sent to the user’s provided email address.</p>
+<ul class="simple">
+<li><p>Handles HTTP POST requests to create a new user account.</p></li>
+<li><p>Validates user input data using the UserSerializer.</p></li>
+<li><p>Checks for existing usernames and emails to prevent duplicates.</p></li>
+<li><p>Upon successful signup, sends a verification email containing a verification link.</p></li>
+</ul>
 <dl class="py method">
 <dt class="sig sig-object py" id="User.views.UserSignupView.create">
 <span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#User.views.UserSignupView.create" title="Link to this definition"></a></dt>
@@ -869,6 +958,12 @@ Sends verification email upon successful signup.</p>
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">User.views.</span></span><span class="sig-name descname"><span class="pre">UserUpdateView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#User.views.UserUpdateView" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">UpdateAPIView</span></code></p>
 <p>This view allows authenticated users to update their profile information.</p>
+<ul class="simple">
+<li><p>Handles HTTP PUT requests to update user profile information.</p></li>
+<li><p>Requires user authentication using custom token authentication.</p></li>
+<li><p>Retrieves the authenticated user object.</p></li>
+<li><p>Validates and updates user data using the UserSerializer.</p></li>
+</ul>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="User.views.UserUpdateView.authentication_classes">
 <span class="sig-name descname"><span class="pre">authentication_classes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[&lt;class</span> <span class="pre">'User.authentication.CustomTokenAuthentication'&gt;]</span></em><a class="headerlink" href="#User.views.UserUpdateView.authentication_classes" title="Link to this definition"></a></dt>
