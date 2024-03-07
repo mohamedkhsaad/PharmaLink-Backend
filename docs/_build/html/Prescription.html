@@ -201,8 +201,13 @@
 <span id="prescription-models-module"></span><h2>Prescription.models module<a class="headerlink" href="#module-Prescription.models" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="Prescription.models.Drug">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Prescription.models.</span></span><span class="sig-name descname"><span class="pre">Drug</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">DrugEye</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">quantity</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">quantity_unit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rate_unit</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Prescription.models.Drug" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Prescription.models.</span></span><span class="sig-name descname"><span class="pre">Drug</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Prescription.models.Drug" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></p>
+<p>Django model to represent drugs prescribed to users.</p>
+<ul class="simple">
+<li><p>Inherits from the Django’s <cite>models.Model</cite> class.</p></li>
+<li><p>Represents a table in the database to store drug prescription details.</p></li>
+</ul>
 <dl class="py exception">
 <dt class="sig sig-object py" id="Prescription.models.Drug.DoesNotExist">
 <em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#Prescription.models.Drug.DoesNotExist" title="Link to this definition"></a></dt>
@@ -235,7 +240,7 @@ one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Prescription.models.Drug.STATE_CHOICES">
-<span class="sig-name descname"><span class="pre">STATE_CHOICES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[('active',</span> <span class="pre">'Active'),</span> <span class="pre">('inactive',</span> <span class="pre">'Inactive'),</span> <span class="pre">('new',</span> <span class="pre">'new')]</span></em><a class="headerlink" href="#Prescription.models.Drug.STATE_CHOICES" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">STATE_CHOICES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[('active',</span> <span class="pre">'Active'),</span> <span class="pre">('inactive',</span> <span class="pre">'Inactive'),</span> <span class="pre">('new',</span> <span class="pre">'New')]</span></em><a class="headerlink" href="#Prescription.models.Drug.STATE_CHOICES" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -328,8 +333,13 @@ object the first time, the query is executed.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="Prescription.models.DrugEye">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Prescription.models.</span></span><span class="sig-name descname"><span class="pre">DrugEye</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">TradeName</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ID</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ScName</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">HOWMUCH</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Unit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">CLASSIFICATION</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Prescription.models.DrugEye" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Prescription.models.</span></span><span class="sig-name descname"><span class="pre">DrugEye</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Prescription.models.DrugEye" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></p>
+<p>Django model to represent drug information obtained from DrugEye.</p>
+<ul class="simple">
+<li><p>Inherits from the Django’s <cite>models.Model</cite> class.</p></li>
+<li><p>Represents a table in the database to store drug information.</p></li>
+</ul>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Prescription.models.DrugEye.CLASSIFICATION">
 <span class="sig-name descname"><span class="pre">CLASSIFICATION</span></span><a class="headerlink" href="#Prescription.models.DrugEye.CLASSIFICATION" title="Link to this definition"></a></dt>
@@ -415,8 +425,13 @@ object the first time, the query is executed.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="Prescription.models.Prescription">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Prescription.models.</span></span><span class="sig-name descname"><span class="pre">Prescription</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">session</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">doctor_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">created_at</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drugs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Prescription.models.Prescription" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Prescription.models.</span></span><span class="sig-name descname"><span class="pre">Prescription</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Prescription.models.Prescription" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></p>
+<p>Django model to represent prescriptions.</p>
+<ul class="simple">
+<li><p>Inherits from the Django’s <cite>models.Model</cite> class.</p></li>
+<li><p>Represents a table in the database to store prescription details.</p></li>
+</ul>
 <dl class="py exception">
 <dt class="sig sig-object py" id="Prescription.models.Prescription.DoesNotExist">
 <em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#Prescription.models.Prescription.DoesNotExist" title="Link to this definition"></a></dt>
@@ -501,8 +516,13 @@ object the first time, the query is executed.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="Prescription.models.Session">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Prescription.models.</span></span><span class="sig-name descname"><span class="pre">Session</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">doctor_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">otp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verified</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ended</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">created_at</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Prescription.models.Session" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Prescription.models.</span></span><span class="sig-name descname"><span class="pre">Session</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Prescription.models.Session" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></p>
+<p>Django model to represent user sessions.</p>
+<ul class="simple">
+<li><p>Inherits from the Django’s <cite>models.Model</cite> class.</p></li>
+<li><p>Represents a table in the database to store session information.</p></li>
+</ul>
 <dl class="py exception">
 <dt class="sig sig-object py" id="Prescription.models.Session.DoesNotExist">
 <em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#Prescription.models.Session.DoesNotExist" title="Link to this definition"></a></dt>
@@ -603,6 +623,17 @@ object the first time, the query is executed.</p>
 <dt class="sig sig-object py" id="Prescription.serializers.DrugEyeSerializer">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Prescription.serializers.</span></span><span class="sig-name descname"><span class="pre">DrugEyeSerializer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Prescription.serializers.DrugEyeSerializer" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ModelSerializer</span></code></p>
+<p>Serializer for the DrugEye model.</p>
+<p>This serializer is used to convert DrugEye model instances into JSON representations,
+making them suitable for transmission over HTTP as responses from API endpoints.</p>
+<dl>
+<dt>Attributes:</dt><dd><p>model (class): The DrugEye model class to be serialized.
+fields (list or tuple): Specifies the fields to include in the serialized output.</p>
+<blockquote>
+<div><p>Using ‘__all__’ includes all fields from the model.</p>
+</div></blockquote>
+</dd>
+</dl>
 <dl class="py class">
 <dt class="sig sig-object py" id="Prescription.serializers.DrugEyeSerializer.Meta">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Meta</span></span><a class="headerlink" href="#Prescription.serializers.DrugEyeSerializer.Meta" title="Link to this definition"></a></dt>
@@ -626,6 +657,15 @@ object the first time, the query is executed.</p>
 <dt class="sig sig-object py" id="Prescription.serializers.PrescriptionSerializer">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Prescription.serializers.</span></span><span class="sig-name descname"><span class="pre">PrescriptionSerializer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Prescription.serializers.PrescriptionSerializer" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ModelSerializer</span></code></p>
+<p>Serializer for Prescription model.</p>
+<p>This serializer is used to serialize and validate prescription data before saving it to the database.</p>
+<dl class="simple">
+<dt>Attributes:</dt><dd><p>DATE_FORMAT (str): Expected date format for start_date and end_date fields.</p>
+</dd>
+<dt>Methods:</dt><dd><p>validate_drugs(self, drugs): Validate drugs data and link them with DrugEye model.
+create(self, validated_data): Create a new prescription instance with validated data.</p>
+</dd>
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Prescription.serializers.PrescriptionSerializer.DATE_FORMAT">
 <span class="sig-name descname"><span class="pre">DATE_FORMAT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'%Y-%m-%d'</span></em><a class="headerlink" href="#Prescription.serializers.PrescriptionSerializer.DATE_FORMAT" title="Link to this definition"></a></dt>
@@ -651,30 +691,27 @@ object the first time, the query is executed.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="Prescription.serializers.PrescriptionSerializer.create">
 <span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">validated_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Prescription.serializers.PrescriptionSerializer.create" title="Link to this definition"></a></dt>
-<dd><p>We have a bit of extra checking around this in order to provide
-descriptive messages when something goes wrong, but this method is
-essentially just:</p>
-<blockquote>
-<div><p>return ExampleModel.objects.create(<a href="#id1"><span class="problematic" id="id2">**</span></a>validated_data)</p>
-</div></blockquote>
-<p>If there are many to many fields present on the instance then they
-cannot be set until the model is instantiated, in which case the
-implementation is like so:</p>
-<blockquote>
-<div><p>example_relationship = validated_data.pop(‘example_relationship’)
-instance = ExampleModel.objects.create(<a href="#id3"><span class="problematic" id="id4">**</span></a>validated_data)
-instance.example_relationship = example_relationship
-return instance</p>
-</div></blockquote>
-<p>The default implementation also does not handle nested relationships.
-If you want to support writable nested relationships you’ll need
-to write an explicit <cite>.create()</cite> method.</p>
+<dd><p>Create a new prescription instance with validated data.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>validated_data (dict): Validated data for creating the prescription.</p>
+</dd>
+<dt>Returns:</dt><dd><p>Prescription: Newly created prescription instance.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="Prescription.serializers.PrescriptionSerializer.validate_drugs">
 <span class="sig-name descname"><span class="pre">validate_drugs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">drugs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Prescription.serializers.PrescriptionSerializer.validate_drugs" title="Link to this definition"></a></dt>
-<dd><p>Validate drugs data and link them with DrugEye model</p>
+<dd><p>Validate drugs data and link them with DrugEye model.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>drugs (dict): Dictionary containing drug data with trade names as keys.</p>
+</dd>
+<dt>Returns:</dt><dd><p>dict: Validated drugs data with DrugEye IDs added.</p>
+</dd>
+<dt>Raises:</dt><dd><p>serializers.ValidationError: If any drug data fails validation.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -683,12 +720,24 @@ to write an explicit <cite>.create()</cite> method.</p>
 <dt class="sig sig-object py" id="Prescription.serializers.UserIdSerializer">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Prescription.serializers.</span></span><span class="sig-name descname"><span class="pre">UserIdSerializer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Prescription.serializers.UserIdSerializer" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Serializer</span></code></p>
+<p>Serializer for validating user ID.</p>
+<p>This serializer is used to validate user IDs provided in API requests.</p>
+<dl class="simple">
+<dt>Attributes:</dt><dd><p>user_id (IntegerField): Field for user ID, expected to be an integer.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="Prescription.serializers.UserSerializerEmail">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Prescription.serializers.</span></span><span class="sig-name descname"><span class="pre">UserSerializerEmail</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Prescription.serializers.UserSerializerEmail" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ModelSerializer</span></code></p>
+<p>Serializer for user email.</p>
+<p>This serializer is used to serialize and validate user email fields.</p>
+<dl class="simple">
+<dt>Attributes:</dt><dd><p>email (EmailField): Field for user email, expected to be in a valid email format.</p>
+</dd>
+</dl>
 <dl class="py class">
 <dt class="sig sig-object py" id="Prescription.serializers.UserSerializerEmail.Meta">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Meta</span></span><a class="headerlink" href="#Prescription.serializers.UserSerializerEmail.Meta" title="Link to this definition"></a></dt>
@@ -748,10 +797,22 @@ For demonstration purposes, always return True.</p>
 </section>
 <section id="module-Prescription.views">
 <span id="prescription-views-module"></span><h2>Prescription.views module<a class="headerlink" href="#module-Prescription.views" title="Link to this heading"></a></h2>
+<p>The following views implement various functionalities related to prescriptions in the application.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="Prescription.views.ActivateDrugView">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Prescription.views.</span></span><span class="sig-name descname"><span class="pre">ActivateDrugView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Prescription.views.ActivateDrugView" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">APIView</span></code></p>
+<p>View for activating a specific drug in a prescription.</p>
+<ul class="simple">
+<li><p>Requires authentication using CustomTokenAuthentication.</p></li>
+<li><p>Requires the user to be authenticated.</p></li>
+<li><p>Handles POST requests to activate a drug in a prescription.</p></li>
+</ul>
+<dl class="simple">
+<dt>Attributes:</dt><dd><p>permission_classes (list): List containing IsAuthenticated permission class.
+authentication_classes (list): List containing CustomTokenAuthentication authentication class.</p>
+</dd>
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Prescription.views.ActivateDrugView.authentication_classes">
 <span class="sig-name descname"><span class="pre">authentication_classes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[&lt;class</span> <span class="pre">'User.authentication.CustomTokenAuthentication'&gt;]</span></em><a class="headerlink" href="#Prescription.views.ActivateDrugView.authentication_classes" title="Link to this definition"></a></dt>
@@ -765,7 +826,16 @@ For demonstration purposes, always return True.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="Prescription.views.ActivateDrugView.post">
 <span class="sig-name descname"><span class="pre">post</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prescription_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drug_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Prescription.views.ActivateDrugView.post" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>POST method to activate a specific drug in a prescription.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>request (Request): HTTP request object.
+prescription_id (int): ID of the prescription containing the drug.
+drug_name (str): Name of the drug to activate.</p>
+</dd>
+<dt>Returns:</dt><dd><p>Response: JSON response containing activation status of the drug or error message.</p>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 
@@ -773,6 +843,17 @@ For demonstration purposes, always return True.</p>
 <dt class="sig sig-object py" id="Prescription.views.ActivatePrescriptionView">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Prescription.views.</span></span><span class="sig-name descname"><span class="pre">ActivatePrescriptionView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Prescription.views.ActivatePrescriptionView" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">APIView</span></code></p>
+<p>View for activating drugs in a prescription.</p>
+<ul class="simple">
+<li><p>Requires authentication using CustomTokenAuthentication.</p></li>
+<li><p>Requires the user to be authenticated.</p></li>
+<li><p>Handles POST requests to activate drugs in a prescription.</p></li>
+</ul>
+<dl class="simple">
+<dt>Attributes:</dt><dd><p>permission_classes (list): List containing IsAuthenticated permission class.
+authentication_classes (list): List containing CustomTokenAuthentication authentication class.</p>
+</dd>
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Prescription.views.ActivatePrescriptionView.authentication_classes">
 <span class="sig-name descname"><span class="pre">authentication_classes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[&lt;class</span> <span class="pre">'User.authentication.CustomTokenAuthentication'&gt;]</span></em><a class="headerlink" href="#Prescription.views.ActivatePrescriptionView.authentication_classes" title="Link to this definition"></a></dt>
@@ -786,7 +867,15 @@ For demonstration purposes, always return True.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="Prescription.views.ActivatePrescriptionView.post">
 <span class="sig-name descname"><span class="pre">post</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prescription_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Prescription.views.ActivatePrescriptionView.post" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>POST method to activate drugs in a prescription.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>request (Request): HTTP request object.
+prescription_id (int): ID of the prescription to activate drugs in.</p>
+</dd>
+<dt>Returns:</dt><dd><p>Response: JSON response containing activation status of drugs or error message.</p>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 
@@ -794,6 +883,17 @@ For demonstration purposes, always return True.</p>
 <dt class="sig sig-object py" id="Prescription.views.ActivePrescriptionsForUserView">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Prescription.views.</span></span><span class="sig-name descname"><span class="pre">ActivePrescriptionsForUserView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Prescription.views.ActivePrescriptionsForUserView" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">APIView</span></code></p>
+<p>View to retrieve active prescriptions for a specific user.</p>
+<ul class="simple">
+<li><p>Requires authentication using CustomTokenAuthentication.</p></li>
+<li><p>Requires the user to be authenticated.</p></li>
+<li><p>Handles GET requests to retrieve active prescriptions for the user.</p></li>
+</ul>
+<dl class="simple">
+<dt>Attributes:</dt><dd><p>permission_classes (list): List containing IsAuthenticated permission class.
+authentication_classes (list): List containing CustomTokenAuthentication authentication class.</p>
+</dd>
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Prescription.views.ActivePrescriptionsForUserView.authentication_classes">
 <span class="sig-name descname"><span class="pre">authentication_classes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[&lt;class</span> <span class="pre">'User.authentication.CustomTokenAuthentication'&gt;]</span></em><a class="headerlink" href="#Prescription.views.ActivePrescriptionsForUserView.authentication_classes" title="Link to this definition"></a></dt>
@@ -802,7 +902,14 @@ For demonstration purposes, always return True.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="Prescription.views.ActivePrescriptionsForUserView.get">
 <span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Prescription.views.ActivePrescriptionsForUserView.get" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>GET method to retrieve active prescriptions for the user.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>request (Request): HTTP request object.</p>
+</dd>
+<dt>Returns:</dt><dd><p>Response: JSON response containing active prescriptions for the user.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Prescription.views.ActivePrescriptionsForUserView.permission_classes">
@@ -815,6 +922,18 @@ For demonstration purposes, always return True.</p>
 <dt class="sig sig-object py" id="Prescription.views.ActivePrescriptionsView">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Prescription.views.</span></span><span class="sig-name descname"><span class="pre">ActivePrescriptionsView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Prescription.views.ActivePrescriptionsView" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">APIView</span></code></p>
+<p>View for retrieving active prescriptions during an active session for a doctor.</p>
+<ul class="simple">
+<li><p>Requires authentication using DoctorCustomTokenAuthentication.</p></li>
+<li><p>Requires the user to be authenticated.</p></li>
+<li><p>Handles GET requests to retrieve active prescriptions.</p></li>
+<li><p>Retrieves prescriptions based on the active session information.</p></li>
+</ul>
+<dl class="simple">
+<dt>Attributes:</dt><dd><p>permission_classes (list): List containing IsAuthenticated permission class.
+authentication_classes (list): List containing DoctorCustomTokenAuthentication authentication class.</p>
+</dd>
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Prescription.views.ActivePrescriptionsView.authentication_classes">
 <span class="sig-name descname"><span class="pre">authentication_classes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[&lt;class</span> <span class="pre">'Doctor.authentication.DoctorCustomTokenAuthentication'&gt;]</span></em><a class="headerlink" href="#Prescription.views.ActivePrescriptionsView.authentication_classes" title="Link to this definition"></a></dt>
@@ -823,7 +942,14 @@ For demonstration purposes, always return True.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="Prescription.views.ActivePrescriptionsView.get">
 <span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Prescription.views.ActivePrescriptionsView.get" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>GET method to retrieve active prescriptions during an active session for a doctor.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>request (Request): HTTP request object.</p>
+</dd>
+<dt>Returns:</dt><dd><p>Response: JSON response containing the list of active prescriptions or error message.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Prescription.views.ActivePrescriptionsView.permission_classes">
@@ -836,6 +962,22 @@ For demonstration purposes, always return True.</p>
 <dt class="sig sig-object py" id="Prescription.views.CreatePrescriptionView">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Prescription.views.</span></span><span class="sig-name descname"><span class="pre">CreatePrescriptionView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Prescription.views.CreatePrescriptionView" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">APIView</span></code></p>
+<p>View for creating a prescription by a doctor.</p>
+<ul class="simple">
+<li><p>Requires authentication using DoctorCustomTokenAuthentication.</p></li>
+<li><p>Requires the user to be authenticated.</p></li>
+<li><p>Handles POST requests to create a prescription.</p></li>
+<li><p>Validates session details, including verification, session expiration, and existence.</p></li>
+<li><p>Automatically populates doctor_id, user_id, and session fields in the prescription data.</p></li>
+<li><p>Fetches scientific name information from DrugEye for each drug in the prescription.</p></li>
+<li><p>Validates prescription data and returns appropriate error messages for validation failures.</p></li>
+<li><p>Saves the prescription if all validation passes and returns success response.</p></li>
+</ul>
+<dl class="simple">
+<dt>Attributes:</dt><dd><p>permission_classes (list): List containing IsAuthenticated permission class.
+authentication_classes (list): List containing DoctorCustomTokenAuthentication authentication class.</p>
+</dd>
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Prescription.views.CreatePrescriptionView.authentication_classes">
 <span class="sig-name descname"><span class="pre">authentication_classes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[&lt;class</span> <span class="pre">'Doctor.authentication.DoctorCustomTokenAuthentication'&gt;]</span></em><a class="headerlink" href="#Prescription.views.CreatePrescriptionView.authentication_classes" title="Link to this definition"></a></dt>
@@ -849,7 +991,23 @@ For demonstration purposes, always return True.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="Prescription.views.CreatePrescriptionView.post">
 <span class="sig-name descname"><span class="pre">post</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Prescription.views.CreatePrescriptionView.post" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>POST method to create a prescription.</p>
+<ul class="simple">
+<li><p>Extracts the doctor ID from the authenticated user.</p></li>
+<li><p>Verifies the session status, ensuring it’s verified, not ended, and not expired.</p></li>
+<li><p>Passes the request object to the serializer context.</p></li>
+<li><p>Automatically populates doctor_id, user_id, and session fields in the prescription data.</p></li>
+<li><p>Checks if a prescription already exists for the session.</p></li>
+<li><p>Fetches scientific name information from DrugEye for each drug in the prescription.</p></li>
+<li><p>Creates a prescription serializer with context and modified data.</p></li>
+<li><p>Validates the prescription data and handles date format errors separately.</p></li>
+<li><p>Saves the prescription and returns the success response with the prescription data.</p></li>
+</ul>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>Response: JSON response containing success or error messages.</p>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 
@@ -857,6 +1015,17 @@ For demonstration purposes, always return True.</p>
 <dt class="sig sig-object py" id="Prescription.views.DeletePrescriptionView">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Prescription.views.</span></span><span class="sig-name descname"><span class="pre">DeletePrescriptionView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Prescription.views.DeletePrescriptionView" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">APIView</span></code></p>
+<p>View for deleting a prescription.</p>
+<ul class="simple">
+<li><p>Requires authentication using CustomTokenAuthentication.</p></li>
+<li><p>Requires the user to be authenticated.</p></li>
+<li><p>Handles DELETE requests to delete a prescription.</p></li>
+</ul>
+<dl class="simple">
+<dt>Attributes:</dt><dd><p>permission_classes (list): List containing IsAuthenticated permission class.
+authentication_classes (list): List containing CustomTokenAuthentication authentication class.</p>
+</dd>
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Prescription.views.DeletePrescriptionView.authentication_classes">
 <span class="sig-name descname"><span class="pre">authentication_classes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[&lt;class</span> <span class="pre">'User.authentication.CustomTokenAuthentication'&gt;]</span></em><a class="headerlink" href="#Prescription.views.DeletePrescriptionView.authentication_classes" title="Link to this definition"></a></dt>
@@ -865,7 +1034,15 @@ For demonstration purposes, always return True.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="Prescription.views.DeletePrescriptionView.delete">
 <span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prescription_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Prescription.views.DeletePrescriptionView.delete" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>DELETE method to delete a prescription.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>request (Request): HTTP request object.
+prescription_id (int): ID of the prescription to delete.</p>
+</dd>
+<dt>Returns:</dt><dd><p>Response: JSON response containing success message or error message.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Prescription.views.DeletePrescriptionView.permission_classes">
@@ -878,6 +1055,18 @@ For demonstration purposes, always return True.</p>
 <dt class="sig sig-object py" id="Prescription.views.DoctorPrescriptionsForUserView">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Prescription.views.</span></span><span class="sig-name descname"><span class="pre">DoctorPrescriptionsForUserView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Prescription.views.DoctorPrescriptionsForUserView" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">APIView</span></code></p>
+<p>View for retrieving all prescriptions created by a doctor for a specific user during an active session.</p>
+<ul class="simple">
+<li><p>Requires authentication using DoctorCustomTokenAuthentication.</p></li>
+<li><p>Requires the user to be authenticated.</p></li>
+<li><p>Handles GET requests to retrieve prescriptions.</p></li>
+<li><p>Retrieves prescriptions created by the doctor for the specified user during an active session.</p></li>
+</ul>
+<dl class="simple">
+<dt>Attributes:</dt><dd><p>permission_classes (list): List containing IsAuthenticated permission class.
+authentication_classes (list): List containing DoctorCustomTokenAuthentication authentication class.</p>
+</dd>
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Prescription.views.DoctorPrescriptionsForUserView.authentication_classes">
 <span class="sig-name descname"><span class="pre">authentication_classes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[&lt;class</span> <span class="pre">'Doctor.authentication.DoctorCustomTokenAuthentication'&gt;]</span></em><a class="headerlink" href="#Prescription.views.DoctorPrescriptionsForUserView.authentication_classes" title="Link to this definition"></a></dt>
@@ -886,7 +1075,15 @@ For demonstration purposes, always return True.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="Prescription.views.DoctorPrescriptionsForUserView.get">
 <span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Prescription.views.DoctorPrescriptionsForUserView.get" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>GET method to retrieve all prescriptions created by a doctor for a specific user during an active session.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>request (Request): HTTP request object.
+user_id (int): ID of the user for whom prescriptions are to be retrieved.</p>
+</dd>
+<dt>Returns:</dt><dd><p>Response: JSON response containing the list of prescriptions or error message.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Prescription.views.DoctorPrescriptionsForUserView.permission_classes">
@@ -899,6 +1096,17 @@ For demonstration purposes, always return True.</p>
 <dt class="sig sig-object py" id="Prescription.views.DoctorPrescriptionsView">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Prescription.views.</span></span><span class="sig-name descname"><span class="pre">DoctorPrescriptionsView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Prescription.views.DoctorPrescriptionsView" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">APIView</span></code></p>
+<p>View for retrieving prescriptions created by a doctor.</p>
+<ul class="simple">
+<li><p>Requires authentication using DoctorCustomTokenAuthentication.</p></li>
+<li><p>Requires the user to be authenticated.</p></li>
+<li><p>Handles GET requests to retrieve doctor’s prescriptions.</p></li>
+</ul>
+<dl class="simple">
+<dt>Attributes:</dt><dd><p>permission_classes (list): List containing IsAuthenticated permission class.
+authentication_classes (list): List containing DoctorCustomTokenAuthentication authentication class.</p>
+</dd>
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Prescription.views.DoctorPrescriptionsView.authentication_classes">
 <span class="sig-name descname"><span class="pre">authentication_classes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[&lt;class</span> <span class="pre">'Doctor.authentication.DoctorCustomTokenAuthentication'&gt;]</span></em><a class="headerlink" href="#Prescription.views.DoctorPrescriptionsView.authentication_classes" title="Link to this definition"></a></dt>
@@ -907,7 +1115,14 @@ For demonstration purposes, always return True.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="Prescription.views.DoctorPrescriptionsView.get">
 <span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Prescription.views.DoctorPrescriptionsView.get" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>GET method to retrieve prescriptions created by a doctor.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>request (Request): HTTP request object.</p>
+</dd>
+<dt>Returns:</dt><dd><p>Response: JSON response containing the list of prescriptions or error message.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Prescription.views.DoctorPrescriptionsView.permission_classes">
@@ -920,6 +1135,20 @@ For demonstration purposes, always return True.</p>
 <dt class="sig sig-object py" id="Prescription.views.MedicineSearchView">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Prescription.views.</span></span><span class="sig-name descname"><span class="pre">MedicineSearchView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Prescription.views.MedicineSearchView" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">APIView</span></code></p>
+<p>API view to search for medicines by name.</p>
+<dl class="simple">
+<dt>Attributes:</dt><dd><dl class="simple">
+<dt>permission_classes (list): List of permission classes.</dt><dd><p>Specifies the permission required to access this view.
+In this case, IsAuthenticated ensures only authenticated users can access the view.</p>
+</dd>
+<dt>authentication_classes (list): List of authentication classes.</dt><dd><p>Specifies the authentication mechanism used for this view.
+Both DoctorCustomTokenAuthentication and CustomTokenAuthentication are used to authenticate users.</p>
+</dd>
+</dl>
+</dd>
+<dt>Methods:</dt><dd><p>get(self, request): Handle GET requests for searching medicines by name.</p>
+</dd>
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Prescription.views.MedicineSearchView.authentication_classes">
 <span class="sig-name descname"><span class="pre">authentication_classes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[&lt;class</span> <span class="pre">'Doctor.authentication.DoctorCustomTokenAuthentication'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'User.authentication.CustomTokenAuthentication'&gt;]</span></em><a class="headerlink" href="#Prescription.views.MedicineSearchView.authentication_classes" title="Link to this definition"></a></dt>
@@ -928,7 +1157,14 @@ For demonstration purposes, always return True.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="Prescription.views.MedicineSearchView.get">
 <span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Prescription.views.MedicineSearchView.get" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Handle GET requests for searching medicines by name.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>request (HttpRequest): HTTP request object containing query parameter.</p>
+</dd>
+<dt>Returns:</dt><dd><p>Response: Response object containing serialized medicine data or error message.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Prescription.views.MedicineSearchView.permission_classes">
@@ -941,6 +1177,17 @@ For demonstration purposes, always return True.</p>
 <dt class="sig sig-object py" id="Prescription.views.PatientPrescriptionsView">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Prescription.views.</span></span><span class="sig-name descname"><span class="pre">PatientPrescriptionsView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Prescription.views.PatientPrescriptionsView" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">APIView</span></code></p>
+<p>View for retrieving prescriptions associated with a patient.</p>
+<ul class="simple">
+<li><p>Requires authentication using CustomTokenAuthentication.</p></li>
+<li><p>Requires the user to be authenticated.</p></li>
+<li><p>Handles GET requests to retrieve patient’s prescriptions.</p></li>
+</ul>
+<dl class="simple">
+<dt>Attributes:</dt><dd><p>permission_classes (list): List containing IsAuthenticated permission class.
+authentication_classes (list): List containing CustomTokenAuthentication authentication class.</p>
+</dd>
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Prescription.views.PatientPrescriptionsView.authentication_classes">
 <span class="sig-name descname"><span class="pre">authentication_classes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[&lt;class</span> <span class="pre">'User.authentication.CustomTokenAuthentication'&gt;]</span></em><a class="headerlink" href="#Prescription.views.PatientPrescriptionsView.authentication_classes" title="Link to this definition"></a></dt>
@@ -949,7 +1196,14 @@ For demonstration purposes, always return True.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="Prescription.views.PatientPrescriptionsView.get">
 <span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Prescription.views.PatientPrescriptionsView.get" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>GET method to retrieve prescriptions associated with a patient.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>request (Request): HTTP request object.</p>
+</dd>
+<dt>Returns:</dt><dd><p>Response: JSON response containing the list of prescriptions or error message.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Prescription.views.PatientPrescriptionsView.permission_classes">
@@ -962,6 +1216,18 @@ For demonstration purposes, always return True.</p>
 <dt class="sig sig-object py" id="Prescription.views.PrescriptionDetailView">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Prescription.views.</span></span><span class="sig-name descname"><span class="pre">PrescriptionDetailView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Prescription.views.PrescriptionDetailView" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">APIView</span></code></p>
+<p>View for retrieving details of a prescription.</p>
+<ul class="simple">
+<li><p>Requires authentication using DoctorCustomTokenAuthentication or CustomTokenAuthentication.</p></li>
+<li><p>Requires the user to be authenticated.</p></li>
+<li><p>Handles GET requests to retrieve details of a prescription.</p></li>
+<li><p>Checks if the requesting user is authorized to access the prescription.</p></li>
+</ul>
+<dl class="simple">
+<dt>Attributes:</dt><dd><p>permission_classes (list): List containing IsAuthenticated permission class.
+authentication_classes (list): List containing DoctorCustomTokenAuthentication and CustomTokenAuthentication authentication classes.</p>
+</dd>
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Prescription.views.PrescriptionDetailView.authentication_classes">
 <span class="sig-name descname"><span class="pre">authentication_classes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[&lt;class</span> <span class="pre">'Doctor.authentication.DoctorCustomTokenAuthentication'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'User.authentication.CustomTokenAuthentication'&gt;]</span></em><a class="headerlink" href="#Prescription.views.PrescriptionDetailView.authentication_classes" title="Link to this definition"></a></dt>
@@ -970,7 +1236,15 @@ For demonstration purposes, always return True.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="Prescription.views.PrescriptionDetailView.get">
 <span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prescription_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Prescription.views.PrescriptionDetailView.get" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>GET method to retrieve details of a prescription.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>request (Request): HTTP request object.
+prescription_id (int): ID of the prescription to retrieve details for.</p>
+</dd>
+<dt>Returns:</dt><dd><p>Response: JSON response containing prescription details or error message.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Prescription.views.PrescriptionDetailView.permission_classes">
@@ -983,6 +1257,19 @@ For demonstration purposes, always return True.</p>
 <dt class="sig sig-object py" id="Prescription.views.StartSessionView">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Prescription.views.</span></span><span class="sig-name descname"><span class="pre">StartSessionView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Prescription.views.StartSessionView" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">APIView</span></code></p>
+<p>API view to start a session with a user.</p>
+<dl>
+<dt>Attributes:</dt><dd><dl class="simple">
+<dt>permission_classes (list): List of permission classes.</dt><dd><p>Requires authentication for access.</p>
+</dd>
+<dt>authentication_classes (list): List of authentication classes.</dt><dd><p>Uses DoctorCustomTokenAuthentication for authentication.</p>
+</dd>
+</dl>
+<p>serializer_class (Serializer): Serializer class for user email.</p>
+</dd>
+<dt>Methods:</dt><dd><p>post(self, request): Handle POST requests to start a session.</p>
+</dd>
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Prescription.views.StartSessionView.authentication_classes">
 <span class="sig-name descname"><span class="pre">authentication_classes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[&lt;class</span> <span class="pre">'Doctor.authentication.DoctorCustomTokenAuthentication'&gt;]</span></em><a class="headerlink" href="#Prescription.views.StartSessionView.authentication_classes" title="Link to this definition"></a></dt>
@@ -996,7 +1283,14 @@ For demonstration purposes, always return True.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="Prescription.views.StartSessionView.post">
 <span class="sig-name descname"><span class="pre">post</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Prescription.views.StartSessionView.post" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Handle POST requests to start a session.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>request (HttpRequest): HTTP request object containing user email.</p>
+</dd>
+<dt>Returns:</dt><dd><p>Response: Response object containing session details or error message.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Prescription.views.StartSessionView.serializer_class">
@@ -1010,6 +1304,20 @@ For demonstration purposes, always return True.</p>
 <dt class="sig sig-object py" id="Prescription.views.UpdatePrescriptionView">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Prescription.views.</span></span><span class="sig-name descname"><span class="pre">UpdatePrescriptionView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Prescription.views.UpdatePrescriptionView" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">APIView</span></code></p>
+<p>View for updating a prescription by a doctor.</p>
+<ul class="simple">
+<li><p>Requires authentication using DoctorCustomTokenAuthentication.</p></li>
+<li><p>Requires the user to be authenticated.</p></li>
+<li><p>Handles PUT requests to update a prescription.</p></li>
+<li><p>Checks if the requesting doctor is authorized to update the prescription.</p></li>
+<li><p>Fetches scientific name information from DrugEye for each drug in the prescription.</p></li>
+<li><p>Validates prescription data and updates the prescription if valid.</p></li>
+</ul>
+<dl class="simple">
+<dt>Attributes:</dt><dd><p>permission_classes (list): List containing IsAuthenticated permission class.
+authentication_classes (list): List containing DoctorCustomTokenAuthentication authentication class.</p>
+</dd>
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Prescription.views.UpdatePrescriptionView.authentication_classes">
 <span class="sig-name descname"><span class="pre">authentication_classes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[&lt;class</span> <span class="pre">'Doctor.authentication.DoctorCustomTokenAuthentication'&gt;]</span></em><a class="headerlink" href="#Prescription.views.UpdatePrescriptionView.authentication_classes" title="Link to this definition"></a></dt>
@@ -1023,7 +1331,15 @@ For demonstration purposes, always return True.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="Prescription.views.UpdatePrescriptionView.put">
 <span class="sig-name descname"><span class="pre">put</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prescription_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Prescription.views.UpdatePrescriptionView.put" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>PUT method to update a prescription.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>request (Request): HTTP request object.
+prescription_id (int): ID of the prescription to be updated.</p>
+</dd>
+<dt>Returns:</dt><dd><p>Response: JSON response containing success or error messages.</p>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 
@@ -1031,6 +1347,18 @@ For demonstration purposes, always return True.</p>
 <dt class="sig sig-object py" id="Prescription.views.UserPrescriptionsView">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Prescription.views.</span></span><span class="sig-name descname"><span class="pre">UserPrescriptionsView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Prescription.views.UserPrescriptionsView" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">APIView</span></code></p>
+<p>View for retrieving prescriptions of a user that a doctor can see during an active session.</p>
+<ul class="simple">
+<li><p>Requires authentication using DoctorCustomTokenAuthentication.</p></li>
+<li><p>Requires the user to be authenticated.</p></li>
+<li><p>Handles GET requests to retrieve prescriptions.</p></li>
+<li><p>Retrieves prescriptions based on the active session information.</p></li>
+</ul>
+<dl class="simple">
+<dt>Attributes:</dt><dd><p>permission_classes (list): List containing IsAuthenticated permission class.
+authentication_classes (list): List containing DoctorCustomTokenAuthentication authentication class.</p>
+</dd>
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Prescription.views.UserPrescriptionsView.authentication_classes">
 <span class="sig-name descname"><span class="pre">authentication_classes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[&lt;class</span> <span class="pre">'Doctor.authentication.DoctorCustomTokenAuthentication'&gt;]</span></em><a class="headerlink" href="#Prescription.views.UserPrescriptionsView.authentication_classes" title="Link to this definition"></a></dt>
@@ -1039,7 +1367,14 @@ For demonstration purposes, always return True.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="Prescription.views.UserPrescriptionsView.get">
 <span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Prescription.views.UserPrescriptionsView.get" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>GET method to retrieve prescriptions of a user that a doctor can see during an active session.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>request (Request): HTTP request object.</p>
+</dd>
+<dt>Returns:</dt><dd><p>Response: JSON response containing the list of prescriptions or error message.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Prescription.views.UserPrescriptionsView.permission_classes">
@@ -1052,6 +1387,18 @@ For demonstration purposes, always return True.</p>
 <dt class="sig sig-object py" id="Prescription.views.VerifySessionView">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Prescription.views.</span></span><span class="sig-name descname"><span class="pre">VerifySessionView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Prescription.views.VerifySessionView" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">APIView</span></code></p>
+<p>API view to verify a session.</p>
+<dl class="simple">
+<dt>Attributes:</dt><dd><dl class="simple">
+<dt>permission_classes (list): List of permission classes.</dt><dd><p>Requires authentication for access.</p>
+</dd>
+<dt>authentication_classes (list): List of authentication classes.</dt><dd><p>Uses DoctorCustomTokenAuthentication for authentication.</p>
+</dd>
+</dl>
+</dd>
+<dt>Methods:</dt><dd><p>post(self, request): Handle POST requests to verify a session.</p>
+</dd>
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Prescription.views.VerifySessionView.authentication_classes">
 <span class="sig-name descname"><span class="pre">authentication_classes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[&lt;class</span> <span class="pre">'Doctor.authentication.DoctorCustomTokenAuthentication'&gt;]</span></em><a class="headerlink" href="#Prescription.views.VerifySessionView.authentication_classes" title="Link to this definition"></a></dt>
@@ -1065,7 +1412,14 @@ For demonstration purposes, always return True.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="Prescription.views.VerifySessionView.post">
 <span class="sig-name descname"><span class="pre">post</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Prescription.views.VerifySessionView.post" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Handle POST requests to verify a session.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>request (HttpRequest): HTTP request object containing OTP.</p>
+</dd>
+<dt>Returns:</dt><dd><p>Response: Response object containing success message or error message.</p>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 
