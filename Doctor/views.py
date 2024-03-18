@@ -21,6 +21,7 @@ from django.utils.translation import gettext_lazy as _
 from rest_framework.generics import GenericAPIView
 from rest_framework.generics import UpdateAPIView
 from rest_framework.permissions import AllowAny
+from django.core.exceptions import ObjectDoesNotExist
 
 # Define the DoctorSignupView class
 class DoctorSignupView(generics.CreateAPIView):
@@ -183,7 +184,7 @@ class DoctorInfoView(APIView):
             return Response({'error': 'Doctor not found'}, status=status.HTTP_404_NOT_FOUND)
         
         # Serialize the doctor object
-        serializer = Doctorserialzer(doctor)
+        serializer = DoctorSerializer(doctor)
         
         # Return serialized doctor data in the response
         return Response(serializer.data, status=status.HTTP_200_OK)
@@ -211,7 +212,57 @@ class DoctorEmailVerificationView(APIView):
         
         # Return a success message in the response
         return Response({'message': 'Email verified successfully'}, status=status.HTTP_200_OK)
-    
+
+# View for resend email verification for doctors
+class DoctorResendEmailVerificationView(generics.GenericAPIView):
+    """
+    Resend email verification to a user's email address without updating the verification status.
+    """
+
+    serializer_class = DoctorResendEmailVerificationSerializer  # Dummy serializer class
+
+    def send_custom_email(self, doctor_id, email):
+        """
+        Sends a custom verification email to the user's provided email address.
+        """
+        subject = 'Verify Your Email'
+        verification_link = f"https://127.0.0.1:8000/user/verify/{doctor_id}/"
+        message = f'Click the following link to verify your email: {verification_link}'
+        sender_email = 'pharmalink1190264@gmail.com'
+        receiver_email = email
+
+        # Construct email object
+        msg = MIMEText(message)
+        msg["Subject"] = subject
+        msg["From"] = sender_email
+        msg["To"] = receiver_email
+
+        # Send email
+        try:
+            server = smtplib.SMTP_SSL("smtp.gmail.com", 465)
+            server.login(sender_email, "azuk ngik jmqo udcb")
+            server.sendmail(sender_email, receiver_email, msg.as_string())
+            server.quit()
+            print("Email sent successfully.")
+        except Exception as e:
+            print(f"Error sending email: {e}")
+
+    def post(self, request, *args, **kwargs):
+        doctor_id = request.query_params.get('doctor_id')
+        if doctor_id is None:
+            return Response({"error": "Parameter 'doctor_id' is missing."}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            doctor = Doctor.objects.get(id=doctor_id)
+
+            # Resend verification email
+            self.send_custom_email(doctor_id, doctor.email)
+
+            return Response({"message": "Verification email resent successfully."}, status=status.HTTP_200_OK)
+
+        except ObjectDoesNotExist:
+            return Response({"error": "User not found."}, status=status.HTTP_404_NOT_FOUND)
+
 # View for doctor logout
 class DoctorLogoutView(APIView):
     """

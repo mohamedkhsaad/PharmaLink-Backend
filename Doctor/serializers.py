@@ -64,3 +64,7 @@ class DoctorPasswordUpdateSerializer(serializers.Serializer):
         instance.set_password(validated_data['password'])
         instance.save()
         return instance
+    
+class DoctorResendEmailVerificationSerializer(serializers.Serializer):
+    # Dummy serializer class to satisfy DRF's requirements
+    pass

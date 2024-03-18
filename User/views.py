@@ -22,6 +22,7 @@ import smtplib
 from email.mime.text import MIMEText
 from django.core.mail import send_mail
 from rest_framework.generics import UpdateAPIView
+from django.core.exceptions import ObjectDoesNotExist
 
 # View for user signup
 class UserSignupView(generics.CreateAPIView):
@@ -93,6 +94,56 @@ class UserSignupView(generics.CreateAPIView):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+# View for resend email verification for doctors
+class ResendEmailVerificationView(generics.GenericAPIView):
+    """
+    Resend email verification to a user's email address without updating the verification status.
+    """
+
+    serializer_class = ResendEmailVerificationSerializer  # Dummy serializer class
+
+    def send_custom_email(self, user_id, email):
+        """
+        Sends a custom verification email to the user's provided email address.
+        """
+        subject = 'Verify Your Email'
+        verification_link = f"https://127.0.0.1:8000/user/verify/{user_id}/"
+        message = f'Click the following link to verify your email: {verification_link}'
+        sender_email = 'pharmalink1190264@gmail.com'
+        receiver_email = email
+
+        # Construct email object
+        msg = MIMEText(message)
+        msg["Subject"] = subject
+        msg["From"] = sender_email
+        msg["To"] = receiver_email
+
+        # Send email
+        try:
+            server = smtplib.SMTP_SSL("smtp.gmail.com", 465)
+            server.login(sender_email, "azuk ngik jmqo udcb")
+            server.sendmail(sender_email, receiver_email, msg.as_string())
+            server.quit()
+            print("Email sent successfully.")
+        except Exception as e:
+            print(f"Error sending email: {e}")
+
+    def post(self, request, *args, **kwargs):
+        user_id = request.query_params.get('user_id')
+        if user_id is None:
+            return Response({"error": "Parameter 'user_id' is missing."}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            user = User.objects.get(id=user_id)
+
+            # Resend verification email
+            self.send_custom_email(user_id, user.email)
+
+            return Response({"message": "Verification email resent successfully."}, status=status.HTTP_200_OK)
+
+        except ObjectDoesNotExist:
+            return Response({"error": "User not found."}, status=status.HTTP_404_NOT_FOUND)
+     
 # View for email verification
 class EmailVerificationView(APIView):
     """

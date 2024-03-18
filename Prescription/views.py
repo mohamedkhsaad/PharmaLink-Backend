@@ -3,24 +3,36 @@ The following views implement various functionalities related to prescriptions i
 """
 # Import necessary modules and classes
 from django.shortcuts import render
+
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.generics import get_object_or_404
+from rest_framework.exceptions import ValidationError
+
 from .models import DrugEye
 from .serializers import UserSerializerEmail
-from Doctor.authentication import DoctorCustomTokenAuthentication
-from User.authentication import CustomTokenAuthentication
 from .serializers import DrugEyeSerializer
 from .models import *
-from .utils import generate_session_id, generate_otp, validate_session, send_otp,send_custom_email_otp
+
+from User.authentication import CustomTokenAuthentication
 from User.models import User
+
+from Doctor.models import Doctor
+from Doctor.serializers import DoctorSerializer
+from Doctor.authentication import DoctorCustomTokenAuthentication
+
+from .utils import generate_session_id, generate_otp, validate_session, send_otp,send_custom_email_otp
 from django.utils import timezone
 from datetime import timedelta
 from .serializers import PrescriptionSerializer
-from rest_framework.permissions import IsAuthenticated
-from fuzzywuzzy import process
+
 import json
-from rest_framework.exceptions import ValidationError
+from fuzzywuzzy import process
+from datetime import date,datetime
+
+from background_task import background
 
 # API view to search for medicines by name
 class MedicineSearchView(APIView):
@@ -778,6 +790,7 @@ class PatientPrescriptionsView(APIView):
         
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+## Activate APIS
 # View for activating drugs in a prescription.
 class ActivatePrescriptionView(APIView):
     """
@@ -843,8 +856,7 @@ class ActivatePrescriptionView(APIView):
         
         # Return response
         return Response(response_data, status=status.HTTP_200_OK)
-
-# View for activating a specific drug in a prescription.
+    
 class ActivateDrugView(APIView):
     """
     View for activating a specific drug in a prescription.
@@ -861,14 +873,13 @@ class ActivateDrugView(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [CustomTokenAuthentication]
 
-    def post(self, request, prescription_id, drug_name):
+    def post(self, request, prescription_id):
         """
         POST method to activate a specific drug in a prescription.
 
         Args:
             request (Request): HTTP request object.
             prescription_id (int): ID of the prescription containing the drug.
-            drug_name (str): Name of the drug to activate.
 
         Returns:
             Response: JSON response containing activation status of the drug or error message.
@@ -876,11 +887,13 @@ class ActivateDrugView(APIView):
         # Extract user ID from the authenticated user
         user_id = request.user.id
         
+        # Extract drug_name from query parameters
+        drug_name = request.query_params.get('drug_name')
+        if not drug_name:
+            return Response({'error': 'Missing drug_name parameter'}, status=status.HTTP_400_BAD_REQUEST)
+        
         # Retrieve the prescription from the database
-        try:
-            prescription = Prescription.objects.get(id=prescription_id, user_id=user_id)
-        except Prescription.DoesNotExist:
-            return Response({'error': 'Prescription not found'}, status=status.HTTP_404_NOT_FOUND)
+        prescription = get_object_or_404(Prescription, id=prescription_id, user_id=user_id)
         
         # Retrieve drugs data from the prescription
         drugs_data = prescription.drugs
@@ -903,6 +916,210 @@ class ActivateDrugView(APIView):
         response_data = {
             'message': f"Drug '{drug_name}' activated successfully"
         }
+        
+        # Return response
+        return Response(response_data, status=status.HTTP_200_OK)
+    
+## Manual Deactivate APIS
+# View for manual Deactivating drugs in a prescription.
+class DeActivatePrescriptionView(APIView):
+    """
+    View for Deactivating drugs in a prescription.
+
+    - Requires authentication using CustomTokenAuthentication.
+    - Requires the user to be authenticated.
+    - Handles POST requests to activate drugs in a prescription.
+
+    Attributes:
+        permission_classes (list): List containing IsAuthenticated permission class.
+        authentication_classes (list): List containing CustomTokenAuthentication authentication class.
+    """
+
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [CustomTokenAuthentication]
+
+    def post(self, request, prescription_id):
+        """
+        POST method to deactivate drugs in a prescription.
+
+        Args:
+            request (Request): HTTP request object.
+            prescription_id (int): ID of the prescription to activate drugs in.
+
+        Returns:
+            Response: JSON response containing activation status of drugs or error message.
+        """
+        # Extract user ID from the authenticated user
+        user_id = request.user.id
+        
+        # Retrieve the prescription from the database
+        try:
+            prescription = Prescription.objects.get(id=prescription_id, user_id=user_id)
+        except Prescription.DoesNotExist:
+            return Response({'error': 'Prescription not found'}, status=status.HTTP_404_NOT_FOUND) 
+        
+        # Retrieve drugs data from the prescription
+        drugs_data = prescription.drugs
+        
+        # Initialize lists to keep track of already activated and newly activated drugs
+        already_deactivated_drugs = []
+        newly_deactivated_drugs = []
+        
+        # Check if any drug in the prescription is already inactive
+        for drug_name, drug_info in drugs_data.items():
+            if drug_info['state'] == 'inactive':
+                already_deactivated_drugs.append(drug_name)
+            else:
+                # Activate the drug if it is not already inactive
+                drug_info['state'] = 'inactive'
+                newly_deactivated_drugs.append(drug_name)
+        
+        # Save the updated prescription
+        prescription.save()
+        
+        # Prepare response message
+        response_data = {}
+        if already_deactivated_drugs:
+            response_data['message'] = f"The following drugs are already deactivated: {', '.join(already_deactivated_drugs)}"
+        if newly_deactivated_drugs:
+            response_data['message'] = response_data.get('message', '') + f"\nDeactivated the following drugs: {', '.join(newly_deactivated_drugs)}"
+        
+        # Return response
+        return Response(response_data, status=status.HTTP_200_OK)
+
+# View for manual deactivating a specific drug in a prescription.
+class DeActivateDrugView(APIView):
+    """
+    View for manual deactivating a specific drug in a prescription.
+
+    - Requires authentication using CustomTokenAuthentication.
+    - Requires the user to be authenticated.
+    - Handles POST requests to deactivate a drug in a prescription.
+
+    Attributes:
+        permission_classes (list): List containing IsAuthenticated permission class.
+        authentication_classes (list): List containing CustomTokenAuthentication authentication class.
+    """
+
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [CustomTokenAuthentication]
+
+    def post(self, request, prescription_id):
+        """
+        POST method to deactivate a specific drug in a prescription.
+
+        Args:
+            request (Request): HTTP request object.
+            prescription_id (int): ID of the prescription containing the drug.
+
+        Returns:
+            Response: JSON response containing deactivation status of the drug or error message.
+        """
+        # Extract user ID from the authenticated user
+        user_id = request.user.id
+        
+        # Extract drug_name from query parameters
+        drug_name = request.query_params.get('drug_name')
+        if not drug_name:
+            return Response({'error': 'Missing drug_name parameter'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        # Retrieve the prescription from the database
+        prescription = get_object_or_404(Prescription, id=prescription_id, user_id=user_id)
+        
+        # Retrieve drugs data from the prescription
+        drugs_data = prescription.drugs
+        
+        # Check if the specified drug exists in the prescription
+        if drug_name not in drugs_data:
+            return Response({'error': 'Drug not found in the prescription'}, status=status.HTTP_404_NOT_FOUND)
+        
+        # Check if the specified drug is already deactivated
+        if drugs_data[drug_name]['state'] == 'inactive':
+            return Response({'error': 'Drug is already deactivated'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        # Deactivate the specified drug
+        drugs_data[drug_name]['state'] = 'inactive'
+        
+        # Save the updated prescription
+        prescription.save() 
+        
+        # Prepare response message
+        response_data = {
+            'message': f"Drug '{drug_name}' deactivated successfully"
+        }
+        
+        # Return response
+        return Response(response_data, status=status.HTTP_200_OK)
+    
+##Autmoatic Deactivatin APIS
+# View for automatic Deactivating drugs in a prescription.
+class AutomaticDeactivateView(APIView):
+    """
+    View for automatic deactivation of drugs in a prescription based on dates.
+
+    - Requires authentication using CustomTokenAuthentication.
+    - Requires the user to be authenticated.
+    - Handles POST requests to automatically deactivate drugs in a prescription.
+
+    Attributes:
+        permission_classes (list): List containing IsAuthenticated permission class.
+        authentication_classes (list): List containing CustomTokenAuthentication authentication class.
+    """
+
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [CustomTokenAuthentication]
+
+    def post(self, request, prescription_id):
+        """
+        POST method to automatically deactivate drugs in a prescription based on dates.
+
+        Args:
+            request (Request): HTTP request object.
+            prescription_id (int): ID of the prescription to automatically deactivate drugs in.
+
+        Returns:
+            Response: JSON response containing deactivation status of drugs or error message.
+        """
+        # Extract user ID from the authenticated user
+        user_id = request.user.id
+        
+        # Retrieve the prescription from the database
+        try:
+            prescription = Prescription.objects.get(id=prescription_id, user_id=user_id)
+        except Prescription.DoesNotExist:
+            return Response({'error': 'Prescription not found'}, status=status.HTTP_404_NOT_FOUND) 
+        
+        # Retrieve drugs data from the prescription
+        drugs_data = prescription.drugs
+        
+        # Initialize list to keep track of deactivated drugs
+        deactivated_drugs = []
+        
+        # Check start and end dates of drugs and deactivate if needed
+        today = date.today()
+        for drug_name, drug_info in drugs_data.items():
+            start_date_str = drug_info.get('start_date')
+            end_date_str = drug_info.get('end_date')
+            if start_date_str and end_date_str:
+                start_date = datetime.strptime(start_date_str, '%Y-%m-%d').date()
+                end_date = datetime.strptime(end_date_str, '%Y-%m-%d').date()
+                if start_date <= today <= end_date:
+                    # Drug is within its valid period, do nothing
+                    pass
+                else:
+                    # Drug is outside its valid period, deactivate it
+                    drug_info['state'] = 'inactive'
+                    deactivated_drugs.append(drug_name)
+        
+        # Save the updated prescription
+        prescription.save()
+        
+        # Prepare response message
+        response_data = {}
+        if deactivated_drugs:
+            response_data['message'] = f"Deactivated the following drugs based on dates: {', '.join(deactivated_drugs)}"
+        else:
+            response_data['message'] = "No drugs deactivated based on dates"
         
         # Return response
         return Response(response_data, status=status.HTTP_200_OK)
@@ -950,10 +1167,10 @@ class DeletePrescriptionView(APIView):
         # Return response
         return Response(response_data, status=status.HTTP_200_OK)
 
-# View to retrieve active prescriptions for a specific user.
+# View to retrieve active,inactive or new prescriptions for a specific user based on the paramater state.
 class ActivePrescriptionsForUserView(APIView):
     """
-    View to retrieve active prescriptions for a specific user.
+    View to retrieve active،inactive or new prescriptions for a specific user based on the paramater state.
 
     - Requires authentication using CustomTokenAuthentication.
     - Requires the user to be authenticated.
@@ -969,7 +1186,7 @@ class ActivePrescriptionsForUserView(APIView):
 
     def get(self, request):
         """
-        GET method to retrieve active prescriptions for the user.
+        GET method to retrieve active,inactive or new prescriptions for the user.
 
         Args:
             request (Request): HTTP request object.
@@ -980,20 +1197,143 @@ class ActivePrescriptionsForUserView(APIView):
         # Obtain the user ID from the authenticated user
         user_id = request.user.id
 
+        # Retrieve the 'state' query parameter from the request, default to 'active' if not provided
+        state = request.query_params.get('state', 'active')
+        
         # Retrieve all prescriptions for the user
         prescriptions = Prescription.objects.filter(user_id=user_id)
 
-        # Filter prescriptions to get only active ones
-        active_prescriptions = []
+         # Filter prescriptions based on the specified state
+        filtered_prescriptions = []
         for prescription in prescriptions:
             drugs_data = prescription.drugs  # Assuming prescription.drugs is already a dictionary
             for drug_name, drug_info in drugs_data.items():
-                if drug_info.get('state') == 'active':  # Ensure 'state' key exists and its value is 'active'
-                    active_prescriptions.append(prescription)
-                    break  # Break out of the inner loop once an active drug is found
+                if drug_info.get('state') == state:
+                    filtered_prescriptions.append(prescription)
+                    break  # Break out of the inner loop once a prescription is found
         
-        # Serialize the active prescriptions
-        serializer = PrescriptionSerializer(active_prescriptions, many=True)
+        # Serialize the filtered prescriptions
+        serializer = PrescriptionSerializer(filtered_prescriptions, many=True)
 
-        # Return response with active prescriptions
+        # Return response with filtered prescriptions
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+## User prescreption doctor info
+# View for retrieving Doctor info that create a prescreption associated with a patient.
+class PatientPrescriptionsDoctorInfoView(APIView):
+    """
+    View for retrieving Doctor info that create a prescreption associated with a patient.
+    """
+
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [CustomTokenAuthentication]
+
+    def get(self, request):
+        user_id = request.user.id
+        
+        # Retrieve prescriptions associated with the patient
+        prescriptions = Prescription.objects.filter(user_id=user_id)
+        
+        # Serialize the prescriptions
+        prescription_serializer = PrescriptionSerializer(prescriptions, many=True)
+        
+        # Extract doctor information for each prescription
+        formatted_data = []
+        for prescription_data in prescription_serializer.data:
+            prescription_id = prescription_data['id']
+            doctor_id = prescription_data.get('doctor_id')
+            if doctor_id:
+                doctor = Doctor.objects.filter(id=doctor_id).first()
+                if doctor:
+                    doctor_info = {
+                        'id': doctor.id,
+                        'fname': doctor.fname,
+                        'lname': doctor.lname,
+                        'image': doctor.image.url if doctor.image else None
+                    }
+                    formatted_item = {
+                        'id': prescription_id,
+                        'doctorInfo': doctor_info,
+                        'created_at': prescription_data['created_at']
+                    }
+                    formatted_data.append(formatted_item)
+        
+        if formatted_data:
+            return Response(formatted_data, status=status.HTTP_200_OK)
+        else:
+            return Response({'message': 'No prescriptions found'}, status=status.HTTP_404_NOT_FOUND)
+        
+# View to retrieve active,inactive or new prescriptions for a specific user based on the paramater state.
+class ActivePrescriptionsForUserDoctorinfoView(APIView):
+    """
+    View to retrieve active,inactive or new prescriptions for a specific user based on the paramater state.
+
+    - Requires authentication using CustomTokenAuthentication.
+    - Requires the user to be authenticated.
+    - Handles GET requests to retrieve active prescriptions for the user.
+
+    Attributes:
+        permission_classes (list): List containing IsAuthenticated permission class.
+        authentication_classes (list): List containing CustomTokenAuthentication authentication class.
+    """
+
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [CustomTokenAuthentication]
+
+    def get(self, request):
+        """
+        GET method to retrieve active, inactive, or new prescriptions for the user.
+
+        Args:
+            request (Request): HTTP request object.
+
+        Returns:
+            Response: JSON response containing active, inactive, or new prescriptions for the user.
+        """
+        # Obtain the user ID from the authenticated user
+        user_id = request.user.id
+
+        # Retrieve the 'state' query parameter from the request, default to 'active' if not provided
+        state = request.query_params.get('state', 'active')
+        
+        # Retrieve all prescriptions for the user
+        prescriptions = Prescription.objects.filter(user_id=user_id)
+
+        # Filter prescriptions based on the specified state
+        filtered_prescriptions = []
+        for prescription in prescriptions:
+            drugs_data = prescription.drugs  # Assuming prescription.drugs is already a dictionary
+            for drug_name, drug_info in drugs_data.items():
+                if drug_info.get('state') == state:
+                    filtered_prescriptions.append(prescription)
+                    break  # Break out of the inner loop once a prescription is found
+        
+        # Serialize the filtered prescriptions
+        prescription_serializer = PrescriptionSerializer(filtered_prescriptions, many=True)
+        
+        # Extract doctor information for each prescription
+        formatted_data = []
+        for prescription_data in prescription_serializer.data:
+            prescription_id = prescription_data['id']
+            doctor_id = prescription_data.get('doctor_id')
+            if doctor_id:
+                doctor = Doctor.objects.filter(id=doctor_id).first()
+                if doctor:
+                    doctor_info = {
+                        'id': doctor.id,
+                        'fname': doctor.fname,
+                        'lname': doctor.lname,
+                        'image': doctor.image.url if doctor.image else None
+                    }
+                    formatted_item = {
+                        'id': prescription_id,
+                        'doctorInfo': doctor_info,
+                        'created_at': prescription_data['created_at']
+                    }
+                    formatted_data.append(formatted_item)
+        
+        if formatted_data:
+            return Response(formatted_data, status=status.HTTP_200_OK)
+        else:
+            return Response({'message': 'No prescriptions found'}, status=status.HTTP_404_NOT_FOUND)

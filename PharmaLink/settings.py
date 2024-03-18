@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'django_resized',
 ]
+#'daphne',
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -98,26 +99,6 @@ WSGI_APPLICATION = 'PharmaLink.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
-
-#Glopal Database
-# DATABASES = {
-#     'default': {
-#         'ENGINE': os.getenv('DB_ENGINE'),
-#         'NAME': os.getenv('DB_NAME'),
-#         'ENFORCE_SCHEMA': os.getenv('DB_ENFORCE_SCHEMA'),
-#         'CLIENT': {
-#             'host': os.getenv('DB_CLIENT_HOST')
-#         }
-#     }
-# }
-
 # Local Database
 DATABASES = {
     'default': {
@@ -125,6 +106,18 @@ DATABASES = {
         'NAME': os.environ.get('DATABASE_NAME'),
     }
 }
+
+# Glopal Database
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'djongo',
+#         'NAME': 'PharmaLink',
+#         'ENFORCE_SCHEMA': False,
+#         'CLIENT': {
+#             'host': 'mongodb+srv://ismail:512002ziad@cluster0.cuhia1z.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
+#         }
+#     }
+# }
 
 
 # Password validation
@@ -335,3 +328,8 @@ CSRF_COOKIE_SECURE = True
 MEDIA_URL = '/'
 MEDIA_ROOT = os.path.join(BASE_DIR, '')
 CORS_ORIGIN_ALLOW_ALL = True
+
+ASGI_APPLICATION = 'ChatApp.asgi.application'
+
+# Background tasks configuration
+BACKGROUND_TASK_RUN_ASYNC = True

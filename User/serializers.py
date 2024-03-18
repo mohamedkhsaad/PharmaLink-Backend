@@ -84,3 +84,7 @@ class PasswordUpdateSerializer(serializers.Serializer):
         # Save the instance
         instance.save()
         return instance
+    
+class ResendEmailVerificationSerializer(serializers.Serializer):
+    # Dummy serializer class to satisfy DRF's requirements
+    pass
