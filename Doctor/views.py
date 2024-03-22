@@ -147,13 +147,14 @@ class DoctorCustomTokenLoginView(APIView):
             user_id = doctor.id
             response_data = {
                 'id': user_id,
+                'username':doctor.username,
                 'email': doctor.email,
                 'token': custom_token.key,
-                'first_name': doctor.fname,
-                'last_name': doctor.lname,
-                'initials': (doctor.fname[0] if doctor.fname else '') + (doctor.lname[0] if doctor.lname else '')
+                # 'first_name': doctor.fname,
+                # 'last_name': doctor.lname,
+                # 'initials': (doctor.fname[0] if doctor.fname else '') + (doctor.lname[0] if doctor.lname else '')
             }
-            response_data['initials'] = response_data['initials'].upper()
+            # response_data['initials'] = response_data['initials'].upper()
 
             # Return success response with user data and token
             return Response(response_data, status=status.HTTP_200_OK)

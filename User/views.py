@@ -212,13 +212,14 @@ class CustomTokenLoginView(APIView):
             # Construct response data
             response_data = {
                 'id': user_id,
+                'username':user.username,
                 'email': user.email,
-                'token': custom_token.key,
-                'first_name': user.fname,
-                'last_name': user.lname,
-                'initials': (user.fname[0] if user.fname else '') + (user.lname[0] if user.lname else '')
+                'token': custom_token.key
+                # 'first_name': user.fname,
+                # 'last_name': user.lname,
+                # 'initials': (user.fname[0] if user.fname else '') + (user.lname[0] if user.lname else '')
             }
-            response_data['initials'] = response_data['initials'].upper()
+            # response_data['initials'] = response_data['initials'].upper()
             # Return success response with user data and token
             return Response(response_data, status=status.HTTP_200_OK)
         else:

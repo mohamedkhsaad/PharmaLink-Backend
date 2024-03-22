@@ -1337,3 +1337,92 @@ class ActivePrescriptionsForUserDoctorinfoView(APIView):
             return Response(formatted_data, status=status.HTTP_200_OK)
         else:
             return Response({'message': 'No prescriptions found'}, status=status.HTTP_404_NOT_FOUND)
+    
+# Home page api
+class HomePageinfoView(APIView):
+    """
+    View to retrieve active, inactive, or new prescriptions for a specific user based on the parameter state.
+
+    - Requires authentication using CustomTokenAuthentication.
+    - Requires the user to be authenticated.
+    - Handles GET requests to retrieve active prescriptions for the user.
+
+    Attributes:
+        permission_classes (list): List containing IsAuthenticated permission class.
+        authentication_classes (list): List containing CustomTokenAuthentication authentication class.
+    """
+
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [CustomTokenAuthentication]
+
+    def get(self, request):
+        """
+        GET method to retrieve active, inactive, or new prescriptions for the user.
+
+        Args:
+            request (Request): HTTP request object.
+
+        Returns:
+            Response: JSON response containing active, inactive, or new prescriptions for the user.
+        """
+        # Obtain the user ID from the authenticated user
+        user_id = request.user.id
+        user_first_name = request.user.fname
+
+        # Retrieve the 'state' query parameter from the URL, default to 'active' if not provided
+        state = request.query_params.get('state', 'active')
+
+        # Retrieve all prescriptions for the user
+        prescriptions = Prescription.objects.filter(user_id=user_id)
+
+        # Filter prescriptions based on the specified state
+        filtered_prescriptions = []
+        for prescription in prescriptions:
+            drugs_data = prescription.drugs  # Assuming prescription.drugs is already a dictionary
+            for drug_name, drug_info in drugs_data.items():
+                if drug_info.get('state') == state:
+                    filtered_prescriptions.append(prescription)
+                    break  # Break out of the inner loop once a prescription is found
+        
+        # Serialize the filtered prescriptions
+        prescription_serializer = PrescriptionSerializer(filtered_prescriptions, many=True)
+        
+        # Create a dictionary to group user data by user ID
+        user_data_dict = {}
+        for prescription_data in prescription_serializer.data:
+            doctor_id = prescription_data.get('doctor_id')
+            if doctor_id:
+                doctor = Doctor.objects.filter(id=doctor_id).first()
+                if doctor:
+                    # Format doctor information
+                    doctor_info = {
+                        'id': doctor.id,
+                        'image': doctor.image.url if doctor.image else None,
+                        'username': doctor.username  # Assuming doctor has a username field
+                    }
+
+                    # Extract drugs information for the prescription based on state
+                    drugs_data = prescription_data['drugs']  # Assuming 'drugs' is already included in prescription_serializer.data
+                    drugs_list = []
+                    for drug_name, drug_info in drugs_data.items():
+                        if drug_info.get('state') == state:
+                            drugs_list.append({
+                                'commercial_name': drug_name,  # Use the drug name as commercial name
+                                'start_date': drug_info.get('start_date'),
+                                'end_date': drug_info.get('end_date'),
+                                'quantity': drug_info.get('quantity'),
+                                'quantity_unit': drug_info.get('quantity_unit')
+                            })
+
+                    # Add data to the user data dictionary
+                    user_data = user_data_dict.setdefault(user_id, {'first_name': user_first_name, 'doctors': [], 'drugs': []})
+                    user_data['doctors'].append(doctor_info)
+                    user_data['drugs'].extend(drugs_list)
+
+        # Convert the dictionary values to a list of user data
+        formatted_data = list(user_data_dict.values())
+
+        if formatted_data:
+            return Response(formatted_data, status=status.HTTP_200_OK)
+        else:
+            return Response({'message': f'No {state} prescriptions found'}, status=status.HTTP_404_NOT_FOUND)

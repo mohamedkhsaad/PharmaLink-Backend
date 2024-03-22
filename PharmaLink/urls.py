@@ -41,6 +41,7 @@ urlpatterns = [
     path('Prescription/user/active-prescriptions/', ActivePrescriptionsForUserView.as_view(), name='active_prescriptions_for_user'),
     path('Prescription/user/prescriptions/Doctorinfo/', PatientPrescriptionsDoctorInfoView.as_view(), name='user_prescriptions_doctorinfo'),
     path('Prescription/user/state-prescriptions/Doctorinfo/', ActivePrescriptionsForUserDoctorinfoView.as_view(), name='user_prescriptions_doctorinfo'),
+    path('Prescription/user/HomePage/', HomePageinfoView.as_view(), name='user_prescriptions_homepage'),
 
     # Doctor
     path('doctor/signup/', DoctorSignupView.as_view(), name='doctor_signup'),
