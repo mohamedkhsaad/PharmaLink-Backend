@@ -46,7 +46,8 @@ class DoctorSignupView(generics.CreateAPIView):
         """
         # Define email parameters
         subject = 'Verify Your Email'
-        verification_link = f"https://127.0.0.1:8000/doctor/verify/{doctor_id}/"
+        # verification_link = f"https://127.0.0.1:8000/doctor/verify/{doctor_id}/"
+        verification_link = f"https://54.234.91.4:8000/doctor/verify/{doctor_id}/"
         message = f'Click the following link to verify your email: {verification_link}'
         sender_email = 'pharmalink1190264@gmail.com'
         receiver_email = email
@@ -94,8 +95,11 @@ class DoctorSignupView(generics.CreateAPIView):
             doctor = serializer.save()
             # Send verification email using custom logic
             self.send_custom_email(doctor.id, doctor.email)
-
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            response_data = {
+                'id': doctor.id,
+                'username':doctor.username
+            }
+            return Response(response_data, status=status.HTTP_201_CREATED)
         
         # Return error response if serializer is not valid
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -227,7 +231,8 @@ class DoctorResendEmailVerificationView(generics.GenericAPIView):
         Sends a custom verification email to the user's provided email address.
         """
         subject = 'Verify Your Email'
-        verification_link = f"https://127.0.0.1:8000/user/verify/{doctor_id}/"
+        # verification_link = f"https://127.0.0.1:8000/user/verify/{doctor_id}/"
+        verification_link = f"https://54.234.91.4:8000/user/verify/{doctor_id}/"
         message = f'Click the following link to verify your email: {verification_link}'
         sender_email = 'pharmalink1190264@gmail.com'
         receiver_email = email
@@ -363,7 +368,9 @@ class DoctorPasswordResetRequestView(GenericAPIView):
         """
         # Compose email content
         subject = 'Reset Your Password'
-        reset_link = f"https://127.0.0.1:8000/doctor/reset-password/{doctor.id}/"
+        # reset_link = f"https://127.0.0.1:8000/doctor/reset-password/{doctor.id}/"
+        reset_link = f"https://54.234.91.4:8000/doctor/reset-password/{doctor.id}/"
+
         message = f'Click the following link to reset your password: {reset_link}'
 
         # Set email parameters

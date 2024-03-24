@@ -47,13 +47,6 @@ class User(AbstractUser, PermissionsMixin):
         ('F', 'Female'),
     ]
     gender = models.CharField(max_length=1, choices=gender_choices)
-    
-    # Choices for chronic disease field
-    CHRONIC_DISEASE_CHOICES = [
-        ('ALS', "ALS (Lou Gehrig's Disease)"),
-        ('Alzheimer', "Alzheimer's Disease and other Dementias"),
-        # Add more choices as needed
-    ]
     chronic_disease = models.JSONField(default=list)
     created_at = models.DateTimeField(auto_now_add=True)
     is_verified = models.BooleanField(default=False)

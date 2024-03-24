@@ -44,7 +44,8 @@ class UserSignupView(generics.CreateAPIView):
         """
         # Compose email message
         subject = 'Verify Your Email'
-        verification_link = f"https://127.0.0.1:8000/user/verify/{user_id}/"
+        # verification_link = f"https://127.0.0.1:8000/user/verify/{user_id}/"
+        verification_link = f"https://54.234.91.4:8000/user/verify/{user_id}/"
         message = f'Click the following link to verify your email: {verification_link}'
         sender_email = 'pharmalink1190264@gmail.com'
         receiver_email = email
@@ -89,8 +90,11 @@ class UserSignupView(generics.CreateAPIView):
             user = serializer.save()
             # Send verification email
             self.send_custom_email(user.id, user.email)
-
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            response_data = {
+                'id': user.id,
+                'username':user.username
+            }
+            return Response(response_data, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -107,7 +111,8 @@ class ResendEmailVerificationView(generics.GenericAPIView):
         Sends a custom verification email to the user's provided email address.
         """
         subject = 'Verify Your Email'
-        verification_link = f"https://127.0.0.1:8000/user/verify/{user_id}/"
+        # verification_link = f"https://127.0.0.1:8000/user/verify/{user_id}/"
+        verification_link = f"https://54.234.91.4:8000/user/verify/{user_id}/"
         message = f'Click the following link to verify your email: {verification_link}'
         sender_email = 'pharmalink1190264@gmail.com'
         receiver_email = email
@@ -315,7 +320,9 @@ class PasswordResetRequestView(GenericAPIView):
         Sends a password reset email to the user's provided email address.
         """
         subject = 'Reset Your Password'
-        reset_link = f"https://127.0.0.1:8000/user/reset-password/{user.id}/"
+        # reset_link = f"https://127.0.0.1:8000/user/reset-password/{user.id}/"
+        reset_link = f"https://54.234.91.4:8000/user/reset-password/{user.id}/"
+
         message = f'Click the following link to reset your password: {reset_link}'
         sender_email = 'pharmalink1190264@gmail.com'
         receiver_email = user.email
