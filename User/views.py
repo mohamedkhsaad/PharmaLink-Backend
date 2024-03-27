@@ -195,13 +195,13 @@ class CustomTokenLoginView(APIView):
         serializer.is_valid(raise_exception=True)
 
         # Retrieve email and password from request data
-        email = request.data.get('email')
+        provided_email = request.data.get('email', '')
         password = request.data.get('password')
 
-        try:
-            # Attempt to retrieve user with provided email
-            user = User.objects.get(email=email)
-        except User.DoesNotExist:
+        # Attempt to retrieve user with provided email (case-insensitive lookup)
+        user = User.objects.filter(email__iexact=provided_email).first()
+
+        if not user:
             # Return error response if user does not exist
             return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
@@ -217,20 +217,16 @@ class CustomTokenLoginView(APIView):
             # Construct response data
             response_data = {
                 'id': user_id,
-                'username':user.username,
-                'email': user.email,
+                'username': user.username,
+                'email': provided_email,  # Return the provided email as is
                 'token': custom_token.key
-                # 'first_name': user.fname,
-                # 'last_name': user.lname,
-                # 'initials': (user.fname[0] if user.fname else '') + (user.lname[0] if user.lname else '')
             }
-            # response_data['initials'] = response_data['initials'].upper()
             # Return success response with user data and token
             return Response(response_data, status=status.HTTP_200_OK)
         else:
             # Return error response if password is incorrect
             return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
-        
+
 # View for user logout
 class UserLogoutView(APIView):
     """

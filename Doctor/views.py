@@ -132,7 +132,8 @@ class DoctorCustomTokenLoginView(APIView):
 
         try:
             # Retrieve the doctor object using the provided email
-            doctor = Doctor.objects.get(email=email)
+            doctor = Doctor.objects.filter(email__iexact=email).first()
+
         except Doctor.DoesNotExist:
             # Return error response if doctor with provided email does not exist
             return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
