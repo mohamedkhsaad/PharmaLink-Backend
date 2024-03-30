@@ -30,6 +30,8 @@ from .serializers import PrescriptionSerializer
 
 import json
 from fuzzywuzzy import process
+from django.db.models import Q
+
 from datetime import date,datetime
 
 from background_task import background
@@ -53,17 +55,12 @@ class MedicineSearchView(APIView):
 
     permission_classes = [IsAuthenticated]
     authentication_classes = [DoctorCustomTokenAuthentication, CustomTokenAuthentication]
-
+    
     def get(self, request):
         """
         Handle GET requests for searching medicines by name.
-
-        Args:
-            request (HttpRequest): HTTP request object containing query parameter.
-
-        Returns:
-            Response: Response object containing serialized medicine data or error message.
         """
+
         # Extract the query parameter from the request
         query = request.query_params.get('query', '')
 
@@ -71,8 +68,12 @@ class MedicineSearchView(APIView):
         if len(query) < 2:
             return Response({'error': 'Query must be at least 2 characters long'}, status=status.HTTP_400_BAD_REQUEST)
 
-        # Check if there's an exact match for the user's query
-        exact_match = DrugEye.objects.filter(TradeName__iexact=query).first()
+        # Check if there's an exact match for the first word or longest word in the query
+        words = query.split()
+        first_word_match = DrugEye.objects.filter(TradeName__iexact=words[0]).first() if words else None
+        longest_word_match = max(words, key=len) if words else None
+        exact_match = first_word_match or DrugEye.objects.filter(TradeName__iexact=longest_word_match).first()
+
         if exact_match:
             # Serialize the exact match and return the response
             serializer = DrugEyeSerializer(exact_match)
@@ -82,15 +83,14 @@ class MedicineSearchView(APIView):
         all_drug_names = DrugEye.objects.values_list('TradeName', flat=True)
 
         # Perform fuzzy matching to find the closest match to the user's query
-        matched_names = process.extract(query, all_drug_names, limit=10)
-
+        matched_names = process.extract(query, all_drug_names, limit=1)
         # Retrieve drug information for the matched names
-        matched_drugs = DrugEye.objects.filter(TradeName__in=[name for name, _ in matched_names])
+        matched_drugs = DrugEye.objects.filter(Q(TradeName__in=[name for name, _ in matched_names]) | Q(TradeName__icontains=query))
 
         # Serialize the matched drugs and return the response
         serializer = DrugEyeSerializer(matched_drugs, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
-
+    
 # API view to start a session with a user
 class StartSessionView(APIView):
     """
