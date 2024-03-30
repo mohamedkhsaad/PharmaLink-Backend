@@ -1426,3 +1426,42 @@ class HomePageinfoView(APIView):
             return Response(formatted_data, status=status.HTTP_200_OK)
         else:
             return Response({'message': f'No {state} prescriptions found'}, status=status.HTTP_404_NOT_FOUND)
+
+# end session
+class EndSessionView(APIView):
+    """
+    API view to end a session.
+
+    - Requires authentication using DoctorCustomTokenAuthentication.
+    - Handles POST requests to end a session.
+    - Clears the session for the authenticated user.
+    """
+
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [DoctorCustomTokenAuthentication]
+
+    def post(self, request):
+        """
+        POST method to end a session.
+
+        Args:
+            request (Request): HTTP request object.
+
+        Returns:
+            Response: JSON response containing success or error messages.
+        """
+        # Extract doctor ID from the authenticated user
+        doctor_id = request.user.id
+
+        # Find the latest session for the doctor
+        latest_session = Session.objects.filter(doctor_id=doctor_id).latest('created_at')
+
+        # Check if the latest session is already ended
+        if latest_session.ended:
+            return Response({'error': 'Session is already ended'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # End the session
+        latest_session.ended = True
+        latest_session.save()
+
+        return Response({'message': 'Session ended successfully'}, status=status.HTTP_200_OK)

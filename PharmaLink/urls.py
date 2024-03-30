@@ -62,6 +62,7 @@ urlpatterns = [
     path('Prescription/drug_search/', MedicineSearchView.as_view(), name='medicine-search'),
     path('Prescription/start-session/', StartSessionView.as_view(), name='start_session'),
     path('Prescription/verify-session/', VerifySessionView.as_view(), name='verify_session'),
+    path('Prescription/end-session/', EndSessionView.as_view(), name='end_session'),
 
     path('Prescription/create-prescription/', CreatePrescriptionView.as_view(), name='create_prescription'),
     path('Prescription/get-prescription/<int:prescription_id>/', PrescriptionDetailView.as_view(), name='prescription-detail'),
