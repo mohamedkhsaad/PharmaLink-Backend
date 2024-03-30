@@ -157,7 +157,7 @@ class DrugInteractionByTradeNameView(APIView):
 
         # Return interactions found
         if interaction_types:
-            return Response({'interaction_types': interaction_types}, status=status.HTTP_200_OK)
+            return Response({'Type':'Risky','interaction_types': interaction_types}, status=status.HTTP_200_OK)
         else:
             return Response({'message': 'No interaction found'}, status=status.HTTP_200_OK)
 
@@ -176,10 +176,12 @@ class DrugInteractionByTradeNameView(APIView):
             drug_eye = DrugEye.objects.get(TradeName=trade_name)
         except DrugEye.DoesNotExist:
             return None
-
+        # Convert ScNameComponents to lowercase for case-insensitive comparison
+        sc_name_components_lower = [component.lower() for component in drug_eye.ScName.split('+')]
+        print(sc_name_components_lower)
         return {
             'ScName': drug_eye.ScName,
-            'ScNameComponents': drug_eye.ScName.split('+')
+            'ScNameComponents': sc_name_components_lower
         }
 
     def check_interaction(self, components1, components2):
