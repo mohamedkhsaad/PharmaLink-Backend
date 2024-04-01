@@ -22,9 +22,38 @@ class User(AbstractUser, PermissionsMixin):
     - Overrides the __str__() method to provide a string representation of the user object (email).
     """
     id = models.AutoField(primary_key=True)
-    fname = models.CharField(max_length=255)
-    lname = models.CharField(max_length=255)
-    username = models.CharField(max_length=255, unique=True)
+    fname = models.CharField(
+        max_length=255,
+        validators=[
+            RegexValidator(
+                regex=r'^[A-Za-z]+$',
+                message='First name must contain only letters.',
+                code='invalid_fname'
+            )
+        ]
+    )
+    lname = models.CharField(
+        max_length=255,
+        validators=[
+            RegexValidator(
+                regex=r'^[A-Za-z]+$',
+                message='Last name must contain only letters.',
+                code='invalid_lname'
+            )
+        ]
+    )
+     # Username with custom regex validation
+    username = models.CharField(
+        max_length=255,
+        unique=True,
+        validators=[
+            RegexValidator(
+                regex=r'^[a-zA-Z0-9_]+$',
+                message='Username must contain only letters, numbers, and underscores.',
+                code='invalid_username'
+            )
+        ]
+    )
     image = models.ImageField(upload_to='user_images/', null=True, blank=True)
     
     # Custom password validation

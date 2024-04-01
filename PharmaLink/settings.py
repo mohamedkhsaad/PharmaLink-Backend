@@ -100,24 +100,24 @@ WSGI_APPLICATION = 'PharmaLink.wsgi.application'
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 
 # Local Database
-DATABASES = {
-    'default': {
-        'ENGINE': os.environ.get('DATABASE_ENGINE'),
-        'NAME': os.environ.get('DATABASE_NAME'),
-    }
-}
-
-# Glopal Database
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'djongo',
-#         'NAME': 'PharmaLink',
-#         'ENFORCE_SCHEMA': False,
-#         'CLIENT': {
-#             'host': 'mongodb+srv://ismail:512002ziad@cluster0.cuhia1z.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
-#         }
+#         'ENGINE': os.environ.get('DATABASE_ENGINE'),
+#         'NAME': os.environ.get('DATABASE_NAME'),
 #     }
 # }
+
+# Glopal Database
+DATABASES = {
+    'default': {
+        'ENGINE': 'djongo',
+        'NAME': 'PharmaLink',
+        'ENFORCE_SCHEMA': False,
+        'CLIENT': {
+            'host': 'mongodb+srv://ismail:512002ziad@cluster0.cuhia1z.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
+        }
+    }
+}
 
 
 # Password validation

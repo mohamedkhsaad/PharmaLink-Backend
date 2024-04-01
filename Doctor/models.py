@@ -20,16 +20,44 @@ class Doctor(AbstractUser):
     - Includes image field for profile pictures.
     - Defines permissions for viewing users.
     """
-
     id = models.AutoField(primary_key=True)
-    fname = models.CharField(max_length=255)
-    lname = models.CharField(max_length=255)
+    fname = models.CharField(
+        max_length=255,
+        validators=[
+            RegexValidator(
+                regex=r'^[A-Za-z]+$',
+                message='First name must contain only letters.',
+                code='invalid_fname'
+            )
+        ]
+    )
+    lname = models.CharField(
+        max_length=255,
+        validators=[
+            RegexValidator(
+                regex=r'^[A-Za-z]+$',
+                message='Last name must contain only letters.',
+                code='invalid_lname'
+            )
+        ]
+    )
+     # Username with custom regex validation
+    username = models.CharField(
+        max_length=255,
+        unique=True,
+        validators=[
+            RegexValidator(
+                regex=r'^[a-zA-Z0-9_]+$',
+                message='Username must contain only letters, numbers, and underscores.',
+                code='invalid_username'
+            )
+        ]
+    )
     gender_choices = [
         ("M", "Male"),
         ("F", "Female")
     ]
     gender = models.CharField(max_length=1, choices=gender_choices)
-    username = models.CharField(max_length=255, unique=True)
     email = models.EmailField(unique=True)
     birthdate = models.DateField()
     phone = models.CharField(max_length=20)
