@@ -23,6 +23,7 @@ from email.mime.text import MIMEText
 from django.core.mail import send_mail
 from rest_framework.generics import UpdateAPIView
 from django.core.exceptions import ObjectDoesNotExist
+from rest_framework_simplejwt.tokens import RefreshToken
 
 # View for user signup
 class UserSignupView(generics.CreateAPIView):
@@ -226,19 +227,26 @@ class EmailVerificationView(APIView):
 #         else:
 #             # Return error response if password is incorrect
 #             return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
-from rest_framework_simplejwt.tokens import RefreshToken
-from django.contrib.auth import authenticate
+
+# View for user login
 class CustomTokenLoginView(APIView):
     """
-    View for user login and token generation.
+    This view handles user login using custom tokens.
+    
+    - Handles HTTP POST requests for user login.
+    - Validates user credentials (email and password).
+    - Generates a custom token for authenticated users.
+    - Checks if the user's email is verified before allowing login.
     """
+
     serializer_class = AuthTokenSerializer
 
     def post(self, request, format=None):
         """
         Handle user login requests and generate tokens.
         """
-        # Validate serializer
+
+        # Validate serializer data
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
 
@@ -248,30 +256,78 @@ class CustomTokenLoginView(APIView):
 
         # Get user by filtering email case-insensitively
         user = User.objects.filter(email__iexact=email).first()
+
+        # Check if user exists and password matches
         if user is None or password != user.password:
             return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
+        # Check if the user's email is verified
+        if not user.is_verified:
+            return Response({'error': 'Email not verified'}, status=status.HTTP_401_UNAUTHORIZED)
+
         # Generate refresh token
         refresh = RefreshToken.for_user(user)
+        access_token = str(refresh.access_token)
 
-        # Create CustomToken instance
-        custom_token = CustomToken.objects.create(
-            key=str(refresh),  # Save refresh token as key
+        # Create or update CustomToken instance with tokens
+        custom_token, created = CustomToken.objects.update_or_create(
             user=user,
-            email=user.email
+            defaults={
+                'refresh_token': str(refresh),
+                'access_token': access_token,
+            }
         )
 
-        # Construct response data
+        # Construct response data with user details and tokens
         response_data = {
             'id': user.id,
             'username': user.username,
             'email': user.email,
             'refresh_token': str(refresh),
-            'access_token': str(refresh.access_token),
+            'access_token': access_token,
         }
-
         return Response(response_data, status=status.HTTP_200_OK)
 
+# View for refresh an access token using a refresh token
+class RefreshTokenView(APIView):
+    """
+    View to refresh an access token using a refresh token.
+    
+    - Handles HTTP POST requests to refresh an access token.
+    - Validates the refresh token provided in the request.
+    - Retrieves the associated CustomToken object using the refresh token.
+    - Updates the access token in the CustomToken object with the new one.
+    """
+
+    def post(self, request):
+        """
+        Handle POST requests to refresh an access token.
+        """
+
+        # Get the refresh token from the request data
+        refresh_token_value = request.data.get('refresh_token')
+        if not refresh_token_value:
+            return Response({'error': 'Refresh token is required'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Retrieve the CustomToken object using the refresh token
+        try:
+            custom_token = CustomToken.objects.get(refresh_token=refresh_token_value)
+        except CustomToken.DoesNotExist:
+            return Response({'error': 'Invalid refresh token'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Validate the refresh token
+        try:
+            refresh = RefreshToken(refresh_token_value)
+            access_token = str(refresh.access_token)
+        except Exception as e:
+            return Response({'error': 'Invalid refresh token'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Update the access token in the CustomToken object
+        custom_token.access_token = access_token
+        custom_token.save()
+
+        return Response({'access_token': access_token}, status=status.HTTP_200_OK)
+    
 # View for user logout
 class UserLogoutView(APIView):
     """

@@ -44,7 +44,7 @@ class CustomTokenAuthentication(BaseAuthentication):
         try:
             # Decode and retrieve the token from the header
             token = auth_header[1].decode()
-            custom_token = CustomToken.objects.get(key=token)
+            custom_token = CustomToken.objects.get(access_token=token)
         except CustomToken.DoesNotExist:
             # Invalid token
             raise AuthenticationFailed('Invalid token')

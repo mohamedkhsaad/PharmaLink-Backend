@@ -49,7 +49,7 @@ class DoctorCustomTokenAuthentication(BaseAuthentication):
             raise AuthenticationFailed(msg)
         try:
             token = auth_header[1].decode()
-            custom_token = CustomToken.objects.get(key=token)
+            custom_token = CustomToken.objects.get(access_token=token)
         except CustomToken.DoesNotExist:
             raise AuthenticationFailed('Invalid token')
         doctor_email = custom_token.email

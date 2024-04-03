@@ -22,6 +22,7 @@ from rest_framework.generics import GenericAPIView
 from rest_framework.generics import UpdateAPIView
 from rest_framework.permissions import AllowAny
 from django.core.exceptions import ObjectDoesNotExist
+from rest_framework_simplejwt.tokens import RefreshToken
 
 # Define the DoctorSignupView class
 class DoctorSignupView(generics.CreateAPIView):
@@ -104,69 +105,169 @@ class DoctorSignupView(generics.CreateAPIView):
         # Return error response if serializer is not valid
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-# Doctor login view class
+# # Doctor login view class
+# class DoctorCustomTokenLoginView(APIView):
+#     """
+#     View class for doctor login. Doctor has to verify their email after signup to be able to login.
+    
+#     - Inherits from APIView to handle HTTP request methods.
+#     - Defines the serializer class for doctor authentication.
+#     - Implements the POST method to handle doctor login requests.
+#     - Validates the provided credentials and generates a custom token for authenticated doctors.
+#     - Retrieves the doctor object using the provided email and verifies the email status.
+#     - Compares the provided password with the stored password for authentication.
+#     - Generates or retrieves the custom token associated with the doctor upon successful authentication.
+#     - Prepares and returns a response with user data and token upon successful authentication.
+#     - Returns error responses for various scenarios, such as invalid credentials or unverified email.
+#     """
+#     serializer_class = DoctorAuthTokenSerializer
+
+#     def post(self, request, format=None):
+#         # Serialize the request data
+#         serializer = self.serializer_class(data=request.data)
+#         serializer.is_valid(raise_exception=True)  # Validate the serializer
+
+#         # Extract email and password from request data
+#         email = request.data.get('email')
+#         password = request.data.get('password')
+
+#         try:
+#             # Retrieve the doctor object using the provided email
+#             doctor = Doctor.objects.filter(email__iexact=email).first()
+
+#         except Doctor.DoesNotExist:
+#             # Return error response if doctor with provided email does not exist
+#             return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+
+#         # Check if the doctor's email is verified
+#         if not doctor.is_verified:
+#             # Return error response if doctor's email is not verified
+#             return Response({'error': _('Email not verified')}, status=status.HTTP_401_UNAUTHORIZED)
+
+#         # Compare the provided password with the doctor's password
+#         if password == doctor.password:
+#             # Create or retrieve the custom token associated with the doctor
+#             custom_token, created = CustomToken.objects.get_or_create(doctor=doctor)
+
+#             # Prepare response data
+#             user_id = doctor.id
+#             response_data = {
+#                 'id': user_id,
+#                 'username':doctor.username,
+#                 'email': doctor.email,
+#                 'token': custom_token.key,
+#                 # 'first_name': doctor.fname,
+#                 # 'last_name': doctor.lname,
+#                 # 'initials': (doctor.fname[0] if doctor.fname else '') + (doctor.lname[0] if doctor.lname else '')
+#             }
+#             # response_data['initials'] = response_data['initials'].upper()
+
+#             # Return success response with user data and token
+#             return Response(response_data, status=status.HTTP_200_OK)
+#         else:
+#             # Return error response if provided credentials are invalid
+#             return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+    
+# View for doctor login
 class DoctorCustomTokenLoginView(APIView):
     """
-    View class for doctor login. Doctor has to verify their email after signup to be able to login.
+    This view handles doctor login using custom tokens.
     
-    - Inherits from APIView to handle HTTP request methods.
-    - Defines the serializer class for doctor authentication.
-    - Implements the POST method to handle doctor login requests.
-    - Validates the provided credentials and generates a custom token for authenticated doctors.
-    - Retrieves the doctor object using the provided email and verifies the email status.
-    - Compares the provided password with the stored password for authentication.
-    - Generates or retrieves the custom token associated with the doctor upon successful authentication.
-    - Prepares and returns a response with user data and token upon successful authentication.
-    - Returns error responses for various scenarios, such as invalid credentials or unverified email.
+    - Handles HTTP POST requests for doctor login.
+    - Validates doctor credentials (email and password).
+    - Generates a custom token for authenticated doctors.
+    - Checks if the doctor's email is verified before allowing login.
     """
+
     serializer_class = DoctorAuthTokenSerializer
 
     def post(self, request, format=None):
-        # Serialize the request data
+        """
+        Handle doctor login requests and generate tokens.
+        """
+
+        # Validate serializer data
         serializer = self.serializer_class(data=request.data)
-        serializer.is_valid(raise_exception=True)  # Validate the serializer
+        serializer.is_valid(raise_exception=True)
 
-        # Extract email and password from request data
-        email = request.data.get('email')
-        password = request.data.get('password')
+        # Retrieve email and password from request data
+        email = serializer.validated_data.get('email')
+        password = serializer.validated_data.get('password')
 
-        try:
-            # Retrieve the doctor object using the provided email
-            doctor = Doctor.objects.filter(email__iexact=email).first()
+        # Get user by filtering email case-insensitively
+        doctor = Doctor.objects.filter(email__iexact=email).first()
 
-        except Doctor.DoesNotExist:
-            # Return error response if doctor with provided email does not exist
+        # Check if user exists and password matches
+        if doctor is None or password != doctor.password:
             return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
-        # Check if the doctor's email is verified
+        # Check if the user's email is verified
         if not doctor.is_verified:
-            # Return error response if doctor's email is not verified
-            return Response({'error': _('Email not verified')}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response({'error': 'Email not verified'}, status=status.HTTP_401_UNAUTHORIZED)
 
-        # Compare the provided password with the doctor's password
-        if password == doctor.password:
-            # Create or retrieve the custom token associated with the doctor
-            custom_token, created = CustomToken.objects.get_or_create(doctor=doctor)
+        # Generate refresh token
+        refresh = RefreshToken.for_user(doctor)
+        access_token = str(refresh.access_token)
 
-            # Prepare response data
-            user_id = doctor.id
-            response_data = {
-                'id': user_id,
-                'username':doctor.username,
-                'email': doctor.email,
-                'token': custom_token.key,
-                # 'first_name': doctor.fname,
-                # 'last_name': doctor.lname,
-                # 'initials': (doctor.fname[0] if doctor.fname else '') + (doctor.lname[0] if doctor.lname else '')
+        # Create or update CustomToken instance with tokens
+        custom_token, created = CustomToken.objects.update_or_create(
+            doctor=doctor,
+            defaults={
+                'refresh_token': str(refresh),
+                'access_token': access_token,
             }
-            # response_data['initials'] = response_data['initials'].upper()
+        )
 
-            # Return success response with user data and token
-            return Response(response_data, status=status.HTTP_200_OK)
-        else:
-            # Return error response if provided credentials are invalid
-            return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
-        
+        # Construct response data with user details and tokens
+        response_data = {
+            'id': doctor.id,
+            'username': doctor.username,
+            'email': doctor.email,
+            'refresh_token': str(refresh),
+            'access_token': access_token,
+        }
+        return Response(response_data, status=status.HTTP_200_OK)
+    
+# View for refresh an access token using a refresh token
+class DoctorRefreshTokenView(APIView):
+    """
+    View to refresh an access token using a refresh token.
+    
+    - Handles HTTP POST requests to refresh an access token.
+    - Validates the refresh token provided in the request.
+    - Retrieves the associated CustomToken object using the refresh token.
+    - Updates the access token in the CustomToken object with the new one.
+    """
+
+    def post(self, request):
+        """
+        Handle POST requests to refresh an access token.
+        """
+
+        # Get the refresh token from the request data
+        refresh_token_value = request.data.get('refresh_token')
+        if not refresh_token_value:
+            return Response({'error': 'Refresh token is required'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Retrieve the CustomToken object using the refresh token
+        try:
+            custom_token = CustomToken.objects.get(refresh_token=refresh_token_value)
+        except CustomToken.DoesNotExist:
+            return Response({'error': 'Invalid refresh token'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Validate the refresh token
+        try:
+            refresh = RefreshToken(refresh_token_value)
+            access_token = str(refresh.access_token)
+        except Exception as e:
+            return Response({'error': 'Invalid refresh token'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Update the access token in the CustomToken object
+        custom_token.access_token = access_token
+        custom_token.save()
+
+        return Response({'access_token': access_token}, status=status.HTTP_200_OK)
+      
 # View for retrieving doctor information
 class DoctorInfoView(APIView):
     """

@@ -120,31 +120,34 @@ class Doctor(AbstractUser):
 # Model for custom authentication tokens
 class CustomToken(models.Model):
     """
-    Model representing custom authentication tokens for Doctor users.
-
-    - Stores a unique token associated with a Doctor.
-    - Links each token to a Doctor instance.
-    - Generates a token using secrets module if not provided.
-    - Sets the email field based on the associated Doctor's email.
+    Custom token model representing tokens used for doctor authentication.
+    
+    - Defines fields for token key, associated doctor, email, access token, refresh token,
+      and creation timestamp.
+    - Ensures token key uniqueness and sets it as a random hex string if not provided.
+    - Sets the associated email from the doctor object if not provided.
+    - Overrides the save() method to handle token key generation and email assignment.
+    - Provides verbose names for the model and its plural form for better readability in the admin interface.
     """
-
     key = models.CharField(max_length=64, unique=True, blank=True)
     doctor = models.ForeignKey(Doctor, related_name='custom_tokens', on_delete=models.CASCADE)
     email = models.EmailField()
+    access_token = models.CharField(max_length=255, blank=True)
+    refresh_token = models.CharField(max_length=255, blank=True)
     created = models.DateTimeField(auto_now_add=True)
+
     class Meta:
         verbose_name = 'CustomToken'
         verbose_name_plural = 'CustomTokens'
 
     def save(self, *args, **kwargs):
         """
-        Method to save CustomToken instances.
-
-        - Overrides the save method to generate a token and set the email if not provided.
+        Custom save method to generate token key and set email if not provided.
         """
-        
         if not self.key:
+            # Generate a random token key
             self.key = secrets.token_hex(32)
         if not self.email:
+            # Set email from associated user if not provided
             self.email = self.doctor.email
         return super().save(*args, **kwargs)

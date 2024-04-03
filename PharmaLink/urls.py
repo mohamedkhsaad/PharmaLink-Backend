@@ -21,6 +21,8 @@ urlpatterns = [
     path('user/verify/<int:user_id>/', EmailVerificationView.as_view(), name='email_verification'),
     path('user/resend-email-verification/', ResendEmailVerificationView.as_view(), name='resend_email_verification'),
     path('user/login/', CustomTokenLoginView.as_view(), name='user_login'),
+    path('user/refresh-token/', RefreshTokenView.as_view(), name='refresh_token'),
+
     path('user/users/<int:user_id>/', UserInfoView.as_view(), name='user-info'),
     path('user/logout/', UserLogoutView.as_view(), name='custom_logout'),
     path('user/update/', UserUpdateView.as_view(), name='user-update'),
@@ -46,6 +48,8 @@ urlpatterns = [
     # Doctor
     path('doctor/signup/', DoctorSignupView.as_view(), name='doctor_signup'),
     path('doctor/login/', DoctorCustomTokenLoginView.as_view(), name='doctor_login'),
+    path('doctor/refresh-token/', DoctorRefreshTokenView.as_view(), name='refresh_token'),
+
     path('doctor/doctors/<int:doctor_id>/', DoctorInfoView.as_view(), name='user-info'),
     path('doctor/verify/<int:doctor_id>/', DoctorEmailVerificationView.as_view(), name='email_verification'),
     path('doctor/resend-email-verification/', DoctorResendEmailVerificationView.as_view(), name='resend_email_verification'),

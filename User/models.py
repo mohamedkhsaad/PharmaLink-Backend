@@ -8,6 +8,10 @@ from django.core.exceptions import ValidationError
 from django.core.validators import MinLengthValidator, RegexValidator
 import secrets
 from django.contrib.auth.models import AbstractUser, PermissionsMixin
+from django.db import models
+from django.contrib.auth.models import User
+from django.utils import timezone
+import secrets
 
 # Custom user model representing a user of the application
 class User(AbstractUser, PermissionsMixin):
@@ -96,11 +100,14 @@ class User(AbstractUser, PermissionsMixin):
         return self.email
 
 # Custom token model representing tokens used for user authentication
+
+
 class CustomToken(models.Model):
     """
     Custom token model representing tokens used for user authentication.
     
-    - Defines fields for token key, associated user, email, and creation timestamp.
+    - Defines fields for token key, associated user, email, access token, refresh token,
+      and creation timestamp.
     - Ensures token key uniqueness and sets it as a random hex string if not provided.
     - Sets the associated email from the user object if not provided.
     - Overrides the save() method to handle token key generation and email assignment.
@@ -109,6 +116,8 @@ class CustomToken(models.Model):
     key = models.CharField(max_length=64, unique=True, blank=True)
     user = models.ForeignKey(User, related_name='custom_tokens', on_delete=models.CASCADE)
     email = models.EmailField()
+    access_token = models.CharField(max_length=255, blank=True)
+    refresh_token = models.CharField(max_length=255, blank=True)
     created = models.DateTimeField(auto_now_add=True)
 
     class Meta:
