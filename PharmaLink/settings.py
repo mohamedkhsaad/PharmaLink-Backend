@@ -9,7 +9,6 @@ https://docs.djangoproject.com/en/dev/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/dev/ref/settings/
 """
-
 from dotenv import load_dotenv
 import os
 from pathlib import Path
@@ -32,6 +31,9 @@ ALLOWED_HOSTS = []
 
 # Application definition
 INSTALLED_APPS = [
+    'chat',
+    'channels',
+    'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -94,7 +96,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'PharmaLink.wsgi.application'
-
+ASGI_APPLICATION = 'chat.asgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
@@ -118,7 +120,6 @@ DATABASES = {
         }
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-password-validators
@@ -328,8 +329,6 @@ CSRF_COOKIE_SECURE = True
 MEDIA_URL = '/'
 MEDIA_ROOT = os.path.join(BASE_DIR, '')
 CORS_ORIGIN_ALLOW_ALL = True
-
-ASGI_APPLICATION = 'ChatApp.asgi.application'
 
 # Background tasks configuration
 BACKGROUND_TASK_RUN_ASYNC = True

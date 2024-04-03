@@ -13,8 +13,8 @@ from django.core.asgi import get_asgi_application
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'PharmaLink.settings')
 
-# application = get_asgi_application()
+# Define your ASGI application for WebSocket routing
 application = ProtocolTypeRouter({
-    "http":get_asgi_application(),
-    "websocket":URLRouter(ASGI_urlpatterns)
+    "http": get_asgi_application(),  # Standard HTTP handling
+    "websocket": URLRouter(ASGI_urlpatterns),  # WebSocket routing
 })
