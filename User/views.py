@@ -173,59 +173,104 @@ class EmailVerificationView(APIView):
         # Respond with success message
         return Response({'message': 'Email verified successfully'}, status=status.HTTP_200_OK)
 
-# View for user login
+# # View for user login
+# class CustomTokenLoginView(APIView):
+#     """
+#     This view handles user login using custom tokens.
+    
+#     - Handles HTTP POST requests for user login.
+#     - Validates user credentials (email and password).
+#     - Generates a custom token for authenticated users.
+#     - Checks if the user's email is verified before allowing login.
+#     """
+#     serializer_class = AuthTokenSerializer
+
+#     def post(self, request, format=None):
+#         """
+#         Handles user login requests.
+#         Validates the provided credentials and generates a custom token for authenticated users.
+#         """
+#         # Validate serializer
+#         serializer = self.serializer_class(data=request.data)
+#         serializer.is_valid(raise_exception=True)
+
+#         # Retrieve email and password from request data
+#         provided_email = request.data.get('email', '')
+#         password = request.data.get('password')
+
+#         # Attempt to retrieve user with provided email (case-insensitive lookup)
+#         user = User.objects.filter(email__iexact=provided_email).first()
+
+#         if not user:
+#             # Return error response if user does not exist
+#             return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+
+#         # Check if user's email is verified
+#         if not user.is_verified:
+#             return Response({'error': _('Email not verified')}, status=status.HTTP_401_UNAUTHORIZED)
+
+#         # Validate password
+#         if password == user.password:
+#             # Generate custom token for authenticated user
+#             custom_token = CustomToken.objects.create(user=user)
+#             user_id = user.id
+#             # Construct response data
+#             response_data = {
+#                 'id': user_id,
+#                 'username': user.username,
+#                 'email': provided_email,  # Return the provided email as is
+#                 'token': custom_token.key
+#             }
+#             # Return success response with user data and token
+#             return Response(response_data, status=status.HTTP_200_OK)
+#         else:
+#             # Return error response if password is incorrect
+#             return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+from rest_framework_simplejwt.tokens import RefreshToken
+from django.contrib.auth import authenticate
 class CustomTokenLoginView(APIView):
     """
-    This view handles user login using custom tokens.
-    
-    - Handles HTTP POST requests for user login.
-    - Validates user credentials (email and password).
-    - Generates a custom token for authenticated users.
-    - Checks if the user's email is verified before allowing login.
+    View for user login and token generation.
     """
     serializer_class = AuthTokenSerializer
 
     def post(self, request, format=None):
         """
-        Handles user login requests.
-        Validates the provided credentials and generates a custom token for authenticated users.
+        Handle user login requests and generate tokens.
         """
         # Validate serializer
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
 
         # Retrieve email and password from request data
-        provided_email = request.data.get('email', '')
-        password = request.data.get('password')
+        email = serializer.validated_data.get('email')
+        password = serializer.validated_data.get('password')
 
-        # Attempt to retrieve user with provided email (case-insensitive lookup)
-        user = User.objects.filter(email__iexact=provided_email).first()
-
-        if not user:
-            # Return error response if user does not exist
+        # Get user by filtering email case-insensitively
+        user = User.objects.filter(email__iexact=email).first()
+        if user is None or password != user.password:
             return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
-        # Check if user's email is verified
-        if not user.is_verified:
-            return Response({'error': _('Email not verified')}, status=status.HTTP_401_UNAUTHORIZED)
+        # Generate refresh token
+        refresh = RefreshToken.for_user(user)
 
-        # Validate password
-        if password == user.password:
-            # Generate custom token for authenticated user
-            custom_token = CustomToken.objects.create(user=user)
-            user_id = user.id
-            # Construct response data
-            response_data = {
-                'id': user_id,
-                'username': user.username,
-                'email': provided_email,  # Return the provided email as is
-                'token': custom_token.key
-            }
-            # Return success response with user data and token
-            return Response(response_data, status=status.HTTP_200_OK)
-        else:
-            # Return error response if password is incorrect
-            return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+        # Create CustomToken instance
+        custom_token = CustomToken.objects.create(
+            key=str(refresh),  # Save refresh token as key
+            user=user,
+            email=user.email
+        )
+
+        # Construct response data
+        response_data = {
+            'id': user.id,
+            'username': user.username,
+            'email': user.email,
+            'refresh_token': str(refresh),
+            'access_token': str(refresh.access_token),
+        }
+
+        return Response(response_data, status=status.HTTP_200_OK)
 
 # View for user logout
 class UserLogoutView(APIView):

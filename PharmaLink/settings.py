@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/dev/ref/settings/
 from dotenv import load_dotenv
 import os
 from pathlib import Path
+from datetime import timedelta
 load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -102,24 +103,25 @@ ASGI_APPLICATION = 'chat.asgi.application'
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 
 # Local Database
+DATABASES = {
+    'default': {
+        'ENGINE': os.environ.get('DATABASE_ENGINE'),
+        'NAME': os.environ.get('DATABASE_NAME'),
+    }
+}
+
+# Glopal Database
 # DATABASES = {
 #     'default': {
-#         'ENGINE': os.environ.get('DATABASE_ENGINE'),
-#         'NAME': os.environ.get('DATABASE_NAME'),
+#         'ENGINE': 'djongo',
+#         'NAME': 'PharmaLink',
+#         'ENFORCE_SCHEMA': False,
+#         'CLIENT': {
+#             'host': 'mongodb+srv://ismail:512002ziad@cluster0.cuhia1z.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
+#         }
 #     }
 # }
 
-# Glopal Database
-DATABASES = {
-    'default': {
-        'ENGINE': 'djongo',
-        'NAME': 'PharmaLink',
-        'ENFORCE_SCHEMA': False,
-        'CLIENT': {
-            'host': 'mongodb+srv://ismail:512002ziad@cluster0.cuhia1z.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
-        }
-    }
-}
 
 # Password validation
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-password-validators
@@ -168,6 +170,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication',
@@ -178,6 +181,11 @@ REST_FRAMEWORK = {
     #     'rest_framework.permissions.IsAuthenticated',
     # ]
 
+}
+
+SIMPLE_JWT = {
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
 }
 SPECTACULAR_SETTINGS = {
     'SCHEMA_PATH_FUNC': 'drf_spectacular.views.spectacular_view',
